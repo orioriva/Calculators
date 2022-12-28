@@ -1,4 +1,4 @@
-package calculators.project.spring;
+package calculators.project.spring.model;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

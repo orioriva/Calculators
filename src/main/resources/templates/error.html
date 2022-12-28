@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<!-- 共通 <head> 読込 -->
+<head th:replace="fragment/head_fragment :: head_fragment(title = 'エラー', scripts = ~{::script}, links = ~{::link})">
+	<!-- 個別CSS、JSを引数に指定 -->
+	<link rel="stylesheet" type="text/css" th:href="@{/css/blank.css}"/>
+	<script type="text/javascript" th:src="@{/js/blank.js}"></script>
+</head>
+<body>
+
+<h1 th:text="${status} + ' ' + ${error}"></h1>
+<p th:text="${message}"></p>
+<a href="javascript:history.back();" th:text="前に戻る"></a>
+
+</body>
+</html>

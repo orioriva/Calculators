@@ -2,12 +2,16 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <!-- 共通 <head> 読込 -->
 <head th:replace="fragment/head_fragment :: head_fragment(
-title = '仮トップページ', scripts = ~{::script}, links = ~{::link})">
+title = 'トップページ', scripts = ~{::script}, links = ~{::link})">
 	<!-- 個別CSS、JSを引数に指定 -->
 	<link rel="stylesheet" type="text/css" th:href="@{/css/blank.css}"/>
-	<script type="text/javascript" th:src="@{/js/index.js}"></script>
+	<script type="text/javascript" th:src="@{/js/blank.js}" defer></script>
 </head>
 <body>
-<canvas class="border bg-light" id="canvas" width="400" height="300"></canvas>
+
+<!-- 共通ヘッダー読込 -->
+<header th:replace="fragment/header_fragment :: header_fragment"></header>
+
+<h2>計算式作成サイト</h2>
 </body>
 </html>
