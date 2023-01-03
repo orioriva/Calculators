@@ -36,10 +36,10 @@
 		<span sec:authorize="${authenticated}">
 			<li class="nav-item d-flex align-items-center">
 				<div class="mr-2">
-					ようこそ <span sec:authentication="principal.userViewName"></span> さん
+					ようこそ<span sec:authentication="principal.userViewName"></span>さん
 				</div>
 				<form th:action="@{/logout}" method="post">
-					<button class="btn btn-sm btn-secondary" th:text="#{logout}"></button>
+					<button class="btn btn-secondary" th:text=>ログアウト</button>
 				</form>
 			</li>
 		</span>
