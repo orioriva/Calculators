@@ -24,10 +24,25 @@
 			</li>
 		</ul>
 	</div>
+	<!-- 右側 -->
 	<ul class="navbar-nav">
-		<li class="nav-item">
-			<a class="btn btn-sm btn-info" th:href="@{/login}" role="button">ログイン</a>
-		</li>
+		<!-- 認証前なら表示 -->
+		<span sec:authorize="${!authenticated}">
+			<li class="nav-item">
+				<a class="btn btn-sm btn-info" th:href="@{/login}" role="button" th:text="#{login}"></a>
+			</li>
+		</span>
+		<!-- 認証済なら表示 -->
+		<span sec:authorize="${authenticated}">
+			<li class="nav-item d-flex align-items-center">
+				<div class="mr-2">
+					ようこそ <span sec:authentication="principal.userViewName"></span> さん
+				</div>
+				<form th:action="@{/logout}" method="post">
+					<button class="btn btn-sm btn-secondary" th:text="#{logout}"></button>
+				</form>
+			</li>
+		</span>
 	</ul>
 </nav>
 </header>

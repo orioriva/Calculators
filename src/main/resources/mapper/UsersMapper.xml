@@ -14,6 +14,34 @@
 	<result column="admin" property="admin"/>
 </resultMap>
  -->
+ 
+ <!-- ユーザーＩＤからユーザー情報１件取得 -->
+<select id="findUserOneUserId" resultType="LoginUser">
+	SELECT
+		id,
+		userName,
+		userId,
+		password,
+		role
+	FROM
+		users
+	WHERE
+		#{userId} = userId
+</select>
+
+<!-- ユーザー１件追加 -->
+<insert id="addUserOne">
+	INSERT INTO
+		users(
+			userName,
+			userId,
+			password
+		) VALUES(
+			#{userName},
+			#{userId},
+			#{password}
+		)
+</insert>
 
 <!--
 <select id="findUserOne" resultMap="muser">
