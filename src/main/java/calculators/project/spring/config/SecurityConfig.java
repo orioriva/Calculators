@@ -11,7 +11,7 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @EnableWebSecurity
 @Configuration
-public class SecurityConfig{
+public class SecurityConfig{	
 	@Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -26,15 +26,18 @@ public class SecurityConfig{
                 .failureUrl("/login?error")
                 .permitAll()	// ログイン画面の未ログイン時のアクセス許可
         ).logout(logout -> logout
-                .logoutSuccessUrl("/")
+        		.logoutUrl("/logout")
+                .logoutSuccessUrl("/login?logout")
         ).authorizeHttpRequests(authz -> authz
                 .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
                 .mvcMatchers("/").permitAll()
                 .mvcMatchers("/calculator").permitAll()
+                .mvcMatchers("/register").permitAll()
+                .mvcMatchers("/register/rest").permitAll()
                 .mvcMatchers("/general").hasRole("GENERAL")
                 .mvcMatchers("/admin").hasRole("ADMIN")
                 .anyRequest().authenticated()
-        );
+        ).csrf().disable();
         return http.build();
     }
 }
