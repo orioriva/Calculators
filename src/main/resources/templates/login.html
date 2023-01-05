@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <!-- 共通 <head> 読込 -->
 <head th:replace="fragment/head_fragment :: head_fragment(
-title = 'ログイン', scripts = ~{::script}, links = ~{::link})">
+title = #{login}, scripts = ~{::script}, links = ~{::link})">
 	<!-- 個別CSS、JSを引数に指定 -->
 	<link rel="stylesheet" type="text/css" th:href="@{/css/blank.css}"/>
 	<script type="text/javascript" th:src="@{/js/blank.js}" defer></script>
@@ -20,7 +20,9 @@ title = 'ログイン', scripts = ~{::script}, links = ~{::link})">
 		class="text-danger">
 			ログインエラーメッセージ
 	</p>
-	<form class="form-input" id="input-form" th:action="@{/login}" method="post">
+	<!-- ログアウト時 -->
+	<p th:if="${param.logout}" th:text="#{logouted}" class="text-danger"></p>
+	<form class="form-input" th:action="@{/login}" method="post">
 		<!-- ユーザーID -->
 		<div class="form-group">
 			<label for="userId" th:text="#{userId}"></label>
@@ -31,12 +33,18 @@ title = 'ログイン', scripts = ~{::script}, links = ~{::link})">
 			<label for="password" th:text="#{password}"></label>
 			<input type="password" id="password" class="form-control" name="password" th:placeholder="#{password}">
 		</div>
+		<!-- 送信ボタン -->
 		<div class="text-center">
-			<button class="mt-3 btn btn-primary w-100" type="submit" th:text="#{login}"></button>
+			<button class="mt-3 btn btn-primary w-100" type="submit">
+				[[#{login}]]<i class="ml-2 fas fa-sign-in-alt"></i>
+			</button>
 		</div>
 	</form>
+	<!-- 新規登録へ -->
 	<div class="text-center">
-		<a class="mt-3 btn btn-success w-100" th:href="@{/register}" role="button">新規登録はこちら</a>
+		<a class="mt-3 btn btn-success w-100" th:href="@{/register}" role="button">
+			[[#{signup} + #{ishere}]]<i class="ml-2 fas fa-user-plus"></i>
+		</a>
 	</div>
 </div>
 </body>

@@ -1,10 +1,10 @@
 <!-- 共通ヘッダー -->
-<header xmlns:th="http://www.thymeleaf.org" th:fragment="header_fragment">
+<header xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" th:fragment="header_fragment">
 <nav class="navbar navbar-expand-sm navbar-light" style="background-color: #eee8aa;">
 	<!--
 	<a class="navbar-brand" th:href="@{/}">自由計算(仮)</a>
 	 -->
-	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false">
 		<span class="navbar-toggler-icon"></span>
 	</button>
 	<!-- 画面が小さい時折りたたむ -->
@@ -14,10 +14,10 @@
 				<a class="nav-link" th:href="@{/}">TOP</a>
 			</li>
 			<li class="nav-item">
-				<a class="nav-link" th:href="@{/calculator}">計算式編集</a>
+				<a class="nav-link" th:href="@{/calculator}">計算式作成</a>
 			</li>
 			<li class="nav-item">
-				<a class="nav-link" href="#">掲示板</a>
+				<a class="nav-link" th:href="@{/bbs}" th:text="#{bbs}"></a>
 			</li>
 			<li class="nav-item">
 				<a class="nav-link disabled" href="#">Disabled</a>
@@ -27,22 +27,32 @@
 	<!-- 右側 -->
 	<ul class="navbar-nav">
 		<!-- 認証前なら表示 -->
-		<span sec:authorize="${!authenticated}">
-			<li class="nav-item">
-				<a class="btn btn-sm btn-info" th:href="@{/login}" role="button" th:text="#{login}"></a>
-			</li>
-		</span>
-		<!-- 認証済なら表示 -->
-		<span sec:authorize="${authenticated}">
-			<li class="nav-item d-flex align-items-center">
-				<div class="mr-2">
-					ようこそ <span sec:authentication="principal.userViewName"></span> さん
-				</div>
-				<form th:action="@{/logout}" method="post">
-					<button class="btn btn-sm btn-secondary" th:text="#{logout}"></button>
+		<li sec:authorize="${!authenticated}" class="nav-item">
+			<a class="btn btn-sm btn-info" th:href="@{/login}" role="button">
+				[[#{login}]]<i class="ml-1 fas fa-sign-in-alt"></i>
+			</a>
+		</li>
+		<!-- ユーザー操作ドロップダウンリスト -->
+		<li sec:authorize="${authenticated}" class="dropdown">
+			<button class="btn btn-outline-secondary dropdown-toggle" type="button" id="dropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				<i class="fas fa-user-circle fa-lg mr-2"></i>
+				ようこそ <span sec:authentication="principal.userViewName"></span> さん
+			</button>
+			<div class="dropdown-menu" aria-labelledby="dropdownMenu">
+				<!-- ユーザー情報編集 -->
+				<form th:action="@{/updateUser}" method="post">
+					<button class="dropdown-item" type="submit" th:text="ユーザー情報編集"></button>
 				</form>
-			</li>
-		</span>
+				<a class="dropdown-item" role="button" th:href="@{/mypage}">マイページ</a>
+				<!-- ログアウト -->
+				<div class="dropdown-divider"></div>
+				<form th:action="@{/logout}" method="post">
+					<button class="dropdown-item" type="submit">
+						[[#{logout}]]<i class="ml-2 fas fa-sign-out-alt"></i>
+					</button>
+				</form>
+			</div>
+		</li>
 	</ul>
 </nav>
 </header>

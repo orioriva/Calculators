@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <!-- 共通 <head> 読込 -->
 <head th:replace="fragment/head_fragment :: head_fragment(
-title = '新規登録', scripts = ~{::script}, links = ~{::link})">
+title = #{signup}, scripts = ~{::script}, links = ~{::link})">
 	<!-- 個別CSS、JSを引数に指定 -->
 	<link rel="stylesheet" type="text/css" th:href="@{/css/blank.css}"/>
 	<script type="text/javascript" th:src="@{/js/users.js}" defer></script>
@@ -14,7 +14,7 @@ title = '新規登録', scripts = ~{::script}, links = ~{::link})">
 
 <!-- 入力フォーム -->
 <div class="container w-50 mt-3">
-	<h3 class="text-center">新規登録</h3>
+	<h3 class="text-center" th:text="#{signup}"></h3>
 	<form class="form-input" id="input-form" th:action="@{/register}" method="post" th:object="${registerForm}">
 		<!-- ユーザー名 -->
 		<div class="form-group">
@@ -32,7 +32,9 @@ title = '新規登録', scripts = ~{::script}, links = ~{::link})">
 			<input type="password" id="password" class="form-control" th:field="*{password}" placeholder="半角英数記号100文字以内">
 		</div>
 		<div class="text-center">
-			<button class="mt-3 btn btn-primary w-100" id="btn-send" type="button">登録</button>
+			<button class="mt-3 btn btn-success w-100" id="btn-send" type="button">
+				[[#{register}]]<i class="ml-2 fas fa-user-plus"></i>
+			</button>
 		</div>
 	</form>
 </div>

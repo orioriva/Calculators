@@ -1,10 +1,94 @@
 <!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
+<html xmlns:th="http://www.thymeleaf.org">
+<!-- 共通 <head> 読込 -->
+<head th:replace="fragment/head_fragment :: head_fragment(
+title = #{myPage}, scripts = ~{::script}, links = ~{::link})">
+	<!-- 個別CSS、JSを引数に指定 -->
+	<link rel="stylesheet" type="text/css" th:href="@{/css/blank.css}"/>
+	<script type="text/javascript" th:src="@{/js/blank.js}" defer></script>
 </head>
 <body>
+
+<!-- 共通ヘッダー読込 -->
+<header th:replace="fragment/header_fragment :: header_fragment"></header>
+
+<div class="container-fluid">
+	<div class="row">
+		<!-- 左側 -->
+		<!--
+		<nav class="col-md-2 vh-100 bg-light sidebar border">
+			<ul class="nav flex-column">
+				<li class="nav-item">マイページTOP</li>
+				<li class="nav-item">ユーザー情報変更</li>
+				<li class="nav-item">自分の投稿</li>
+				<li class="nav-item">保存した計算式</li>
+			</ul>
+		</nav>
+		 -->
+		<div class="col-md-2">
+			<h5 class="pt-2">My Page Menu</h5>
+			<ul class="list-group list-group-flush">
+				<li class="list-group-item active">マイページTOP</li>
+				<li class="list-group-item">ユーザー情報変更</li>
+				<li class="list-group-item">自分の投稿</li>
+				<li class="list-group-item">保存した計算式</li>
+				<li class="list-group-item">ログアウト</li>
+			</ul>
+		</div>
+		<!-- 右側 -->
+		<div class="col-md-10">
+			<div th:replace="fragment/formulas_fragment :: formulas_fragment"></div>
+			<!--
+			<div class="container">
+				<div class="p-2 border-bottom">
+					<h3 class=""><span sec:authentication="principal.userViewName"></span>さんのマイページ</h3>
+				</div>
+				<div class="row">
+					<div class="col-md">
+						ユーザー情報変更
+					</div>
+					<div class="col-md">
+						最近の投稿
+					</div>
+					<div class="col-md">
+						最近保存した計算式
+					</div>
+				</div>
+			</div>
+			 -->
+		</div>
+	</div>
+</div>
+
+<!--
+<div class="container">
+	<div class="p-2 border-bottom">
+		<h3 class="text-center"><span sec:authentication="principal.userViewName"></span>さんのマイページ</h3>
+	</div>
+	<ul class="nav nav-tabs">
+		<li class="nav-item">
+			<a class="nav-link active disabled" href="#">ユーザー情報変更</a>
+		</li>
+		<li class="nav-item">
+			<a class="nav-link" href="#">Link</a>
+		</li>
+		<li class="nav-item">
+			<a class="nav-link" href="#">Link</a>
+		</li>
+		<li class="nav-item">
+			<a class="nav-link disabled" href="#">Disabled</a>
+		</li>
+	</ul>
+	<div class="border border-top-0">
+		<form class="p-3 form-input container">
+			<div class="form-group">
+				<label for="userName" th:text="#{userName}"></label>
+				<input type="text" id="userName" class="form-control" >
+			</div>
+		</form>
+	</div>
+</div>
+ -->
 
 </body>
 </html>

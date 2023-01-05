@@ -11,14 +11,14 @@ import org.springframework.security.core.userdetails.UserDetails;
 public class LoginUserDetails implements UserDetails{
 	private final LoginUser loginUser;
 	private final List<GrantedAuthority> authList;
-	
+
 	public LoginUserDetails(LoginUser loginUser) {
 		this.loginUser = loginUser;
 		GrantedAuthority auth = new SimpleGrantedAuthority(loginUser.getRole());
 		this.authList = new ArrayList<>();
 		this.authList.add(auth);
 	}
-	
+
 	public LoginUser getLoginUser() { return this.loginUser; }
 
 	@Override
@@ -30,7 +30,7 @@ public class LoginUserDetails implements UserDetails{
 	public String getPassword() {
 		return this.loginUser.getPassword();
 	}
-	
+
 	public String getUserViewName() {
 		return this.loginUser.getUserName();
 	}
@@ -59,5 +59,5 @@ public class LoginUserDetails implements UserDetails{
 	public boolean isEnabled() {
 		return true;
 	}
-	
+
 }

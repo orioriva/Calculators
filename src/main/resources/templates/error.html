@@ -8,6 +8,9 @@
 </head>
 <body>
 
+<!-- 共通ヘッダー読込 -->
+<header th:replace="fragment/header_fragment :: header_fragment"></header>
+
 <h1 th:text="${status} + ' ' + ${error}"></h1>
 <p th:text="${message}"></p>
 <a href="javascript:history.back();" th:text="前に戻る"></a>

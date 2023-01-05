@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<!-- 共通 <head> 読込 -->
+<head th:replace="fragment/head_fragment :: head_fragment(
+title = #{bbs}, scripts = ~{::script}, links = ~{::link})">
+	<!-- 個別CSS、JSを引数に指定 -->
+	<link rel="stylesheet" type="text/css" th:href="@{/css/blank.css}"/>
+	<script type="text/javascript" th:src="@{/js/blank.js}" defer></script>
+</head>
+<body>
+
+<!-- 共通ヘッダー読込 -->
+<header th:replace="fragment/header_fragment :: header_fragment"></header>
+
+<div class="container">
+	<!-- 検索フォーム -->
+	<form class="form-inline m-2 border-bottom">
+		<!-- カテゴリ選択 -->
+		<div class="input-group p-2">
+			<div class="input-group-prepend">
+				<label class="input-group-text" for="category">カテゴリ</label>
+			</div>
+			<select class="custom-select" id="category">
+				<option>すべて</option>
+				<option>生活</option>
+				<option>身体</option>
+				<option>交通</option>
+				<option>仕事</option>
+				<option>勉強</option>
+				<option>遊び</option>
+				<option>その他</option>
+			</select>
+		</div>
+		<!-- 作成者 -->
+		<div class="input-group p-2">
+			<div class="input-group-prepend">
+				<label class="input-group-text" for="category">作成者</label>
+			</div>
+			<input type="text" class="form-control">
+		</div>
+		<!-- タイトル -->
+		<div class="input-group p-2">
+			<div class="input-group-prepend">
+				<label class="input-group-text" for="category">タイトル</label>
+			</div>
+			<input type="text" class="form-control">
+		</div>
+		<div class="p-2">
+			<button class="btn btn-sm btn-primary">
+				<i class="fas fa-search mr-1"></i>
+				絞り込み
+			</button>
+		</div>
+	</form>
+
+	<!-- 投稿表示テーブル -->
+	<table class="table table-bordered table-hover table-sm">
+		<thead class="thead-light">
+			<tr>
+				<th scope="col">カテゴリ</th>
+				<th scope="col">作成者</th>
+				<th scope="col">タイトル</th>
+				<th scope="col">更新日</th>
+				<th scope="col">操作</th>
+			</tr>
+		</thead>
+		<tr>
+			<td>交通</td>
+			<td>テスト</td>
+			<td>定期代と定期無しの比較</td>
+			<td>2023/1/5</td>
+			<td>開く</td>
+		</tr>
+	</table>
+</div>
+
+<!-- ページネーション -->
+<ul class="pagination justify-content-center">
+	<li class="page-item">
+		<a class="page-link" href="#" aria-label="Previous">
+			<span aria-hidden="true">&laquo;</span>
+			<span class="sr-only">Previous</span>
+		</a>
+	</li>
+	<li class="page-item"><a class="page-link" href="#">1</a></li>
+	<li class="page-item"><a class="page-link" href="#">2</a></li>
+	<li class="page-item"><a class="page-link" href="#">3</a></li>
+	<li class="page-item">
+		<a class="page-link" href="#" aria-label="Next">
+			<span aria-hidden="true">&raquo;</span>
+			<span class="sr-only">Next</span>
+		</a>
+	</li>
+</ul>
+
+</body>
+</html>
