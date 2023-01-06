@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- Mapperとxmlのマッピング -->
+<mapper namespace="calculators.project.spring.mapper.FormulasMapper">
+
+<!-- 作成者IDと一致する計算表リストを取得 -->
+<select id="getFormulaList" resultType="Formula">
+	SELECT
+		id,
+		creatorId,
+		updateDate,
+		title
+	FROM
+		formulas
+	WHERE
+		creatorId = #{creatorId}
+</select>
+
+<!-- 数式表１件追加 -->
+<insert id="addFormulaOne">
+	INSERT INTO
+		formulas(
+			creatorId,
+			updateDate,
+			title,
+			jsonData
+		) VALUES(
+			#{creatorId},
+			#{updateDate},
+			#{title},
+			#{jsonData}
+		)
+</insert>
+
+<!-- 数式表１件更新 -->
+<update id="updateFormulaOne">
+	UPDATE
+		formulas
+	SET
+		updateDate = #{updateDate},
+		title = #{title},
+		admin = #{jsonData}
+	WHERE
+		id = #{id}
+</update>
+
+<!-- 数式表１件削除 -->
+<delete id="deleteFormulaOne">
+	DELETE FROM
+		formulas
+	WHERE
+		id = #{id}
+</delete>
+
+</mapper>

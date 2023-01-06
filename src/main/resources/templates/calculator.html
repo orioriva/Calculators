@@ -30,99 +30,42 @@ title = '計算式編集', scripts = ~{::script}, links = ~{::link})">
 <!-- ナビゲーションバー -->
 <nav class="container-fluid navbar">
     <div class="navbar-nav d-flex flex-row align-items-center">
-        <div class="navbar-item">
-            <!-- 操作ガイド -->
-            <button class="btn btn-sm btn-secondary" id="guide-btn"><i class="fas fa-question-circle"></i>&ensp;操作ガイド</button>
-            <!-- 全消去 -->
-            <button class="btn btn-sm btn-danger" id="delete-btn"><i class="fas fa-trash-alt"></i>&ensp;全消去</button>
-            <!-- 保存 -->
-            <button class="btn btn-sm btn-success"><i class="fas fa-save"></i>&ensp;保存</button>
-        </div>
+		<!-- 操作ガイド -->
+		<button class="nav-item mr-2 btn btn-sm btn-secondary" id="guide-btn"><i class="fas fa-question-circle"></i>&ensp;操作ガイド</button>
+		<!-- 全消去 -->
+		<button class="nav-item mr-2 btn btn-sm btn-danger" id="delete-btn"><i class="fas fa-trash-alt"></i>&ensp;全消去</button>
+		<!-- 開く -->
+		<button class="nav-item mr-2 btn btn-sm btn-success" id="open-btn"><i class="fas fa-folder-open"></i>&ensp;開く</button>
     </div>
 </nav>
 
 <!-- 操作ガイド（ポップアップ表示） -->
-<div class="popup">
-    <div class="content">
-        <table class="table table-bordered">
-            <tr>
-                <td>
-                    マウスクリック（左・右・ホイール）
-                </td>
-                <td>
-                    画面上のオブジェクトを選択<br>
-                    更にドラッグする事でオブジェクトを移動可能
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    ダブルクリック（マウス左）
-                </td>
-                <td>
-                    数字オブジェクトのタグ（文字部分）または数値部分をダブルクリックする事で変更が可能<br>
-                    （ポップアップが表示されるので、そこに文字列・数値を入力する）
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    数字キー:0～9
-                </td>
-                <td>
-                    非選択時：数字キーに対応した数値を初期値とした数字オブジェクトをマウスカーソル位置に配置する<br>
-                    数字オブジェクト選択時：数字の最後に数字キーに対応した数値を追加する(計算結果は不可)<br>
-                    符号オブジェクト選択時：数字キーに対応した数値の数字オブジェクトを作成し、更にそれと計算した結果の数字オブジェクトを生成
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    +  -  *  / キー
-                </td>
-                <td>
-                    数字オブジェクト選択時に、それぞれ足し算・引き算・掛け算・割り算の符号オブジェクトを追加する<br>
-                    ※追加された符号オブジェクトの矢印の先にある●を計算先にしたい数字オブジェクトへドラッグ＆ドロップする事で計算結果オブジェクトを生成出来る
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    ドットキー：.
-                </td>
-                <td>
-                    数字オブジェクト選択時に、小数点を追加する(計算結果は不可)
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    BackSpaceキー
-                </td>
-                <td>
-                    数字オブジェクト選択時に、入力された数字を一桁削除する(計算結果は不可)
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    Cキー
-                </td>
-                <td>
-                    数字オブジェクト選択時に、入力された数字を全て削除する（０だけにする）
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    Deleteキー
-                </td>
-                <td>
-                    選択オブジェクトを削除する(計算結果は不可)
-                </td>
-            </tr>
-        </table>
-        <button id="close" class="btn btn-secondary">閉じる</button>
-    </div>
+<div th:replace="fragment/calculatorGuide_fragment :: calculatorGuide_fragment"></div>
+
+<!-- ファイル読込 -->
+<div class="popup-file">
+	<div class="content">
+		<!-- 新規保存 -->
+		<button id="addData" class="btn btn-primary mb-3"><i class="fas fa-folder-plus"></i>&ensp;新規保存</button>
+		<!-- 計算表一覧 -->
+		<table class="table table-sm table-bordered">
+			<tr>
+				<th>タイトル</th>
+				<th>更新日</th>
+				<th>操作</th>
+			</tr>
+			<span id="formulaList"></span>
+		</table>
+		<button id="close-file" class="btn btn-secondary">閉じる</button>
+	</div>
 </div>
 
 <!-- キャンバス -->
 <div class="" id="canvas-wrapper">
     <canvas class="bg-light" id="canvas" width="1280" height="720">このブラウザは HTML5 Canvas に対応していません。</canvas>
 </div>
+
+<input type="hidden" th:value="${jsonData}" id="jsonData">
 
 </body>
 </html>

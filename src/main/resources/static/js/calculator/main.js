@@ -7,9 +7,7 @@ var loading = {
 };
 
 // ページのロードが終わったら
-window.addEventListener("load", init(
-	'[{"type":"number","x":436.6040570999249,"y":239.9349593495935,"tag":"NEW","number":5,"calcSource":null,"nextObj":[1],"prevObj":[]},{"type":"sign","x":514.2271039749248,"y":239.9349593495935,"typeText":"+","nextObj":[2],"prevObj":[0]},{"type":"number","x":629.2271039749248,"y":239.9349593495935,"tag":"NEW","number":5,"calcSource":null,"nextObj":[4],"prevObj":[1]},{"type":"number","x":793.2298318933132,"y":335.0243902439024,"tag":"NEW ＋ NEW","number":"10","calcSource":1},{"type":"sign","x":631.8388811279112,"y":336.130081300813,"typeText":"+","nextObj":[],"prevObj":[2]},{"type":"pointer","x":771.8501508499248,"y":239.9349593495935,"parent":4}]'
-));
+window.addEventListener("load", init() );
 
 //リサイズイベントを検知してリサイズ処理を実行
 //window.addEventListener("resize", handleResize);
@@ -25,12 +23,16 @@ function handleResize(event) {
 }
 
 /** 起動時処理 */
-function init(data) {
+function init() {
 	setInterval(update, 60);
 
-	if(data != undefined){
-		loadObjects(data);
+	const data = $('#jsonData').val();
+
+	if(data == undefined || data == null){
+		return;
 	}
+
+	loadObjects(data);
 }
 
 function addNumber(x,y,text,number){
@@ -94,8 +96,6 @@ function getData(text,target){
 
 /** オブジェクト情報を文字列化（JSON） */
 function objectsToString(){
-	let text = "";
-
 	let save = new Array();
 	for(let value of objects){
 		save.push(new SaveObj(value));
@@ -105,7 +105,7 @@ function objectsToString(){
 	let jsonData = JSON.stringify(save);
 	console.log(jsonData.length);
 
-	copyToClipboard(jsonData);
+	//copyToClipboard(jsonData);
 
-	return text;
+	return jsonData;
 }

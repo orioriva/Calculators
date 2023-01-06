@@ -163,9 +163,11 @@ window.addEventListener('keydown', e => {
 				selectedChange(obj);
 			}
 			break;
+		/*
 		case 's':
 			objectsToString();
 			break;
+		*/
 		default:
 			break;
 	}

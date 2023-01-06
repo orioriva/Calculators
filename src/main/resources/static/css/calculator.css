@@ -20,7 +20,7 @@ html, body{
 	border: 5px skyblue dashed;
 }
 
-.popup {
+[class^="popup"] {
     display: none;
     height: 100vh;
     width: 100%;

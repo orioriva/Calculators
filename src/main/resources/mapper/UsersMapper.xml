@@ -14,8 +14,8 @@
 	<result column="admin" property="admin"/>
 </resultMap>
  -->
- 
- <!-- ユーザーＩＤからユーザー情報１件取得 -->
+
+<!-- ユーザーＩＤからユーザー情報１件取得 -->
 <select id="findUserOneUserId" resultType="LoginUser">
 	SELECT
 		id,
