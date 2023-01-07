@@ -26,13 +26,7 @@ function handleResize(event) {
 function init() {
 	setInterval(update, 60);
 
-	const data = $('#jsonData').val();
-
-	if(data == undefined || data == null){
-		return;
-	}
-
-	loadObjects(data);
+	loadObjects();
 }
 
 function addNumber(x,y,text,number){
@@ -47,12 +41,18 @@ function update(){
 }
 
 /** オブジェクトの読込 */
-function loadObjects(jsonData){
+function loadObjects(){
 	loading.isLoading = true;
 
+	const jsonData = $('#jsonData').val();
+
+	if(jsonData == undefined || jsonData == null || jsonData == ''){
+		return;
+	}
+
 	// JavaScriptオブジェクトへ変換
-	let objData = JSON.parse(jsonData);
-	console.log(objData);
+	let objData;
+	objData = JSON.parse(jsonData);
 
 	for(let value of objData){
 		let targetObj = null;
@@ -83,6 +83,8 @@ function loadObjects(jsonData){
 	}
 
 	selectedChange(null);
+
+	$('#jsonData').val('');
 
 	loading.isLoading = false;
 }

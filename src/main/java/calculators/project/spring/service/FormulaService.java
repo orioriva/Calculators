@@ -13,9 +13,17 @@ public class FormulaService {
 	@Autowired
 	private FormulasMapper mapper;
 
+	/** IDから計算表データを１件取得 */
+	public Formula getFormulaOne(int creatorId, int formulaId) {
+		return mapper.getFormulaOne(creatorId, formulaId);
+	}
 	/** IDから計算表リストを取得 */
 	public List<Formula> getFormulaList(int creatorId){
 		return mapper.getFormulaList(creatorId);
+	}
+	/** 計算表IDからjsonデータを取得 */
+	public String getJsonOne(int creatorId, int formulaId) {
+		return mapper.getJsonOne(creatorId, formulaId);
 	}
 	/** 計算表を１件追加 */
 	public boolean addFormulaOne(Formula formula) {
@@ -26,7 +34,7 @@ public class FormulaService {
 		return mapper.updateFormulaOne(formula);
 	}
 	/** 計算表を１件削除 */
-	public boolean deleteFormulaOne(int id) {
-		return mapper.deleteFormulaOne(id);
+	public boolean deleteFormulaOne(int creatorId, int formulaId) {
+		return mapper.deleteFormulaOne(creatorId, formulaId);
 	}
 }

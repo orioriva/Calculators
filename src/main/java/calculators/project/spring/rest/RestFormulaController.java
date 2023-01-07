@@ -18,6 +18,7 @@ public class RestFormulaController {
 	@Autowired
 	private FormulaService formulaService;
 
+	/** 一覧表示処理 */
 	@PostMapping("/mypage/formulas/rest")
 	public List<Formula> postGetFormulaList(
 			@AuthenticationPrincipal LoginUserDetails user
@@ -42,6 +43,46 @@ public class RestFormulaController {
 			return 999;
 		}
 
+		return 0;
+	}
+
+	/** 計算表データ取得（json） */
+	@PostMapping("/mypage/formulas/load/rest")
+	public String postLoadFormula(
+			@AuthenticationPrincipal LoginUserDetails user,
+			@RequestParam int formulaId
+	) {
+		return formulaService.getJsonOne(user.getLoginUser().getId(), formulaId);
+	}
+
+	/** 計算表データ１件削除 */
+	@PostMapping("/mypage/formulas/delete/rest")
+	public int postDeleteFormula(
+			@AuthenticationPrincipal LoginUserDetails user,
+			@RequestParam int formulaId) {
+		if(!formulaService.deleteFormulaOne(user.getLoginUser().getId(), formulaId)) {
+			return 999;
+		}
+		return 0;
+	}
+
+	/** 計算表データ１件更新 */
+	@PostMapping("/mypage/formulas/update/rest")
+	public int postUpdateFormula(
+			@AuthenticationPrincipal LoginUserDetails user,
+			@RequestParam int formulaId,
+			@RequestParam String json
+	) {
+		try {
+			Formula formula = formulaService.getFormulaOne(
+					user.getLoginUser().getId(),
+					formulaId);
+			formula.setJsonData(json);
+			formula.setUpdateDate(new Date());
+			formulaService.updateFormulaOne(formula);
+		}catch (Exception e) {
+			return 999;
+		}
 		return 0;
 	}
 }

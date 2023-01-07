@@ -5,6 +5,17 @@
 <!-- Mapperとxmlのマッピング -->
 <mapper namespace="calculators.project.spring.mapper.FormulasMapper">
 
+<!-- IDと一致する計算表データを１件取得 -->
+<select id="getFormulaOne" resultType="Formula">
+	SELECT
+		*
+	FROM
+		formulas
+	WHERE
+		id = #{formulaId} AND
+		creatorId = #{creatorId}
+</select>
+
 <!-- 作成者IDと一致する計算表リストを取得 -->
 <select id="getFormulaList" resultType="Formula">
 	SELECT
@@ -15,6 +26,17 @@
 	FROM
 		formulas
 	WHERE
+		creatorId = #{creatorId}
+</select>
+
+<!-- 計算表IDからjsonデータを1件取得 -->
+<select id="getJsonOne" resultType="String">
+	SELECT
+		jsonData
+	FROM
+		formulas
+	WHERE
+		id = #{formulaId} AND
 		creatorId = #{creatorId}
 </select>
 
@@ -41,9 +63,10 @@
 	SET
 		updateDate = #{updateDate},
 		title = #{title},
-		admin = #{jsonData}
+		jsonData = #{jsonData}
 	WHERE
-		id = #{id}
+		id = #{id} AND
+		creatorId = #{creatorId}
 </update>
 
 <!-- 数式表１件削除 -->
@@ -51,7 +74,8 @@
 	DELETE FROM
 		formulas
 	WHERE
-		id = #{id}
+		id = #{formulaId} AND
+		creatorId = #{creatorId}
 </delete>
 
 </mapper>
