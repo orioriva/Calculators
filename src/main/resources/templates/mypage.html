@@ -27,17 +27,29 @@ title = #{myPage}, scripts = ~{::script}, links = ~{::link})">
 		 -->
 		<div class="col-md-2">
 			<h5 class="pt-2">My Page Menu</h5>
-			<ul class="list-group list-group-flush">
-				<li class="list-group-item active">マイページTOP</li>
-				<li class="list-group-item">ユーザー情報変更</li>
-				<li class="list-group-item">自分の投稿</li>
-				<li class="list-group-item">保存した計算式</li>
-				<li class="list-group-item">ログアウト</li>
-			</ul>
+			<div class="list-group list-group-flush">
+				<a th:href="@{/mypage/top}" class="list-group-item list-group-item-action active">
+					マイページTOP
+				</a>
+				<a th:href="@{/mypage/formulas}" class="list-group-item list-group-item-action">
+					保存した計算表
+				</a>
+				<a class="list-group-item list-group-item-action">ユーザー情報変更</a>
+				<a class="list-group-item list-group-item-action">自分の投稿</a>
+				
+				<a class="list-group-item list-group-item-action">ログアウト</a>
+			</div>
 		</div>
 		<!-- 右側 -->
 		<div class="col-md-10">
-			<div th:replace="fragment/formulas_fragment :: formulas_fragment"></div>
+			<th:block th:switch="${viewPage}">
+				<div th:case="top">
+					<div th:replace="fragment/mypage/myTop_fragment :: myTop_fragment"></div>
+				</div>
+				<div th:case="formulas">
+					<div th:replace="fragment/mypage/myFormulas_fragment :: myFormulas_fragment"></div>
+				</div>
+			</th:block>
 			<!--
 			<div class="container">
 				<div class="p-2 border-bottom">

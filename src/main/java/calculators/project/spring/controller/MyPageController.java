@@ -7,8 +7,19 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class MyPageController {
 	@GetMapping("/mypage")
-	public String getMyPage(Model model) {
+	public String getMyPage() {
+		return "redirect:/mypage/top";
+	}
+	
+	@GetMapping("/mypage/top")
+	public String getMyPageTop(Model model) {
 		model.addAttribute("viewPage","top");
+		return "mypage";
+	}
+	
+	@GetMapping("/mypage/formulas")
+	public String getMyPageFormulas(Model model) {
+		model.addAttribute("viewPage","formulas");
 		return "mypage";
 	}
 }

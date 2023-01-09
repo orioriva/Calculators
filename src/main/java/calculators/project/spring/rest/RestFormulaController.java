@@ -66,9 +66,9 @@ public class RestFormulaController {
 		return 0;
 	}
 
-	/** 計算表データ１件更新 */
-	@PostMapping("/mypage/formulas/update/rest")
-	public int postUpdateFormula(
+	/** 計算表データ１件更新(json) */
+	@PostMapping("/mypage/formulas/updateJson/rest")
+	public int postUpdateFormulaJson(
 			@AuthenticationPrincipal LoginUserDetails user,
 			@RequestParam int formulaId,
 			@RequestParam String json
@@ -79,6 +79,25 @@ public class RestFormulaController {
 					formulaId);
 			formula.setJsonData(json);
 			formula.setUpdateDate(new Date());
+			formulaService.updateFormulaOne(formula);
+		}catch (Exception e) {
+			return 999;
+		}
+		return 0;
+	}
+	
+	/** 計算表データ１件更新(タイトル名) */
+	@PostMapping("/mypage/formulas/updateTitle/rest")
+	public int postUpdateFormulaTitle(
+			@AuthenticationPrincipal LoginUserDetails user,
+			@RequestParam int formulaId,
+			@RequestParam String title
+	) {
+		try {
+			Formula formula = formulaService.getFormulaOne(
+					user.getLoginUser().getId(),
+					formulaId);
+			formula.setTitle(title);
 			formulaService.updateFormulaOne(formula);
 		}catch (Exception e) {
 			return 999;

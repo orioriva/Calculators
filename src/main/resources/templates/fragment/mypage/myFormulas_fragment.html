@@ -1,11 +1,14 @@
 <!-- 保存した計算式一覧 -->
 <div xmlns:th="http://www.thymeleaf.org"
 	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
-	th:fragment="formulas_fragment">
+	th:fragment="myFormulas_fragment">
+
+<script type="text/javascript" th:src="@{/js/formulas.js}" defer></script>
+<script type="text/javascript" th:src="@{/js/mypage/myFormulas.js}" defer></script>
 
 <div class="container">
 	<div class="mt-2 border-bottom">
-		<h3 class="">保存した計算式</h3>
+		<h3 class="">保存した計算表</h3>
 	</div>
 	<table class="mt-2 table table-bordered table-hover table-sm">
 		<thead class="thead-light">
@@ -15,11 +18,8 @@
 				<th scope="col">操作</th>
 			</tr>
 		</thead>
-		<tr>
-			<td>定期代と定期無しの比較</td>
-			<td>2023/1/5</td>
-			<td>読込</td>
-		</tr>
+		<tbody id="formulaList">
+		</tbody>
 	</table>
 </div>
 
