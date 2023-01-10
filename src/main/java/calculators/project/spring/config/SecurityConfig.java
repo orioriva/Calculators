@@ -20,7 +20,7 @@ public class SecurityConfig{
         http.formLogin(login -> login
                 .loginProcessingUrl("/login")
                 .loginPage("/login")
-                .defaultSuccessUrl("/",true)	// ログイン後
+                .defaultSuccessUrl("/mypage/top",true)	// ログイン後
                 .failureUrl("/login?error")
                 .permitAll()	// ログイン画面の未ログイン時のアクセス許可
         ).logout(logout -> logout

@@ -4,8 +4,9 @@
 <head th:replace="fragment/head_fragment :: head_fragment(
 title = #{bbs}, scripts = ~{::script}, links = ~{::link})">
 	<!-- 個別CSS、JSを引数に指定 -->
-	<link rel="stylesheet" type="text/css" th:href="@{/css/blank.css}"/>
-	<script type="text/javascript" th:src="@{/js/blank.js}" defer></script>
+	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.13.1/datatables.min.css"/>
+	<script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.13.1/datatables.min.js" defer></script>
+	<script type="text/javascript" th:src="@{/js/bbs.js}" defer></script>
 </head>
 <body>
 
@@ -20,8 +21,8 @@ title = #{bbs}, scripts = ~{::script}, links = ~{::link})">
 			<div class="input-group-prepend">
 				<label class="input-group-text" for="category">カテゴリ</label>
 			</div>
-			<select class="custom-select" id="category">
-				<option>すべて</option>
+			<select class="custom-select" id="category" onchange="filterColumn(0);">
+				<option value="">すべて</option>
 				<option>生活</option>
 				<option>身体</option>
 				<option>交通</option>
@@ -34,27 +35,29 @@ title = #{bbs}, scripts = ~{::script}, links = ~{::link})">
 		<!-- 作成者 -->
 		<div class="input-group p-2">
 			<div class="input-group-prepend">
-				<label class="input-group-text" for="category">作成者</label>
+				<label class="input-group-text">作成者</label>
 			</div>
-			<input type="text" class="form-control">
+			<input type="text" class="form-control" oninput="filterColumn(1);">
 		</div>
 		<!-- タイトル -->
 		<div class="input-group p-2">
 			<div class="input-group-prepend">
-				<label class="input-group-text" for="category">タイトル</label>
+				<label class="input-group-text">タイトル</label>
 			</div>
-			<input type="text" class="form-control">
+			<input type="text" class="form-control" oninput="filterColumn(2);">
 		</div>
+		<!--
 		<div class="p-2">
 			<button class="btn btn-sm btn-primary">
 				<i class="fas fa-search mr-1"></i>
 				絞り込み
 			</button>
 		</div>
+		 -->
 	</form>
 
 	<!-- 投稿表示テーブル -->
-	<table class="table table-bordered table-hover table-sm">
+	<table id="dataTable" class="table table-bordered table-hover table-sm">
 		<thead class="thead-light">
 			<tr>
 				<th scope="col">カテゴリ</th>
@@ -75,6 +78,7 @@ title = #{bbs}, scripts = ~{::script}, links = ~{::link})">
 </div>
 
 <!-- ページネーション -->
+<!--
 <ul class="pagination justify-content-center">
 	<li class="page-item">
 		<a class="page-link" href="#" aria-label="Previous">
@@ -92,6 +96,7 @@ title = #{bbs}, scripts = ~{::script}, links = ~{::link})">
 		</a>
 	</li>
 </ul>
+ -->
 
 </body>
 </html>

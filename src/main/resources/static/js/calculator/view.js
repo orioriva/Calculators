@@ -1,5 +1,14 @@
 'use strict'
 
+var dataTable = null;
+
+//DataTables日本語化
+$.extend( $.fn.dataTable.defaults, {
+    language: {
+        url: "http://cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Japanese.json"
+    }
+});
+
 /** ページ遷移前の確認 */
 window.onbeforeunload = function(event){
     event.returnValue = 'ページを離れますか？\r\n保存していない内容は破棄されます！';
@@ -68,6 +77,13 @@ function updateFormulaTable(formulaData){
 			+ '</td>'
 		).appendTo(row);
 	});
+
+	// 既にdataTableが定義されていれば削除
+	if(dataTable !== null){
+		dataTable.destroy();
+	}
+
+	dataTable = $('#dataTable').DataTable();
 }
 
 // クリップボードへコピー（コピーの処理）
