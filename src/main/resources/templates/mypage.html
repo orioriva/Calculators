@@ -20,17 +20,17 @@ title = #{myPage}, scripts = ~{::script}, links = ~{::link})">
 		<div class="col-md-2">
 			<h5 class="pt-2">My Page Menu</h5>
 			<div class="list-group list-group-flush">
-				<a th:href="@{/mypage/top}" class="list-group-item list-group-item-action active">
+				<a th:href="@{/mypage/top}" class="list-group-item list-group-item-action" th:classappend="${viewPage == 'top'} ? 'active disabled' : ''">
 					マイページTOP
 				</a>
-				<a th:href="@{/mypage/formulas}" class="list-group-item list-group-item-action">
+				<a th:href="@{/mypage/formulas}" class="list-group-item list-group-item-action" th:classappend="${viewPage == 'formulas'} ? 'active disabled' : ''">
 					保存した計算表
 				</a>
 				<a class="list-group-item list-group-item-action">ユーザー情報変更</a>
 				<a class="list-group-item list-group-item-action">自分の投稿</a>
 				<form name="logout" th:action="@{/logout}" method="post">
 				</form>
-				<a  class="list-group-item list-group-item-action" onclick="document.logout.submit();">[[#{logout}]]<i class="ml-2 fas fa-sign-out-alt"></i></a>
+				<a href="#" class="list-group-item list-group-item-action" onclick="document.logout.submit();">[[#{logout}]]<i class="ml-2 fas fa-sign-out-alt"></i></a>
 			</div>
 		</div>
 		<!-- 右側 -->

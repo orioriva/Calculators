@@ -17,7 +17,7 @@ title = #{bbs}, scripts = ~{::script}, links = ~{::link})">
 	<!-- 検索フォーム -->
 	<form class="form-inline m-2 border-bottom">
 		<!-- カテゴリ選択 -->
-		<div class="input-group p-2">
+		<div class="input-group mr-2 mb-2">
 			<div class="input-group-prepend">
 				<label class="input-group-text" for="category">カテゴリ</label>
 			</div>
@@ -33,18 +33,25 @@ title = #{bbs}, scripts = ~{::script}, links = ~{::link})">
 			</select>
 		</div>
 		<!-- 作成者 -->
-		<div class="input-group p-2">
+		<div class="input-group mr-2 mb-2">
 			<div class="input-group-prepend">
 				<label class="input-group-text">作成者</label>
 			</div>
 			<input type="text" class="form-control" oninput="filterColumn(1);">
 		</div>
 		<!-- タイトル -->
-		<div class="input-group p-2">
+		<div class="input-group mr-2 mb-2">
 			<div class="input-group-prepend">
 				<label class="input-group-text">タイトル</label>
 			</div>
 			<input type="text" class="form-control" oninput="filterColumn(2);">
+		</div>
+		<!-- 更新日 -->
+		<div class="input-group mr-2 mb-2">
+			<div class="input-group-prepend">
+				<label class="input-group-text">更新日</label>
+			</div>
+			<input type="text" class="form-control" oninput="filterColumn(3);">
 		</div>
 		<!--
 		<div class="p-2">
@@ -55,6 +62,9 @@ title = #{bbs}, scripts = ~{::script}, links = ~{::link})">
 		</div>
 		 -->
 	</form>
+
+	<!-- 新規投稿ボタン -->
+	<a sec:authorize="${authenticated}" th:href="@{/bbs/newpost}" class="btn btn-sm btn-primary mb-2" role="button">[[#{newpost}]]</a>
 
 	<!-- 投稿表示テーブル -->
 	<table id="dataTable" class="table table-bordered table-hover table-sm">

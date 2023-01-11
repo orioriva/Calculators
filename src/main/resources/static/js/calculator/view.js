@@ -6,7 +6,14 @@ var dataTable = null;
 $.extend( $.fn.dataTable.defaults, {
     language: {
         url: "http://cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Japanese.json"
-    }
+    },
+    lengthMenu: [ 10, 20, 30, 40, 50 ],
+    displayLength: 10,
+    columnDefs: [{
+		  "targets": 2,
+		  "orderable": false,
+		  "searchable": false
+	}]
 });
 
 /** ページ遷移前の確認 */
@@ -36,7 +43,7 @@ $('#delete-btn').click(function() {
     }
 });
 
-/** 開くボタンが押された時 */
+/** ファイルを開くボタンが押された時 */
 $('#open-btn').click(function() {
     $('.popup-file').addClass('show').fadeIn();
     ajaxGetFormulaList();
@@ -45,7 +52,9 @@ $('#open-btn').click(function() {
 /** ファイルを閉じる時 */
 $('.popup-file').click(function(e){
     if(!$(e.target).closest('.content').length){
-		$('.popup-file').fadeOut();
+    	if($(e.target).prop("tagName") != "A"){
+    		$('.popup-file').fadeOut();
+    	}
 	}
 });
 $('#close-file').click(function() {
@@ -62,13 +71,18 @@ function loadConfirm(){
 
 /** リストデータを元にtbodyに要素を追加する(formula.jsから呼び出し) */
 function updateFormulaTable(formulaData){
+	// 既にdataTableが定義されていれば削除
+	if(dataTable !== null){
+		dataTable.destroy();
+	}
+
 	let insertPos = $('#formulaList');
 	insertPos.empty();
 
 	$.each(formulaData, function(index, value){
 		let row = $('<tr></tr>').appendTo(insertPos);
 		$(
-			  '<td class="d-flex justify-content-between">' + value.title + "<button class=' btn btn-sm btn-secondary' type='button' value='" + value.id + "' onclick='ajaxUpdateFormulaTitle(" + '"' + value.title + '"' + ");'><i class='fas fa-pen'></i>&ensp;変更</button></td>"
+			  '<td class="d-flex justify-content-between">' + value.title + "<button class=' btn btn-sm btn-secondary' type='button' value='" + value.id + "' onclick='ajaxUpdateFormulaTitle(" + '"' + value.title + '"' + ");'><i class='fas fa-pen'></i></button></td>"
 			+ '<td>' + formatDate(new Date(value.updateDate), "YYYY / MM / DD") + '</td>'
 			+ '<td>'
 			+ "<button class='btn btn-sm btn-success mr-2' type='button' value='" + value.id + "' onclick='ajaxUpdateFormulaJson();'><i class='fas fa-save'></i>&ensp;上書き保存</button>"
@@ -77,11 +91,6 @@ function updateFormulaTable(formulaData){
 			+ '</td>'
 		).appendTo(row);
 	});
-
-	// 既にdataTableが定義されていれば削除
-	if(dataTable !== null){
-		dataTable.destroy();
-	}
 
 	dataTable = $('#dataTable').DataTable();
 }

@@ -9,4 +9,9 @@ public class BBSController {
 	public String getBBS() {
 		return "bbs/bbs";
 	}
+
+	@GetMapping("/bbs/newpost")
+	public String getNewPost() {
+		return "bbs/newpost";
+	}
 }

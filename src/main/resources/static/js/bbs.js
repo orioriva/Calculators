@@ -6,22 +6,27 @@ var dataTable = null;
 $.extend( $.fn.dataTable.defaults, {
     language: {
         url: "http://cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Japanese.json"
-    }
+    },
+    lengthMenu: [ 10, 20, 30, 40, 50 ],
+    displayLength: 10,
+    columnDefs: [{
+		  "targets": 4,
+		  "orderable": false,
+		  "searchable": false
+	}]
 });
 
 $(document).ready(function () {
 	createDataTable();
 });
 
-function filterColumn(i) {
+function filterColumn(col) {
+	let searchText = event.currentTarget.value;
 	$('#dataTable')
 		.DataTable()
-		.column(i)
+		.column(col)
 		.search(
-			event.currentTarget.value
-			//$('#col' + i + '_filter').val(),
-			//$('#col' + i + '_regex').prop('checked'),
-			//$('#col' + i + '_smart').prop('checked')
+			searchText
 		)
 		.draw();
 }
