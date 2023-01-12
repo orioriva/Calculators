@@ -2,7 +2,7 @@
 
 var dataTable = null;
 
-//DataTables日本語化
+//DataTables設定
 $.extend( $.fn.dataTable.defaults, {
     language: {
         url: "http://cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Japanese.json"
@@ -76,23 +76,49 @@ function updateFormulaTable(formulaData){
 		dataTable.destroy();
 	}
 
-	let insertPos = $('#formulaList');
-	insertPos.empty();
-
-	$.each(formulaData, function(index, value){
-		let row = $('<tr></tr>').appendTo(insertPos);
-		$(
-			  '<td class="d-flex justify-content-between">' + value.title + "<button class=' btn btn-sm btn-secondary' type='button' value='" + value.id + "' onclick='ajaxUpdateFormulaTitle(" + '"' + value.title + '"' + ");'><i class='fas fa-pen'></i></button></td>"
-			+ '<td>' + formatDate(new Date(value.updateDate), "YYYY / MM / DD") + '</td>'
-			+ '<td>'
-			+ "<button class='btn btn-sm btn-success mr-2' type='button' value='" + value.id + "' onclick='ajaxUpdateFormulaJson();'><i class='fas fa-save'></i>&ensp;上書き保存</button>"
-			+ "<button class='btn btn-sm btn-info mr-2' type='button' value='" + value.id + "' onclick='loadConfirm();'><i class='fas fa-download'></i>&ensp;読込</button>"
-			+ "<button class='btn btn-sm btn-danger' type='button' value='" + value.id + "' onclick='ajaxDeleteFormula();'><i class='fas fa-trash-alt'></i>&ensp;削除</button>"
-			+ '</td>'
-		).appendTo(row);
+	dataTable = $('#dataTable').DataTable({
+		data: formulaData,
+		columns: [
+			// タイトル
+			{
+				data: 'title',
+				render: function(data,type,row){
+					let insert =
+						'<div class="d-flex justify-content-between">' +
+							data +
+							"<button class='btn btn-sm btn-secondary' type='button' value='" + row.id + "' onclick='ajaxUpdateFormulaTitle(\"" + data + "\");'>" +
+									"<i class='fas fa-pen'></i>" +
+							"</button>"
+						'</div>';
+					return insert;
+				}
+			},
+			// 更新日
+			{
+				data: 'updateDate',
+				render: function(data){
+					return formatDate(new Date(data), "YYYY / MM / DD");
+				}
+			},
+			// 操作
+			{
+				data: 'id',
+				render: function(data){
+					let insert =
+						"<button class='btn btn-sm btn-success mr-2' type='button' value='" + data + "' onclick='ajaxUpdateFormulaJson();'>" +
+							"<i class='fas fa-save'></i>&ensp;上書き保存" +
+						"</button>" +
+						"<button class='btn btn-sm btn-info mr-2' type='button' value='" + data + "' onclick='loadConfirm();'>" +
+							"<i class='fas fa-download'></i>&ensp;読込" +
+						"</button>" +
+						"<button class='btn btn-sm btn-danger' type='button' value='" + data + "' onclick='ajaxDeleteFormula();'>" +
+							"<i class='fas fa-trash-alt'></i>&ensp;削除" +
+						"</button>";
+					return insert;
+				}
+			}
+		]
 	});
-
-	dataTable = $('#dataTable').DataTable();
 }
 
 // クリップボードへコピー（コピーの処理）
