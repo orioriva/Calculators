@@ -13,4 +13,5 @@ public class BBSPost {
 	private String title;
 	private String comment;
 	private String jsonData;
+	private String creatorName;
 }

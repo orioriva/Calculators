@@ -87,6 +87,8 @@ title = #{bbs}, scripts = ~{::script}, links = ~{::link})">
 	</table>
 </div>
 
+<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+
 <!-- ページネーション -->
 <!--
 <ul class="pagination justify-content-center">

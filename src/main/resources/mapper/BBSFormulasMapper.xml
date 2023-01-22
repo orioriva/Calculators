@@ -4,4 +4,106 @@
 
 <!-- Mapperとxmlのマッピング -->
 <mapper namespace="calculators.project.spring.mapper.BBSFormulasMapper">
+	<!-- マッピング定義(ユーザー) -->
+ 	<resultMap type="calculators.project.spring.model.BBSPost" id="bbsPost">
+ 		<id column="id" property="id" />
+ 		<result column="category" property="category"/>
+ 		<result column="creatorId" property="creatorId"/>
+ 		<result column="updateDate" property="updateDate"/>
+ 		<result column="title" property="title"/>
+ 		<result column="comment" property="comment"/>
+ 		<result column="jsonData" property="jsonData"/>
+ 		<result column="userName" property="creatorName"/>
+ 	</resultMap>
+ 
+<!-- 投稿リスト取得 -->
+<select id="getPostList" resultMap="bbsPost">
+	SELECT
+		bbsformulas.id,
+		bbsformulas.category,
+		bbsformulas.updateDate,
+		bbsformulas.title,
+		bbsformulas.comment,
+		users.userName
+	FROM
+		bbsformulas
+		LEFT JOIN
+			users
+		ON
+			bbsformulas.creatorId = users.id
+</select>
+
+<!-- 投稿１件取得 -->
+<select id="getPostOne" resultMap="bbsPost">
+	SELECT
+		bbsformulas.id,
+		bbsformulas.category,
+		bbsformulas.creatorId,
+		bbsformulas.updateDate,
+		bbsformulas.title,
+		bbsformulas.comment,
+		users.userName
+	FROM
+		bbsformulas
+		LEFT JOIN
+			users
+		ON
+			bbsformulas.creatorId = users.id
+	WHERE
+		bbsformulas.id = #{postId}
+</select>
+
+<!-- jsonデータ１件取得 -->
+<select id="getJsonOne" resultType="String">
+	SELECT
+		jsonData
+	FROM
+		bbsformulas
+	WHERE
+		id = #{postId}
+</select>
+
+<!-- 投稿１件追加 -->
+<insert id="newPostOne">
+	INSERT INTO
+		bbsformulas(
+			category,
+			creatorId,
+			updateDate,
+			title,
+			comment,
+			jsonData
+		) VALUES(
+			#{category},
+			#{creatorId},
+			#{updateDate},
+			#{title},
+			#{comment},
+			#{jsonData}
+		)
+</insert>
+
+<!-- 投稿１件更新 -->
+<update id="updatePostOne">
+	UPDATE
+		bbsformulas
+	SET
+		category = #{category},
+		updateDate = #{updateDate},
+		title = #{title},
+		jsonData = #{jsonData}
+	WHERE
+		id = #{id} AND
+		creatorId = #{creatorId}
+</update>
+
+<!-- 数式表１件削除 -->
+<delete id="deletePostOne">
+	DELETE FROM
+		bbsformulas
+	WHERE
+		id = #{id} AND
+		creatorId = #{creatorId}
+</delete>
+
 </mapper>

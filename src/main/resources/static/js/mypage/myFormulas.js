@@ -47,7 +47,7 @@ function updateFormulaTable(formulaData){
 			{
 				data: 'updateDate',
 				render: function(data){
-					return formatDate(new Date(data), "YYYY / MM / DD");
+					return dateToTextDef(new Date(data));
 				}
 			},
 			// 操作

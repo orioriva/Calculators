@@ -28,15 +28,17 @@ public class SecurityConfig{
                 .logoutSuccessUrl("/login?logout")
                 .permitAll()
         ).authorizeHttpRequests(authz -> authz
-                .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
-                .mvcMatchers("/").permitAll()
-                .mvcMatchers("/calculator").permitAll()
-                .mvcMatchers("/register").permitAll()
-                .mvcMatchers("/register/rest").permitAll()
-                .mvcMatchers("/bbs").permitAll()
-                .mvcMatchers("/general").hasRole("GENERAL")
-                .mvcMatchers("/admin").hasRole("ADMIN")
-                .anyRequest().authenticated()
+        		.requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
+        		.mvcMatchers("/").permitAll()
+        		.mvcMatchers("/calculator").permitAll()
+        		.mvcMatchers("/register").permitAll()
+        		.mvcMatchers("/register/rest").permitAll()
+        		.mvcMatchers("/bbs").permitAll()
+        		.mvcMatchers("/bbs/rest").permitAll()
+        		.mvcMatchers("/bbs/post").permitAll()
+        		.mvcMatchers("/general").hasRole("GENERAL")
+        		.mvcMatchers("/admin").hasRole("ADMIN")
+        		.anyRequest().authenticated()
         );
         return http.build();
     }

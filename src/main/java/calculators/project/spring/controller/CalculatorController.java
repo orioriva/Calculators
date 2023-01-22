@@ -8,12 +8,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import calculators.project.spring.model.LoginUserDetails;
+import calculators.project.spring.service.BBSFormulasService;
 import calculators.project.spring.service.FormulaService;
 
 @Controller
 public class CalculatorController {
 	@Autowired
-	FormulaService formulaService;
+	private FormulaService formulaService;
+	
+	@Autowired
+	private BBSFormulasService bbsFormulaService;
 
 	@GetMapping("/calculator")
 	public String getCalculator(
@@ -22,15 +26,16 @@ public class CalculatorController {
 			@RequestParam(value="openBBS", defaultValue="")String bbsFormulaId,
 			@AuthenticationPrincipal LoginUserDetails user
 	) {
+		String jsonData = "";
 		try {
 			if(user != null && formulaId != "") {
-				String jsonData = formulaService.getJsonOne(user.getLoginUser().getId(), Integer.parseInt(formulaId));
-				model.addAttribute("jsonData", jsonData);
-				return "calculator";
+				jsonData = formulaService.getJsonOne(user.getLoginUser().getId(), Integer.parseInt(formulaId));
+			}else if(bbsFormulaId != "") {
+				jsonData = bbsFormulaService.getJsonOne(Integer.parseInt(bbsFormulaId));
 			}
 		}catch (Exception e) {}
 
-		model.addAttribute("jsonData","");
+		model.addAttribute("jsonData", jsonData);
 		return "calculator";
 	}
 }

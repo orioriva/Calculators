@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<!-- 共通 <head> 読込 -->
+<head th:replace="fragment/head_fragment :: head_fragment(
+title = ${postData != null} ? ${postData.title} : '投稿無し', scripts = ~{::script}, links = ~{::link})">
+	<!-- 個別CSS、JSを引数に指定 -->
+	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.13.1/datatables.min.css"/>
+	<script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.13.1/datatables.min.js" defer></script>
+</head>
+<body>
+
+<!-- 共通ヘッダー読込 -->
+<header th:replace="fragment/header_fragment :: header_fragment"></header>
+
+<div class="container mt-3">
+	<th:block th:if="${postData == null}">
+		<h3 class="text-danger text-center" th:text="#{postNone}"></h3>
+		<div class="text-center">
+			<a href="javascript:history.back();" th:text="#{history.back}"></a>
+		</div>
+	</th:block>
+	<th:block th:if="${postData != null}">
+		<div class="container w-100">
+			<div class="row bg-info rounded p-3">
+				<div class="col-2 bg-light text-dark rounded d-flex align-items-center justify-content-center">[[${postData.category}]]</div>
+				<h3 class="col-10 text-white">[[${postData.title}]]</h3>
+			</div>
+		</div>
+		<div class="w-100 border rounded mt-2">
+			<div class="p-2 border-bottom">
+				<small th:text="'更新日時：' + ${#dates.format(postData.updateDate, 'yyyy/MM/dd HH:mm')}"></small>
+				<div>投稿者：[[${postData.creatorName}]]</div>
+			</div>
+			<div class="p-2">
+				<div th:text="${postData.comment}"></div>
+				<a th:href="'/calculator?openBBS=' + ${postData.id}" class="mt-2 btn btn-sm btn-info">開く</a>
+			</div>
+		</div>
+	</th:block>
+</div>
+
+</body>
+</html>

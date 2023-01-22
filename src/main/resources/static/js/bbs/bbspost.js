@@ -42,7 +42,7 @@ $('#close-file').click(function() {
 /** 計算表をセットする */
 function setFormula(formulaId, title){
 	$('#titleText').text(title);
-	$('#formulaId').val(formulaId);
+	$('#postFormula').val(formulaId);
 	$('.popup-file').fadeOut();
 }
 
@@ -70,8 +70,6 @@ function ajaxGetFormulaList(){
 	}).fail(function(jqXHR, testStatus, errorThrown){
 		// ajax失敗時の処理
 		alert('情報送信に失敗しました');
-	}).always(function(){
-		// 常に実行する処理
 	});
 }
 
@@ -98,9 +96,8 @@ function ajaxAddBBSPost(){
 		}else if(data.result == 999){
 			alert("データベースへの追加に失敗しました");
 		}else if(data.result == 0){
-			// 入力情報を送信
-			$('#input-form').submit();
 			alert("投稿完了しました");
+			$('#input-form').submit();
 		}
 	}).fail(function(jqXHR, testStatus, errorThrown){
 		alert('情報送信に失敗しました');
@@ -126,7 +123,7 @@ function updateFormulaTable(formulaData){
 			{
 				data: 'updateDate',
 				render: function(data){
-					return formatDate(new Date(data), "YYYY / MM / DD");
+					return dateToTextDef(new Date(data));
 				}
 			},
 			// 操作
@@ -154,7 +151,11 @@ function removeValidResult(){
 /** バリデーション結果の反映 */
 function reflectValidResult(key, value){
 	// CSS適用
-	$('input[id=' + key +']').addClass('is-invalid');
+	if(key == 'postFormula'){
+		$('#titleText').addClass('is-invalid');
+	}else{
+		$('input[id=' + key +']').addClass('is-invalid');
+	}
 	// エラーメッセージ追加
-	$('input[id=' + key +']').parent().append('<div class="text-danger">' + value + '</div>');
+	$('#errorMsg').append('<div class="text-danger">' + value + '</div>');
 }

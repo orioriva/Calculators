@@ -9,14 +9,6 @@ $('#addData').click(function() {
 	ajaxAddData(title);
 });
 
-/** 日付をYYYY/MM/DD形式にフォーマットする */
-function formatDate(date, format) {
-    format = format.replace(/YYYY/, date.getFullYear());
-    format = format.replace(/MM/, date.getMonth() + 1);
-    format = format.replace(/DD/, date.getDate());
-    return format;
-}
-
 /** 現在の計算表データを新規保存 */
 function ajaxAddData(title){
 	// ajax通信
