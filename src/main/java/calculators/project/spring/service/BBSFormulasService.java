@@ -1,6 +1,8 @@
 package calculators.project.spring.service;
 
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,5 +33,21 @@ public class BBSFormulasService {
 	/** JSONデータを１件取得 */
 	public String getJsonOne(int postId) {
 		return mapper.getJsonOne(postId);
+	}
+	
+	/** カテゴリ選択肢のMapを取得 */
+	public Map<String, String> getCategoryMap(){
+		Map<String, String> map = new LinkedHashMap<String, String>(){
+			{
+				put("生活", "生活");
+				put("健康", "健康");
+				put("交通", "交通");
+				put("仕事", "仕事");
+				put("勉強", "勉強");
+				put("遊び", "遊び");
+				put("その他", "その他");
+			}
+		};
+		return map;
 	}
 }

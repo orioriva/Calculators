@@ -23,7 +23,11 @@ public class BBSController {
 	}
 
 	@GetMapping("/bbs/newpost")
-	public String getNewPost(@ModelAttribute BBSPostForm form) {
+	public String getNewPost(
+			Model model,
+			@ModelAttribute BBSPostForm form
+	) {
+		model.addAttribute("categoryMap", bbsFormulasService.getCategoryMap());
 		return "bbs/newpost";
 	}
 	
@@ -34,6 +38,11 @@ public class BBSController {
 		BBSPost postData = bbsFormulasService.getPostOne(Integer.parseInt(postId));
 		model.addAttribute("postData", postData);
 		return "bbs/post";
+	}
+	
+	@GetMapping("/bbs/post/update")
+	public String getUpdatePost() {
+		return "bbs/updatepost";
 	}
 
 	@PostMapping("/bbs/newpost")
