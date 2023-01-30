@@ -1,20 +1,7 @@
 'use strict'
 
-var dataTable = null;
-
-//DataTables日本語化
-$.extend( $.fn.dataTable.defaults, {
-    language: {
-        url: "http://cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Japanese.json"
-    },
-    lengthMenu: [ 10, 20, 30, 40, 50 ],
-    displayLength: 10,
-    columnDefs: [{
-		  "targets": 4,
-		  "orderable": false,
-		  "searchable": false
-	}]
-});
+/** DataTables初期設定 */
+setDataTablesStatus(4,3);
 
 /** ページの読み込みが終わったら */
 $(document).ready(function () {
@@ -78,7 +65,7 @@ function createDataTable(list){
 			{
 				data: 'updateDate',
 				render: function(data){
-					return formatDate(new Date(data), "YYYY / MM / DD　hh：mm");
+					return dateToTextDef(new Date(data));
 				}
 			},
 			//　操作

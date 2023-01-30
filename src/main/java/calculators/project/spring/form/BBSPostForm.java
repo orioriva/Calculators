@@ -11,6 +11,7 @@ public class BBSPostForm {
 	private String postFormula;
 	@NotBlank
 	private String title;
+	@NotEmpty
 	private String category;
 	private String comment;
 }

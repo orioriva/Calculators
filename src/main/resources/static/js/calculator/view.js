@@ -1,20 +1,7 @@
 'use strict'
 
-var dataTable = null;
-
-//DataTables設定
-$.extend( $.fn.dataTable.defaults, {
-    language: {
-        url: "http://cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Japanese.json"
-    },
-    lengthMenu: [ 10, 20, 30, 40, 50 ],
-    displayLength: 10,
-    columnDefs: [{
-		  "targets": 2,
-		  "orderable": false,
-		  "searchable": false
-	}]
-});
+/** DataTables初期設定 */
+setDataTablesStatus(2, 1);
 
 /** ページ遷移前の確認 */
 window.onbeforeunload = function(event){

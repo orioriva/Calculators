@@ -15,7 +15,7 @@
  		<result column="jsonData" property="jsonData"/>
  		<result column="userName" property="creatorName"/>
  	</resultMap>
- 
+
 <!-- 投稿リスト取得 -->
 <select id="getPostList" resultMap="bbsPost">
 	SELECT
@@ -91,6 +91,7 @@
 		category = #{category},
 		updateDate = #{updateDate},
 		title = #{title},
+		comment = #{comment},
 		jsonData = #{jsonData}
 	WHERE
 		id = #{id} AND

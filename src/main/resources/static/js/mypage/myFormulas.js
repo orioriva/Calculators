@@ -3,21 +3,8 @@
 // ページのロードが終わったら
 window.addEventListener("load", ajaxGetFormulaList() );
 
-var dataTable = null;
-
-//DataTables日本語化
-$.extend( $.fn.dataTable.defaults, {
-    language: {
-        url: "http://cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Japanese.json"
-    },
-    lengthMenu: [ 10, 20, 30, 40, 50 ],
-    displayLength: 10,
-    columnDefs: [{
-		  "targets": 2,
-		  "orderable": false,
-		  "searchable": false
-	}]
-});
+/** DataTables初期設定 */
+setDataTablesStatus(2,1);
 
 /** リストデータを元にtbodyに要素を追加する(formula.jsから呼び出し) */
 function updateFormulaTable(formulaData){
@@ -55,8 +42,8 @@ function updateFormulaTable(formulaData){
 				data: 'id',
 				render: function(data){
 					let insert =
-						"<a href='/bbs/newpost' class='btn btn-sm btn-outline-success mr-2' role='button'>" +
-							"<i class='fas fa-edit'></i>&ensp;新規投稿" +
+						"<a href='/bbs/newpost?selectedId=" + data + "' class='btn btn-sm btn-outline-success mr-2' role='button'>" +
+							"<i class='fas fa-edit'></i>&ensp;掲示板へ投稿" +
 						"</a>" +
 						"<a href='/calculator?openMine=" + data + "' class='btn btn-sm btn-info mr-2' role='button'>" +
 							"<i class='fas fa-download'></i>&ensp;読込" +

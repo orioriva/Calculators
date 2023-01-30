@@ -9,7 +9,7 @@ import calculators.project.spring.mapper.FormulasMapper;
 import calculators.project.spring.model.Formula;
 
 @Service
-public class FormulaService {
+public class FormulasService {
 	@Autowired
 	private FormulasMapper mapper;
 

@@ -11,19 +11,19 @@ import org.springframework.web.bind.annotation.RestController;
 
 import calculators.project.spring.model.Formula;
 import calculators.project.spring.model.LoginUserDetails;
-import calculators.project.spring.service.FormulaService;
+import calculators.project.spring.service.FormulasService;
 
 @RestController
 public class RestFormulaController {
 	@Autowired
-	private FormulaService formulaService;
+	private FormulasService formulasService;
 
 	/** 一覧表示処理 */
 	@PostMapping("/mypage/formulas/rest")
 	public List<Formula> postGetFormulaList(
 			@AuthenticationPrincipal LoginUserDetails user
 	){
-		return formulaService.getFormulaList(user.getLoginUser().getId());
+		return formulasService.getFormulaList(user.getLoginUser().getId());
 	}
 
 	/** 新規保存処理 */
@@ -39,7 +39,7 @@ public class RestFormulaController {
 				title,
 				json);
 
-		if(!formulaService.addFormulaOne(formula)) {
+		if(!formulasService.addFormulaOne(formula)) {
 			return 999;
 		}
 
@@ -52,7 +52,7 @@ public class RestFormulaController {
 			@AuthenticationPrincipal LoginUserDetails user,
 			@RequestParam int formulaId
 	) {
-		return formulaService.getJsonOne(user.getLoginUser().getId(), formulaId);
+		return formulasService.getJsonOne(user.getLoginUser().getId(), formulaId);
 	}
 
 	/** 計算表データ１件削除 */
@@ -60,7 +60,7 @@ public class RestFormulaController {
 	public int postDeleteFormula(
 			@AuthenticationPrincipal LoginUserDetails user,
 			@RequestParam int formulaId) {
-		if(!formulaService.deleteFormulaOne(user.getLoginUser().getId(), formulaId)) {
+		if(!formulasService.deleteFormulaOne(user.getLoginUser().getId(), formulaId)) {
 			return 999;
 		}
 		return 0;
@@ -74,12 +74,12 @@ public class RestFormulaController {
 			@RequestParam String json
 	) {
 		try {
-			Formula formula = formulaService.getFormulaOne(
+			Formula formula = formulasService.getFormulaOne(
 					user.getLoginUser().getId(),
 					formulaId);
 			formula.setJsonData(json);
 			formula.setUpdateDate(new Date());
-			formulaService.updateFormulaOne(formula);
+			formulasService.updateFormulaOne(formula);
 		}catch (Exception e) {
 			return 999;
 		}
@@ -94,11 +94,11 @@ public class RestFormulaController {
 			@RequestParam String title
 	) {
 		try {
-			Formula formula = formulaService.getFormulaOne(
+			Formula formula = formulasService.getFormulaOne(
 					user.getLoginUser().getId(),
 					formulaId);
 			formula.setTitle(title);
-			formulaService.updateFormulaOne(formula);
+			formulasService.updateFormulaOne(formula);
 		}catch (Exception e) {
 			return 999;
 		}

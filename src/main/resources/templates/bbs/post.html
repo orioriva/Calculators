@@ -4,8 +4,8 @@
 <head th:replace="fragment/head_fragment :: head_fragment(
 title = ${postData != null} ? ${postData.title} : #{postNone}, scripts = ~{::script}, links = ~{::link})">
 	<!-- 個別CSS、JSを引数に指定 -->
-	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.13.1/datatables.min.css"/>
-	<script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.13.1/datatables.min.js" defer></script>
+	<link rel="stylesheet" type="text/css" th:href="@{/css/blank.css}">
+	<script type="text/javascript" th:src="@{/js/blank.js}" defer></script>
 </head>
 <body>
 
@@ -35,14 +35,14 @@ title = ${postData != null} ? ${postData.title} : #{postNone}, scripts = ~{::scr
 			<div class="p-2">
 				<h5 th:text="#{poster} + '：' + ${postData.creatorName} + '　　' + #{updateDate} + '：' + ${#dates.format(postData.updateDate, 'yyyy/MM/dd HH:mm')}"></h5>
 				<div class="p-3 border rounded">
-					<div th:text="${postData.comment}"></div>
+					<pre th:text="${postData.comment}"></pre>
 				</div>
 				<div class="d-flex flex-row mt-2">
-					<a th:href="'/calculator?openBBS=' + ${postData.id}" class="btn btn-info"　th:text="#{open}"></a>
+					<a th:href="'/calculator?openBBS=' + ${postData.id}" class="btn btn-info" th:text="#{open}"></a>
 					<div sec:authorize="${authenticated}">
 						<th:block th:if="${#authentication.principal.loginUser.id == postData.creatorId}">
 							<!-- 投稿者本人の場合可能な操作 -->
-							<button class="ml-2 btn btn-warning" th:text="#{postEditing}"></button>
+							<a th:href="'/bbs/post/update?postId=' + ${postData.id}" class="ml-2 btn btn-warning" th:text="#{postEditing}" role="button"></a>
 						</th:block>
 					</div>
 				</div>

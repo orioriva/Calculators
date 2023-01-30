@@ -14,31 +14,37 @@ import calculators.project.spring.model.BBSPost;
 public class BBSFormulasService {
 	@Autowired
 	private BBSFormulasMapper mapper;
-	
+
 	/** 投稿を１件追加 */
 	public boolean newPostOne(BBSPost post) {
 		return mapper.newPostOne(post);
 	}
-	
+
+	/** 投稿を１件更新 */
+	public boolean updatePostOne(BBSPost post) {
+		return mapper.updatePostOne(post);
+	}
+
 	/** 投稿リストを取得 */
 	public List<BBSPost> getPostList(){
 		return mapper.getPostList();
 	}
-	
+
 	/** 投稿を１件取得 */
 	public BBSPost getPostOne(int postId) {
 		return mapper.getPostOne(postId);
 	}
-	
+
 	/** JSONデータを１件取得 */
 	public String getJsonOne(int postId) {
 		return mapper.getJsonOne(postId);
 	}
-	
+
 	/** カテゴリ選択肢のMapを取得 */
 	public Map<String, String> getCategoryMap(){
 		Map<String, String> map = new LinkedHashMap<String, String>(){
 			{
+				put("-- 未選択 --","");
 				put("生活", "生活");
 				put("健康", "健康");
 				put("交通", "交通");

@@ -4,10 +4,9 @@
 <head th:replace="fragment/head_fragment :: head_fragment(
 title = #{newpost}, scripts = ~{::script}, links = ~{::link})">
 	<!-- 個別CSS、JSを引数に指定 -->
-	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.13.1/datatables.min.css"/>
 	<link rel="stylesheet" type="text/css" th:href="@{/css/bbspost.css}">
-	<script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.13.1/datatables.min.js" defer></script>
 	<script type="text/javascript" th:src="@{/js/bbs/bbspost.js}" defer></script>
+	<script type="text/javascript" th:src="@{/js/bbs/newpost.js}" defer></script>
 </head>
 <body>
 
@@ -28,7 +27,7 @@ title = #{newpost}, scripts = ~{::script}, links = ~{::link})">
 		<div class="input-group-prepend">
 			<label class="input-group-text" for="myFormulas" th:text="#{postFormula}"></label>
 		</div>
-		<label class="form-control text-truncate" id="titleText" for="open-btn" th:text="#{select.pls}"></label>
+		<label class="form-control text-truncate" id="titleText" for="open-btn" th:text="${selectedName != ''} ? ${selectedName} : #{select.pls}"></label>
 		<div class="input-group-append">
 			<button class="btn btn-secondary" id="open-btn" type="button" th:text="#{select}"></button>
 		</div>

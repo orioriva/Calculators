@@ -1,25 +1,7 @@
 'use strict'
 
-var dataTable = null;
-
-//DataTables設定
-$.extend( $.fn.dataTable.defaults, {
-    language: {
-        url: "http://cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Japanese.json"
-    },
-    lengthMenu: [ 10, 20, 30, 40, 50 ],
-    displayLength: 10,
-    columnDefs: [{
-		  "targets": 2,
-		  "orderable": false,
-		  "searchable": false
-	}]
-});
-
-/** 送信ボタンが押された時 */
-$('#send-btn').click(function() {
-	ajaxAddBBSPost();
-});
+/** DataTables初期設定 */
+setDataTablesStatus(2,1);
 
 /** ファイルを開くボタンが押された時 */
 $('#open-btn').click(function() {
@@ -46,14 +28,6 @@ function setFormula(formulaId, title){
 	$('.popup-file').fadeOut();
 }
 
-/** 日付をYYYY/MM/DD形式にフォーマットする */
-function formatDate(date, format) {
-    format = format.replace(/YYYY/, date.getFullYear());
-    format = format.replace(/MM/, date.getMonth() + 1);
-    format = format.replace(/DD/, date.getDate());
-    return format;
-}
-
 /** 表の計算表一覧部分を取得 */
 function ajaxGetFormulaList(){
 	// ajax通信
@@ -70,38 +44,6 @@ function ajaxGetFormulaList(){
 	}).fail(function(jqXHR, testStatus, errorThrown){
 		// ajax失敗時の処理
 		alert('情報送信に失敗しました');
-	});
-}
-
-function ajaxAddBBSPost(){
-	// バリデーション結果をクリア
-	removeValidResult();
-
-	// フォームの値を取得
-	var formData = $('#input-form').serializeArray();
-
-	$.ajax({
-		type : "POST",
-		cache : false,
-		url : '/bbs/newpost/rest',
-		data : formData,
-		dataType : 'json'
-	}).done(function(data){
-		console.log(data);
-		if(data.result == 90){
-			// validationエラー時の処理
-			$.each(data.errors, function(key, value){
-				reflectValidResult(key, value)
-			});
-		}else if(data.result == 999){
-			alert("データベースへの追加に失敗しました");
-		}else if(data.result == 0){
-			alert("投稿完了しました");
-			$('#input-form').submit();
-		}
-	}).fail(function(jqXHR, testStatus, errorThrown){
-		alert('情報送信に失敗しました');
-	}).always(function(){
 	});
 }
 
@@ -153,6 +95,8 @@ function reflectValidResult(key, value){
 	// CSS適用
 	if(key == 'postFormula'){
 		$('#titleText').addClass('is-invalid');
+	}else if(key == 'category'){
+		$('select[id=' + key +']').addClass('is-invalid');
 	}else{
 		$('input[id=' + key +']').addClass('is-invalid');
 	}
