@@ -1,5 +1,9 @@
 /** 送信ボタンが押された時 */
 $('#send-btn').click(function (){
+	if(!confirm("この内容で投稿してよろしいですか？")){
+		return;
+	}
+
 	// バリデーション結果をクリア
 	removeValidResult();
 

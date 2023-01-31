@@ -24,7 +24,8 @@ public class BBSController {
 	private BBSFormulasService bbsFormulasService;
 
 	@GetMapping("/bbs")
-	public String getBBS() {
+	public String getBBS(Model model) {
+		model.addAttribute("categoryMap", bbsFormulasService.getCategoryMap());
 		return "bbs/bbs";
 	}
 
@@ -69,12 +70,12 @@ public class BBSController {
 		if(postData == null || user.getLoginUser().getId() != postData.getCreatorId()) {
 			return "redirect:/bbs";
 		}
+		form.setPostId(postData.getId());
 		form.setTitle(postData.getTitle());
-		form.setPostFormula(String.valueOf(postData.getId()));
 		form.setCategory(postData.getCategory());
 		form.setComment(postData.getComment());
 		model.addAttribute("categoryMap", bbsFormulasService.getCategoryMap());
-		model.addAttribute("selectedName", "※　変更無し　※");
+		model.addAttribute("selectedName", "");
 		return "bbs/updatepost";
 	}
 }

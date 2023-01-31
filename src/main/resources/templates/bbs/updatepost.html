@@ -5,6 +5,7 @@
 title = #{postEditing}, scripts = ~{::script}, links = ~{::link})">
 	<!-- 個別CSS、JSを引数に指定 -->
 	<link rel="stylesheet" type="text/css" th:href="@{/css/bbspost.css}">
+	<link rel="stylesheet" type="text/css" th:href="@{/css/updatepost.css}">
 	<script type="text/javascript" th:src="@{/js/bbs/bbspost.js}" defer></script>
 	<script type="text/javascript" th:src="@{/js/bbs/updatepost.js}" defer></script>
 </head>
@@ -23,23 +24,27 @@ title = #{postEditing}, scripts = ~{::script}, links = ~{::link})">
 	<div class="mb-3 text-center" id="errorMsg">
 	</div>
 
-	<!-- 計算表を変更するか？ -->
-	<div class="custom-control custom-switch">
-		<input type="checkbox" class="custom-control-input" id="customSwitch1">
-		<label class="custom-control-label" for="customSwitch1">Toggle this switch element</label>
-	</div>
+	<input type="hidden" th:field="*{postId}">
 
-	<!-- 計算表選択 -->
-	<div class="input-group mb-3" id="selectFormula">
-		<div class="input-group-prepend">
-			<label class="input-group-text" for="myFormulas" th:text="#{postFormula}"></label>
+	<div class="border rounded p-2 mb-3">
+		<!-- 計算表を変更するか？ -->
+		<div class="custom-control custom-switch">
+			<input type="checkbox" class="custom-control-input" name="changeFormula" id="changeFormula">
+			<label class="custom-control-label" for="changeFormula" th:text="#{formulaChange}"></label>
 		</div>
-		<label class="form-control text-truncate" id="titleText" for="open-btn" th:text="${selectedName != ''} ? ${selectedName} : #{select.pls}"></label>
-		<div class="input-group-append">
-			<button class="btn btn-secondary" id="open-btn" type="button" th:text="#{select}"></button>
+
+		<!-- 計算表選択 -->
+		<div class="input-group mt-1" id="selectFormula" style="display:none">
+			<div class="input-group-prepend">
+				<label class="input-group-text" for="myFormulas" th:text="#{postFormula}"></label>
+			</div>
+			<label class="form-control text-truncate" id="titleText" for="open-btn" th:text="${selectedName != ''} ? ${selectedName} : #{select.pls}"></label>
+			<div class="input-group-append">
+				<button class="btn btn-secondary" id="open-btn" type="button" th:text="#{select}"></button>
+			</div>
 		</div>
+		<input type="hidden" th:field="*{postFormula}" value="">
 	</div>
-	<input type="hidden" th:field="*{postFormula}" value="">
 
 	<div class="row">
 		<!-- タイトル -->
@@ -68,7 +73,7 @@ title = #{postEditing}, scripts = ~{::script}, links = ~{::link})">
 
 	<!-- コメント -->
 	<div class="form-group">
-		<label class="mt-2 mb-0 p-2 border border-bottom-0 rounded bg-light" for="comment" th:text="#{comment.sup}"></label>
+		<label class="mt-2 mb-0 p-2 border-bottom-0 rounded" id="commentLavel" for="comment" th:text="#{comment.sup}"></label>
 		<textarea class="form-control" id="comment" rows="8" th:field="*{comment}"></textarea>
 	</div>
 

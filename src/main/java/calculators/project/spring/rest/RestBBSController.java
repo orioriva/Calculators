@@ -9,7 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import calculators.project.spring.form.BBSPostForm;
@@ -31,6 +33,7 @@ public class RestBBSController {
 	@Autowired
 	private ErrorCheckService errorCheck;
 
+	/** 投稿一覧リスト取得 */
 	@PostMapping("/bbs/rest")
 	public List<BBSPost> restGetPostList() {
 		return bbsFormulaService.getPostList();
@@ -74,6 +77,10 @@ public class RestBBSController {
 	) {
 		Map<String, String> errors = new HashMap<>();
 		errorCheck.setValidError(bindingResult, errors);
+		// 計算表を変更しないなら計算表が指定されていないエラーは無視する
+		if(errors.containsKey("postFormula") && form.getChangeFormula() == null) {
+			errors.remove("postFormula");
+		}
 		// エラーが見つかった場合
 		if(!errors.isEmpty()) {
 			return new RestResult(90, errors);
@@ -81,18 +88,33 @@ public class RestBBSController {
 
 		// 投稿データ登録
 		BBSPost post = new BBSPost();
+		int userId = user.getLoginUser().getId();
+		post.setId(form.getPostId());
+		post.setCreatorId(userId);
 		post.setCategory(form.getCategory());
 		post.setUpdateDate(new Date());
 		post.setTitle(form.getTitle());
 		post.setComment(form.getComment());
 
-		/* jsonDataを変更するなら新しいjsonDataを入れるようにする
-		int userId = user.getLoginUser().getId();
-		int formulaId = Integer.parseInt(form.getPostFormula());
-		post.setJsonData(formulasService.getJsonOne(userId, formulaId));
-		*/
+		if(form.getChangeFormula() != null) {
+			System.out.println(form.getPostFormula());
+			int formulaId = Integer.parseInt(form.getPostFormula());
+			post.setJsonData(formulasService.getJsonOne(userId, formulaId));
+		}else {
+			post.setJsonData(null);
+		}
+
 		bbsFormulaService.updatePostOne(post);
 
 		return new RestResult(0, null);
+	}
+
+	/** 投稿を論理削除 */
+	@DeleteMapping("/bbs/post/delete/rest")
+	public boolean restDeletePost(
+		@AuthenticationPrincipal LoginUserDetails user,
+		@RequestParam int id
+	) {
+		return bbsFormulaService.hidePostOne(id, user.getLoginUser().getId());
 	}
 }

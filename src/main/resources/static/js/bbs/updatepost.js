@@ -1,8 +1,18 @@
+function getParam(name, url) {
+    if (!url) url = window.location.href;
+    name = name.replace(/[\[\]]/g, "\\$&");
+    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+        results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, " "));
+}
+
 $('input[type=checkbox]').change(function() {
 	if($(this).prop('checked')){
-		$('#selectFormula').show("normal");
+		$('#selectFormula').animate({height:'show', opacity:'show'},'normal');
 	}else{
-		$('#selectFormula').hide("normal");
+		$('#selectFormula').animate({height:'hide', opacity:'hide'},'normal');
 	}
 });
 
@@ -30,7 +40,7 @@ $('#send-btn').click(function (){
 			alert("データベース更新に失敗しました");
 		}else if(data.result == 0){
 			alert("更新完了しました");
-			window.location.href = '/bbs/post?postId=' + $('#postFormula').val();
+			window.location.href = '/bbs/post?postId=' + getParam('postId');
 		}
 	}).fail(function(jqXHR, testStatus, errorThrown){
 		alert('情報送信に失敗しました');

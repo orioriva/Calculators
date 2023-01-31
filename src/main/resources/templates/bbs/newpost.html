@@ -61,7 +61,7 @@ title = #{newpost}, scripts = ~{::script}, links = ~{::link})">
 
 	<!-- コメント -->
 	<div class="form-group">
-		<label class="mt-2 mb-0 p-2 border border-bottom-0 rounded bg-light" for="comment" th:text="#{comment.sup}"></label>
+		<label class="mt-2 mb-0 p-2 border-bottom-0 rounded" id="commentLavel" for="comment" th:text="#{comment.sup}"></label>
 		<textarea class="form-control" id="comment" rows="8" th:field="*{comment}"></textarea>
 	</div>
 

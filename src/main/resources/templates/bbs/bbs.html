@@ -18,37 +18,30 @@ title = #{bbs}, scripts = ~{::script}, links = ~{::link})">
 		<!-- カテゴリ選択 -->
 		<div class="input-group mr-2 mb-2">
 			<div class="input-group-prepend">
-				<label class="input-group-text" for="category">カテゴリ</label>
+				<label class="input-group-text" for="category" th:text="#{category}"></label>
 			</div>
 			<select class="custom-select" id="category" onchange="filterColumn(0);">
-				<option value="">すべて</option>
-				<option>生活</option>
-				<option>身体</option>
-				<option>交通</option>
-				<option>仕事</option>
-				<option>勉強</option>
-				<option>遊び</option>
-				<option>その他</option>
+				<option th:each="category : ${categoryMap}" th:value="${category.value}" th:text="${category.key}"></option>
 			</select>
 		</div>
 		<!-- 作成者 -->
 		<div class="input-group mr-2 mb-2">
 			<div class="input-group-prepend">
-				<label class="input-group-text">作成者</label>
+				<label class="input-group-text" th:text="#{poster}"></label>
 			</div>
 			<input type="text" class="form-control" oninput="filterColumn(1);">
 		</div>
 		<!-- タイトル -->
 		<div class="input-group mr-2 mb-2">
 			<div class="input-group-prepend">
-				<label class="input-group-text">タイトル</label>
+				<label class="input-group-text" th:text="#{title}"></label>
 			</div>
 			<input type="text" class="form-control" oninput="filterColumn(2);">
 		</div>
 		<!-- 更新日 -->
 		<div class="input-group mr-2 mb-2">
 			<div class="input-group-prepend">
-				<label class="input-group-text">更新日</label>
+				<label class="input-group-text" th:text="#{updateDate}"></label>
 			</div>
 			<input type="text" class="form-control" oninput="filterColumn(3);">
 		</div>
@@ -66,48 +59,22 @@ title = #{bbs}, scripts = ~{::script}, links = ~{::link})">
 	<a sec:authorize="${authenticated}" th:href="@{/bbs/newpost}" class="btn btn-sm btn-primary mb-2" role="button">[[#{newpost}]]</a>
 
 	<!-- 投稿表示テーブル -->
-	<table id="dataTable" class="table table-bordered table-hover table-sm">
+	<table id="dataTable" class="table table-bordered table-hover table-sm w-100">
 		<thead class="thead-light">
 			<tr>
-				<th scope="col">カテゴリ</th>
-				<th scope="col">作成者</th>
-				<th scope="col">タイトル</th>
-				<th scope="col">更新日</th>
-				<th scope="col">操作</th>
+				<th scope="col" th:text="#{category}"></th>
+				<th scope="col" th:text="#{poster}"></th>
+				<th scope="col" th:text="#{title}"></th>
+				<th scope="col" th:text="#{updateDate}"></th>
+				<th scope="col" th:text="#{operation}"></th>
 			</tr>
 		</thead>
-		<tr>
-			<td>交通</td>
-			<td>テスト</td>
-			<td>定期代と定期無しの比較</td>
-			<td>2023/1/5</td>
-			<td>開く</td>
-		</tr>
+		<tbody>
+		</tbody>
 	</table>
 </div>
 
 <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
-
-<!-- ページネーション -->
-<!--
-<ul class="pagination justify-content-center">
-	<li class="page-item">
-		<a class="page-link" href="#" aria-label="Previous">
-			<span aria-hidden="true">&laquo;</span>
-			<span class="sr-only">Previous</span>
-		</a>
-	</li>
-	<li class="page-item"><a class="page-link" href="#">1</a></li>
-	<li class="page-item"><a class="page-link" href="#">2</a></li>
-	<li class="page-item"><a class="page-link" href="#">3</a></li>
-	<li class="page-item">
-		<a class="page-link" href="#" aria-label="Next">
-			<span aria-hidden="true">&raquo;</span>
-			<span class="sr-only">Next</span>
-		</a>
-	</li>
-</ul>
- -->
 
 </body>
 </html>

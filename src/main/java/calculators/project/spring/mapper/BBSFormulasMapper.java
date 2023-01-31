@@ -13,4 +13,5 @@ public interface BBSFormulasMapper {
 	public List<BBSPost> getPostList();
 	public BBSPost getPostOne(int postId);
 	public String getJsonOne(int postId);
+	public boolean hidePostOne(int id, int creatorId);
 }

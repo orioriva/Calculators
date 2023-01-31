@@ -31,6 +31,8 @@
 			users
 		ON
 			bbsformulas.creatorId = users.id
+	WHERE
+		view = true;
 </select>
 
 <!-- 投稿１件取得 -->
@@ -50,7 +52,8 @@
 		ON
 			bbsformulas.creatorId = users.id
 	WHERE
-		bbsformulas.id = #{postId}
+		bbsformulas.id = #{postId} AND
+		view = true
 </select>
 
 <!-- jsonデータ１件取得 -->
@@ -60,7 +63,8 @@
 	FROM
 		bbsformulas
 	WHERE
-		id = #{postId}
+		id = #{postId} AND
+		view = true
 </select>
 
 <!-- 投稿１件追加 -->
@@ -91,14 +95,29 @@
 		category = #{category},
 		updateDate = #{updateDate},
 		title = #{title},
-		comment = #{comment},
-		jsonData = #{jsonData}
+		comment = #{comment}
+		<if test="jsonData != null">
+			,jsonData = #{jsonData}
+		</if>
 	WHERE
 		id = #{id} AND
-		creatorId = #{creatorId}
+		creatorId = #{creatorId} AND
+		view = true
 </update>
 
-<!-- 数式表１件削除 -->
+<!-- 数式表１件削除(論理) -->
+<update id="hidePostOne">
+	UPDATE
+		bbsformulas
+	SET
+		view = false
+	WHERE
+		id = #{id} AND
+		creatorId = #{creatorId} AND
+		view = true
+</update>
+
+<!-- 数式表１件削除(物理) -->
 <delete id="deletePostOne">
 	DELETE FROM
 		bbsformulas

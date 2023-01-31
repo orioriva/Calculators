@@ -40,6 +40,11 @@ public class BBSFormulasService {
 		return mapper.getJsonOne(postId);
 	}
 
+	/** 投稿を１件論理削除 */
+	public boolean hidePostOne(int id, int creatorId) {
+		return mapper.hidePostOne(id, creatorId);
+	}
+
 	/** カテゴリ選択肢のMapを取得 */
 	public Map<String, String> getCategoryMap(){
 		Map<String, String> map = new LinkedHashMap<String, String>(){

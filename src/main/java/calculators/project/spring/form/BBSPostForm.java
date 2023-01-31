@@ -7,6 +7,8 @@ import lombok.Data;
 
 @Data
 public class BBSPostForm {
+	private Integer postId;
+	private String changeFormula;
 	@NotEmpty
 	private String postFormula;
 	@NotBlank
