@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import calculators.project.spring.mapper.BBSFormulasMapper;
 import calculators.project.spring.model.BBSPost;
+import calculators.project.spring.model.Category;
 
 @Service
 public class BBSFormulasService {
@@ -27,7 +28,10 @@ public class BBSFormulasService {
 
 	/** 投稿リストを取得 */
 	public List<BBSPost> getPostList(){
-		return mapper.getPostList();
+		return mapper.getPostList(null);
+	}
+	public List<BBSPost> getPostList(Integer creatorId){
+		return mapper.getPostList(creatorId);
 	}
 
 	/** 投稿を１件取得 */
@@ -43,6 +47,11 @@ public class BBSFormulasService {
 	/** 投稿を１件論理削除 */
 	public boolean hidePostOne(int id, int creatorId) {
 		return mapper.hidePostOne(id, creatorId);
+	}
+
+	/** カテゴリ選択肢のリストを取得 */
+	public List<Category> getCategoryList(String locale){
+		return mapper.getCategoryList(locale);
 	}
 
 	/** カテゴリ選択肢のMapを取得 */

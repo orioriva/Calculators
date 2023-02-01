@@ -16,11 +16,27 @@
  		<result column="userName" property="creatorName"/>
  	</resultMap>
 
+<!-- カテゴリリスト取得 -->
+<select id="getCategoryList" resultType="Category">
+	SELECT
+		id,
+		<choose>
+			<when test="locale == en">
+				en AS name
+			</when>
+			<otherwise>
+				ja AS name
+			</otherwise>
+		</choose>
+	FROM
+		categories
+</select>
+
 <!-- 投稿リスト取得 -->
 <select id="getPostList" resultMap="bbsPost">
 	SELECT
 		bbsformulas.id,
-		bbsformulas.category,
+		categories.ja AS category,
 		bbsformulas.updateDate,
 		bbsformulas.title,
 		bbsformulas.comment,
@@ -31,8 +47,15 @@
 			users
 		ON
 			bbsformulas.creatorId = users.id
+		LEFT JOIN
+			categories
+		ON
+			bbsformulas.category = categories.id
 	WHERE
-		view = true;
+		view = true
+		<if test="creatorId != null">
+			AND bbsformulas.creatorId = #{creatorId}
+		</if>
 </select>
 
 <!-- 投稿１件取得 -->

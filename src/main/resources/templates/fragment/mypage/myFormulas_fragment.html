@@ -9,17 +9,17 @@
 
 <div class="container">
 	<div class="mt-2 border-bottom">
-		<h3 class="">保存した計算表</h3>
+		<h3 th:text="#{myFormulaList}"></h3>
 	</div>
 	<div>
-		<a th:href="@{/calculator}" class="btn btn-sm btn-primary mt-2 mb-2" role="button"><i class="fas fa-folder-plus"></i>&ensp;新規作成</a>
+		<a th:href="@{/calculator}" class="btn btn-sm btn-primary mt-2 mb-2" role="button"><i class="fas fa-folder-plus"></i>&ensp;[[#{newCreate}]]</a>
 	</div>
 	<table id="dataTable" class="mt-2 table table-bordered table-hover table-sm text-nowrap w-100">
 		<thead class="thead-light">
 			<tr>
-				<th scope="col">タイトル</th>
-				<th scope="col">更新日</th>
-				<th scope="col">操作</th>
+				<th scope="col" th:text="#{title}"></th>
+				<th scope="col" th:text="#{updateDate}"></th>
+				<th scope="col" th:text="#{operation}"></th>
 			</tr>
 		</thead>
 		<tbody>

@@ -39,6 +39,12 @@ public class RestBBSController {
 		return bbsFormulaService.getPostList();
 	}
 
+	/** 投稿一覧リスト取得 */
+	@PostMapping("/bbs/myPosts/rest")
+	public List<BBSPost> restGetMyPostList(@AuthenticationPrincipal LoginUserDetails user) {
+		return bbsFormulaService.getPostList(user.getLoginUser().getId());
+	}
+
 	/** 新規投稿 */
 	@PostMapping("/bbs/newpost/rest")
 	public RestResult restNewPost(

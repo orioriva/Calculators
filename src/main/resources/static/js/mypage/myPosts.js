@@ -8,12 +8,39 @@ $(document).ready(function () {
 	ajaxGetPostList();
 });
 
-/** 投稿一覧取得 */
+function ajaxDeletePost(postId){
+	if(!confirm("本当にこの投稿を削除してよろしいですか？")){
+		return;
+	}
+
+	// ajax通信
+	$.ajax({
+		type : "DELETE",
+		cache : false,
+		url : '/bbs/post/delete/rest',
+		data : {
+			id : postId,
+			_csrf: $("*[name=_csrf]").val()  // CSRFトークンを送信
+		},
+		dataType : 'json'
+	}).done(function(data){
+		if(!data){
+			alert('削除出来ませんでした');
+			return;
+		}
+		alert('投稿を削除しました');
+		ajaxGetPostList();
+	}).fail(function(jqXHR, testStatus, errorThrown){
+		// ajax失敗時の処理
+		alert('情報送信に失敗しました');
+	});
+}
+
 function ajaxGetPostList(){
 	$.ajax({
 		type : "POST",
 		cache : false,
-		url : '/bbs/rest',
+		url : '/bbs/myPosts/rest',
 		data : {
 			_csrf: $("*[name=_csrf]").val()  // CSRFトークンを送信
 		},
@@ -21,27 +48,8 @@ function ajaxGetPostList(){
 	}).done(function(data){
 		createDataTable(data);
 	}).fail(function(jqXHR, testStatus, errorThrown){
-		// ajax失敗時の処理
 		alert('情報送信に失敗しました');
-	}).always(function(){
-		// 常に実行する処理
 	});
-}
-
-/** 絞り込みボタンが押されたら */
-function toggleSearchForm(){
-	$('#search-form').animate({height:'toggle', opacity:'toggle'},'normal');
-}
-
-function filterColumn(col) {
-	let searchText = event.currentTarget.value;
-	$('#dataTable')
-		.DataTable()
-		.column(col)
-		.search(
-			searchText
-		)
-		.draw();
 }
 
 function createDataTable(list){
@@ -80,7 +88,13 @@ function createDataTable(list){
 					let insert =
 						'<a href="/bbs/post?postId=' + data + '" class="btn btn-sm btn-info" role="button">' +
 							'<i class="fas fa-book-open"></i>&ensp;閲覧' +
-						'</a>';
+						'<a href="/bbs/post/update?postId=' + data + '" class="ml-2 btn btn-sm btn-success" role="button">' +
+							'<i class="fas fa-edit"></i>&ensp;投稿内容編集' +
+						'</a>' +
+						'<button type="button" class="ml-2 btn btn-sm btn-danger" id="delete-btn" onclick="ajaxDeletePost(' + data + ');">' +
+							'<i class="fas fa-trash-alt"></i>&ensp;投稿を削除' +
+						'</button>'
+						;
 					return insert;
 				}
 			}

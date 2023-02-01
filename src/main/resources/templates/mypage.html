@@ -16,16 +16,18 @@ title = #{myPage}, scripts = ~{::script}, links = ~{::link})">
 	<div class="row">
 		<!-- 左側 -->
 		<div class="col-md-2">
-			<h5 class="pt-2">My Page Menu</h5>
+			<h5 class="text-center pt-2">My Page Menu</h5>
 			<div class="list-group list-group-flush">
-				<a th:href="@{/mypage/top}" class="list-group-item list-group-item-action" th:classappend="${viewPage == 'top'} ? 'active disabled' : ''">
-					マイページTOP
+				<a th:href="@{/mypage/top}" class="list-group-item list-group-item-action" th:classappend="${viewPage == 'top'} ? 'active disabled'">
+					[[#{myPageTop}]]
 				</a>
-				<a th:href="@{/mypage/formulas}" class="list-group-item list-group-item-action" th:classappend="${viewPage == 'formulas'} ? 'active disabled' : ''">
-					保存した計算表
+				<a th:href="@{/mypage/formulas}" class="list-group-item list-group-item-action" th:classappend="${viewPage == 'formulas'} ? 'active disabled'">
+					[[#{myFormulaList}]]
 				</a>
-				<a class="list-group-item list-group-item-action">ユーザー情報変更</a>
-				<a class="list-group-item list-group-item-action">自分の投稿</a>
+				<a th:href="@{/mypage/posts}" class="list-group-item list-group-item-action" th:classappend="${viewPage == 'posts'} ? 'active disabled'">
+					[[#{myPostList}]]
+				</a>
+				<a class="list-group-item list-group-item-action">[[#{userSettings}]]</a>
 				<form name="logout" th:action="@{/logout}" method="post">
 				</form>
 				<a href="#" class="list-group-item list-group-item-action" onclick="document.logout.submit();">[[#{logout}]]<i class="ml-2 fas fa-sign-out-alt"></i></a>
@@ -34,12 +36,15 @@ title = #{myPage}, scripts = ~{::script}, links = ~{::link})">
 		<!-- 右側 -->
 		<div class="col-md-10">
 			<th:block th:switch="${viewPage}">
-				<div th:case="top">
+				<th:block th:case="top">
 					<div th:replace="fragment/mypage/myTop_fragment :: myTop_fragment"></div>
-				</div>
-				<div th:case="formulas">
+				</th:block>
+				<th:block th:case="formulas">
 					<div th:replace="fragment/mypage/myFormulas_fragment :: myFormulas_fragment"></div>
-				</div>
+				</th:block>
+				<th:block th:case="posts">
+					<div th:replace="fragment/mypage/myPosts_fragment :: myPosts_fragment"></div>
+				</th:block>
 			</th:block>
 		</div>
 	</div>

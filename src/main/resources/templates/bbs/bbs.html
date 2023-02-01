@@ -13,8 +13,20 @@ title = #{bbs}, scripts = ~{::script}, links = ~{::link})">
 <header th:replace="fragment/header_fragment :: header_fragment"></header>
 
 <div class="container">
+
+	<div class="mt-2 mb-2">
+		<!-- 新規投稿ボタン -->
+		<a sec:authorize="${authenticated}" th:href="@{/bbs/newpost}" class="btn btn-primary" role="button">
+			<i class="fas fa-edit"></i>&ensp;[[#{newpost}]]
+		</a>
+		<!-- 検索フォーム表示・非表示切り替え -->
+		<button class="btn btn-info" onclick="toggleSearchForm();">
+			<i class="fas fa-search"></i>&ensp;[[#{searchOn}]]
+		</button>
+	</div>
+
 	<!-- 検索フォーム -->
-	<form class="form-inline m-2 border-bottom">
+	<form class="form-inline p-2 mb-2 border border-info rounded-lg" id="search-form" style="display:none">
 		<!-- カテゴリ選択 -->
 		<div class="input-group mr-2 mb-2">
 			<div class="input-group-prepend">
@@ -45,18 +57,7 @@ title = #{bbs}, scripts = ~{::script}, links = ~{::link})">
 			</div>
 			<input type="text" class="form-control" oninput="filterColumn(3);">
 		</div>
-		<!--
-		<div class="p-2">
-			<button class="btn btn-sm btn-primary">
-				<i class="fas fa-search mr-1"></i>
-				絞り込み
-			</button>
-		</div>
-		 -->
 	</form>
-
-	<!-- 新規投稿ボタン -->
-	<a sec:authorize="${authenticated}" th:href="@{/bbs/newpost}" class="btn btn-sm btn-primary mb-2" role="button">[[#{newpost}]]</a>
 
 	<!-- 投稿表示テーブル -->
 	<table id="dataTable" class="table table-bordered table-hover table-sm w-100">
