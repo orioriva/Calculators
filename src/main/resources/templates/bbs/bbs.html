@@ -20,7 +20,7 @@ title = #{bbs}, scripts = ~{::script}, links = ~{::link})">
 			<i class="fas fa-edit"></i>&ensp;[[#{newpost}]]
 		</a>
 		<!-- 検索フォーム表示・非表示切り替え -->
-		<button class="btn btn-info" onclick="toggleSearchForm();">
+		<button class="btn btn-outline-info" data-toggle="button" aria-pressed="true" onclick="toggleSearchForm();">
 			<i class="fas fa-search"></i>&ensp;[[#{searchOn}]]
 		</button>
 	</div>
@@ -33,7 +33,8 @@ title = #{bbs}, scripts = ~{::script}, links = ~{::link})">
 				<label class="input-group-text" for="category" th:text="#{category}"></label>
 			</div>
 			<select class="custom-select" id="category" onchange="filterColumn(0);">
-				<option th:each="category : ${categoryMap}" th:value="${category.value}" th:text="${category.key}"></option>
+				<option value="" th:text="#{all}"></option>
+				<option th:each="category : ${categoryList}" th:value="${category.name}" th:text="${category.name}"></option>
 			</select>
 		</div>
 		<!-- 作成者 -->

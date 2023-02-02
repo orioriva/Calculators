@@ -64,7 +64,8 @@ title = #{postEditing}, scripts = ~{::script}, links = ~{::link})">
 					<label class="input-group-text" for="category" th:text="#{category}"></label>
 				</div>
 				<select class="custom-select" th:field="*{category}">
-					<option th:each="category : ${categoryMap}" th:value="${category.value}" th:text="${category.key}"></option>
+					<option value="" th:text="#{unselected}"></option>
+					<option th:each="category : ${categoryList}" th:value="${category.id}" th:text="${category.name}"></option>
 				</select>
 			</div>
 		</div>

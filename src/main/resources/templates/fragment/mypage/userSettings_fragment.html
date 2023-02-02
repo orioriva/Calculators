@@ -1,0 +1,86 @@
+<!-- 自分の投稿一覧 -->
+<div xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	th:fragment="userSettings_fragment">
+
+<script type="text/javascript" th:src="@{/js/mypage/userSettings.js}" defer></script>
+
+
+<div class="container">
+	<div class="mt-2 mb-2 border-bottom">
+		<h3 th:text="#{userSettings}"></h3>
+	</div>
+
+	<div class="accordion">
+		<!-- ユーザー名変更 -->
+		<div class="card">
+			<div class="card-header">
+				<h5 class="mb-0">
+					<button class="btn btn-link" type="button" data-toggle="collapse"
+						data-target="#userName" aria-expanded="false">
+						ユーザー名の変更
+					</button>
+				</h5>
+			</div>
+			<div id="userName" class="collapse" data-parent=".accordion">
+				<div class="card-body">
+					<form class="form-input">
+						<!-- 現在のユーザー名表示 -->
+						<!--
+						<div class="form-group">
+							<label for="nowName" th:text="#{now} + #{userName}"></label>
+							<div id="nowName" class="border rounded-lg p-2">
+								<span sec:authentication="principal.userViewName"></span>
+							</div>
+						</div>
+						-->
+						<!-- 新しいユーザー名入力 -->
+						<div class="form-group">
+							<label for="nowName" th:text="#{new} + #{userName}"></label>
+							<input type="text" id="userName" class="form-control" name="userName" th:value="${#authentication.principal.loginUser.userName}" th:placeholder="#{new} + #{userName}">
+						</div>
+						<button class="btn btn-primary" type="button">[[#{change}]]</button>
+					</form>
+				</div>
+			</div>
+		</div>
+
+		<!-- ログインID・パスワードの変更 -->
+		<div class="card">
+			<div class="card-header">
+				<h5 class="mb-0">
+					<button class="btn btn-link" type="button" data-toggle="collapse"
+						data-target="#id-password" aria-expanded="false">
+						ログインID・パスワードの変更
+					</button>
+				</h5>
+			</div>
+			<div id="id-password" class="collapse" data-parent=".accordion">
+				<div class="card-body">
+					※　変更後、ログアウトを行います
+				</div>
+			</div>
+		</div>
+
+		<!-- 退会手続き -->
+		<div class="card">
+			<div class="card-header">
+				<h5 class="mb-0">
+					<button class="btn btn-link" type="button" data-toggle="collapse"
+						data-target="#unregister" aria-expanded="false">
+						ユーザー登録解除
+					</button>
+				</h5>
+			</div>
+			<div id="unregister" class="collapse" data-parent=".accordion">
+				<div class="card-body">
+					確認の為、ID・パスワードを入力して下さい
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+</div>
+
+</div>

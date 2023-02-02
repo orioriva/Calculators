@@ -43,6 +43,16 @@
 		)
 </insert>
 
+<!-- ユーザー名更新 -->
+<update id="updateUserName">
+	UPDATE
+		users
+	SET
+		userName = #{userName}
+	WHERE
+		id = #{id}
+</update>
+
 <!--
 <select id="findUserOne" resultMap="muser">
 	select

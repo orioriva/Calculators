@@ -8,6 +8,7 @@ import lombok.Data;
 public class BBSPost {
 	private int id;
 	private String category;
+	private Integer categoryId;
 	private int creatorId;
 	private Date updateDate;
 	private String title;

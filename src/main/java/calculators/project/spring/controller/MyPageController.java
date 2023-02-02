@@ -1,8 +1,11 @@
 package calculators.project.spring.controller;
 
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+
+import calculators.project.spring.model.LoginUserDetails;
 
 @Controller
 public class MyPageController {
@@ -26,6 +29,13 @@ public class MyPageController {
 	@GetMapping("/mypage/posts")
 	public String getMyPagePosts(Model model) {
 		model.addAttribute("viewPage","posts");
+		return "mypage";
+	}
+
+	@GetMapping("/mypage/userSettings")
+	public String getMyPageUserSettings(Model model,@AuthenticationPrincipal LoginUserDetails user) {
+		user.getLoginUser().setUserName("aaa");
+		model.addAttribute("viewPage","userSettings");
 		return "mypage";
 	}
 }

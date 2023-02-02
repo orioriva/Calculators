@@ -16,7 +16,7 @@ import calculators.project.spring.service.ErrorCheckService;
 import calculators.project.spring.service.UserService;
 
 @RestController
-public class RestRegisterController {
+public class RestUserController {
 	@Autowired
 	private UserService userService;
 	

@@ -27,7 +27,9 @@ title = #{myPage}, scripts = ~{::script}, links = ~{::link})">
 				<a th:href="@{/mypage/posts}" class="list-group-item list-group-item-action" th:classappend="${viewPage == 'posts'} ? 'active disabled'">
 					[[#{myPostList}]]
 				</a>
-				<a class="list-group-item list-group-item-action">[[#{userSettings}]]</a>
+				<a th:href="@{/mypage/userSettings}" class="list-group-item list-group-item-action" th:classappend="${viewPage == 'userSettings'} ? 'active disabled'">
+					[[#{userSettings}]]
+				</a>
 				<form name="logout" th:action="@{/logout}" method="post">
 				</form>
 				<a href="#" class="list-group-item list-group-item-action" onclick="document.logout.submit();">[[#{logout}]]<i class="ml-2 fas fa-sign-out-alt"></i></a>
@@ -44,6 +46,9 @@ title = #{myPage}, scripts = ~{::script}, links = ~{::link})">
 				</th:block>
 				<th:block th:case="posts">
 					<div th:replace="fragment/mypage/myPosts_fragment :: myPosts_fragment"></div>
+				</th:block>
+				<th:block th:case="userSettings">
+					<div th:replace="fragment/mypage/userSettings_fragment :: userSettings_fragment"></div>
 				</th:block>
 			</th:block>
 		</div>

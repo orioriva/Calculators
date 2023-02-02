@@ -1,6 +1,6 @@
 <!-- 共通ヘッダー -->
 <header xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" th:fragment="header_fragment">
-<nav class="navbar navbar-expand-sm navbar-light" style="background-color: #eee8aa;">
+<nav class="navbar navbar-expand-sm navbar-light rounded-lg m-1" style="background-color: #ffff77;">
 	<!--
 	<a class="navbar-brand" th:href="@{/}">自由計算(仮)</a>
 	 -->
@@ -36,7 +36,7 @@
 		<li sec:authorize="${authenticated}" class="dropdown">
 			<button class="btn btn-outline-secondary dropdown-toggle" type="button" id="dropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 				<i class="fas fa-user-circle fa-lg mr-2"></i>
-				ようこそ <span sec:authentication="principal.userViewName"></span> さん
+				<span th:text="#{welcomeUser(${#authentication.principal.loginUser.userName})}"></span>
 			</button>
 			<div class="dropdown-menu" aria-labelledby="dropdownMenu">
 				<!-- ユーザー情報編集 -->

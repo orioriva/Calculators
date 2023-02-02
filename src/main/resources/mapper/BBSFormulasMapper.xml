@@ -8,6 +8,7 @@
  	<resultMap type="calculators.project.spring.model.BBSPost" id="bbsPost">
  		<id column="id" property="id" />
  		<result column="category" property="category"/>
+ 		<result column="categoryId" property="categoryId"/>
  		<result column="creatorId" property="creatorId"/>
  		<result column="updateDate" property="updateDate"/>
  		<result column="title" property="title"/>
@@ -21,7 +22,7 @@
 	SELECT
 		id,
 		<choose>
-			<when test="locale == en">
+			<when test="locale == 'en'">
 				en AS name
 			</when>
 			<otherwise>
@@ -37,6 +38,7 @@
 	SELECT
 		bbsformulas.id,
 		categories.ja AS category,
+		categories.id AS categoryId,
 		bbsformulas.updateDate,
 		bbsformulas.title,
 		bbsformulas.comment,
@@ -62,7 +64,8 @@
 <select id="getPostOne" resultMap="bbsPost">
 	SELECT
 		bbsformulas.id,
-		bbsformulas.category,
+		categories.ja AS category,
+		categories.id AS categoryId,
 		bbsformulas.creatorId,
 		bbsformulas.updateDate,
 		bbsformulas.title,
@@ -74,6 +77,10 @@
 			users
 		ON
 			bbsformulas.creatorId = users.id
+		LEFT JOIN
+			categories
+		ON
+			bbsformulas.category = categories.id
 	WHERE
 		bbsformulas.id = #{postId} AND
 		view = true
