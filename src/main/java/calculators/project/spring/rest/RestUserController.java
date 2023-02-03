@@ -4,13 +4,16 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import calculators.project.spring.form.ChangeUserNameForm;
 import calculators.project.spring.form.RegisterForm;
 import calculators.project.spring.model.LoginUser;
+import calculators.project.spring.model.LoginUserDetails;
 import calculators.project.spring.model.RestResult;
 import calculators.project.spring.service.ErrorCheckService;
 import calculators.project.spring.service.UserService;
@@ -19,13 +22,13 @@ import calculators.project.spring.service.UserService;
 public class RestUserController {
 	@Autowired
 	private UserService userService;
-	
+
 	@Autowired
 	private ErrorCheckService errorCheck;
-	
+
 	@PostMapping("/register/rest")
 	public RestResult restRegister(@Validated RegisterForm form,
-			BindingResult bindingResult) 
+			BindingResult bindingResult)
 	{
 		Map<String, String> errors = new HashMap<>();
 		errorCheck.setValidError(bindingResult, errors);
@@ -43,7 +46,26 @@ public class RestUserController {
 		if(!userService.addUserOne(user)) {
 			return new RestResult(999, null);
 		}
-		
+
+		return new RestResult(0, null);
+	}
+
+	/** ユーザー名変更 */
+	@PostMapping("/mypage/userSettings/rename/rest")
+	public RestResult restRename(
+		@Validated ChangeUserNameForm form,
+		BindingResult bindingResult,
+		@AuthenticationPrincipal LoginUserDetails user
+	) {
+		Map<String, String> errors = new HashMap<>();
+		errorCheck.setValidError(bindingResult, errors);
+		if(!errors.isEmpty()) {
+			return new RestResult(90, errors);
+		}
+		if(!userService.updateUserName(user.getLoginUser().getId(), form.getUserName())) {
+			return new RestResult(999, null);
+		}
+		user.getLoginUser().setUserName(form.getUserName());
 		return new RestResult(0, null);
 	}
 }

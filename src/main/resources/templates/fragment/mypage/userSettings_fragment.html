@@ -11,35 +11,28 @@
 		<h3 th:text="#{userSettings}"></h3>
 	</div>
 
-	<div class="accordion">
+	<div class="accordion" id="accordion">
 		<!-- ユーザー名変更 -->
 		<div class="card">
 			<div class="card-header">
 				<h5 class="mb-0">
 					<button class="btn btn-link" type="button" data-toggle="collapse"
-						data-target="#userName" aria-expanded="false">
+						data-target="#userNameCollapse" aria-expanded="false">
 						ユーザー名の変更
 					</button>
 				</h5>
 			</div>
-			<div id="userName" class="collapse" data-parent=".accordion">
+			<div id="userNameCollapse" class="collapse" data-parent="#accordion">
 				<div class="card-body">
-					<form class="form-input">
-						<!-- 現在のユーザー名表示 -->
-						<!--
-						<div class="form-group">
-							<label for="nowName" th:text="#{now} + #{userName}"></label>
-							<div id="nowName" class="border rounded-lg p-2">
-								<span sec:authentication="principal.userViewName"></span>
-							</div>
-						</div>
-						-->
+					<form class="form-input" id="changeUserNameForm" th:action="@{/mypage/userSettings/rename}" method="post" onsubmit="ajaxRename(); return false;" th:object="${changeUserNameForm}">
 						<!-- 新しいユーザー名入力 -->
 						<div class="form-group">
-							<label for="nowName" th:text="#{new} + #{userName}"></label>
-							<input type="text" id="userName" class="form-control" name="userName" th:value="${#authentication.principal.loginUser.userName}" th:placeholder="#{new} + #{userName}">
+							<label for="userName" th:text="#{new} + #{userName}"></label>
+							<input type="text" class="form-control" th:field="*{userName}"
+								th:value="${#authentication.principal.loginUser.userName}" th:placeholder="#{new} + #{userName} + '(20文字以内)'">
+
 						</div>
-						<button class="btn btn-primary" type="button">[[#{change}]]</button>
+						<button id="userName-change" class="btn btn-primary" type="submit">[[#{change}]]</button>
 					</form>
 				</div>
 			</div>
@@ -51,13 +44,64 @@
 				<h5 class="mb-0">
 					<button class="btn btn-link" type="button" data-toggle="collapse"
 						data-target="#id-password" aria-expanded="false">
-						ログインID・パスワードの変更
+						ログインユーザーID・パスワードの変更
 					</button>
 				</h5>
 			</div>
-			<div id="id-password" class="collapse" data-parent=".accordion">
+			<div id="id-password" class="collapse" data-parent="#accordion">
 				<div class="card-body">
 					※　変更後、ログアウトを行います
+					<form class="form-input" action="" onsubmit="return false;">
+						<div class="mt-2">
+							<!-- ID変更 -->
+							<div class="card mb-2">
+								<div class="card-header">
+									<div class="custom-control custom-switch">
+										<input type="checkbox" class="custom-control-input" id="newIdSwitch">
+										<label class="custom-control-label" for="newIdSwitch">ログインユーザーIDを変更する</label>
+									</div>
+								</div>
+								<div class="hide card-body" id="newIdArea">
+									<div class="input-group mt-2">
+										<div class="input-group-prepend">
+											<label class="input-group-text" th:text="#{new} + #{userId}"></label>
+										</div>
+										<input type="text" class="form-control">
+									</div>
+								</div>
+							</div>
+							<!-- パスワード変更 -->
+							<div class="border rounded-lg p-2 mb-3">
+								<div class="custom-control custom-switch">
+									<input type="checkbox" class="custom-control-input" id="newPasswordSwitch">
+									<label class="custom-control-label" for="newPasswordSwitch">パスワードを変更する</label>
+								</div>
+								<div class="hide" id="newPasswordArea">
+									<div class="input-group mt-2">
+										<div class="input-group-prepend">
+											<label class="input-group-text" th:text="#{new} + #{password}"></label>
+										</div>
+										<input type="text" class="form-control">
+									</div>
+								</div>
+							</div>
+
+							<div class="card">
+								<div class="card-header">確認の為、現在のID・パスワードを入力して下さい</div>
+								<div class="card-body">
+									<div class="form-group">
+										<label for="nowId" th:text="#{now} + #{userId}"></label>
+										<input id="nowId" type="text" class="form-control">
+									</div>
+									<div class="form-group">
+										<label for="nowPassword" th:text="#{now} + #{password}"></label>
+										<input id="nowPassword" type="password" class="form-control">
+									</div>
+									<button class="mt-2 btn btn-primary">[[#{change}]]</button>
+								</div>
+							</div>
+						</div>
+					</form>
 				</div>
 			</div>
 		</div>
@@ -72,7 +116,7 @@
 					</button>
 				</h5>
 			</div>
-			<div id="unregister" class="collapse" data-parent=".accordion">
+			<div id="unregister" class="collapse" data-parent="#accordion">
 				<div class="card-body">
 					確認の為、ID・パスワードを入力して下さい
 				</div>

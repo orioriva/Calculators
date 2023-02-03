@@ -32,8 +32,6 @@ function ajaxAddData(title){
 	}).fail(function(jqXHR, testStatus, errorThrown){
 		// ajax失敗時の処理
 		alert('情報送信に失敗しました');
-	}).always(function(){
-		// 常に実行する処理
 	});
 }
 
@@ -124,7 +122,7 @@ function ajaxUpdateFormulaTitle(oldTitle){
 		alert("キャンセルしました");
 		return;
 	}
-	
+
 	// ajax通信
 	$.ajax({
 		type : "POST",

@@ -11,10 +11,10 @@ import calculators.project.spring.model.LoginUser;
 public class UserService {
 	@Autowired
 	private UserMapper mapper;
-	
+
 	@Autowired
 	private PasswordEncoder encoder;
-	
+
 	/** ユーザーIDからユーザー情報を１件取得 */
 	public LoginUser findUserOneUserId(String userId) {
 		return mapper.findUserOneUserId(userId);
@@ -28,5 +28,9 @@ public class UserService {
 		String encodePass = encoder.encode(user.getPassword());
 		user.setPassword(encodePass);
 		return mapper.addUserOne(user);
+	}
+	/** ユーザー名を変更 */
+	public boolean updateUserName(int id,String userName){
+		return mapper.updateUserName(id, userName);
 	}
 }

@@ -4,7 +4,9 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 
+import calculators.project.spring.form.ChangeUserNameForm;
 import calculators.project.spring.model.LoginUserDetails;
 
 @Controller
@@ -33,8 +35,11 @@ public class MyPageController {
 	}
 
 	@GetMapping("/mypage/userSettings")
-	public String getMyPageUserSettings(Model model,@AuthenticationPrincipal LoginUserDetails user) {
-		user.getLoginUser().setUserName("aaa");
+	public String getMyPageUserSettings(Model model,
+		@ModelAttribute ChangeUserNameForm userNameForm,
+		@AuthenticationPrincipal LoginUserDetails user
+	) {
+		userNameForm.setUserName(user.getUserViewName());
 		model.addAttribute("viewPage","userSettings");
 		return "mypage";
 	}

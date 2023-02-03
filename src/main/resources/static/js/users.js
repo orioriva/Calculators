@@ -28,9 +28,6 @@ function sendData(){
 		data : formData,
 		dataType : 'json',
 	}).done(function(data){
-		// ajax成功時の処理
-		console.log(data);
-
 		if(data.result == 90){
 			// validationエラー時の処理
 			$.each(data.errors, function(key, value){

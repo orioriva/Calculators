@@ -8,4 +8,5 @@ import calculators.project.spring.model.LoginUser;
 public interface UserMapper {
 	public LoginUser findUserOneUserId(String userId);
 	public boolean addUserOne(LoginUser user);
+	public boolean updateUserName(int id,String userName);
 }
