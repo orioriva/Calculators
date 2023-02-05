@@ -33,4 +33,19 @@ public class UserService {
 	public boolean updateUserName(int id,String userName){
 		return mapper.updateUserName(id, userName);
 	}
+	/** 指定されたユーザーＩＤとパスワードが現在のものと等しいか？ */
+	public boolean equalsUserIdPassword(int id, String userId, String password) {
+		LoginUser user = mapper.findUserOneUserId(userId);
+		if(user == null)
+			return false;
+		return (user.getId() == id &&
+				user.getUserId().equals(userId) &&
+				encoder.matches(password, user.getPassword())
+				);
+	}
+	/** ユーザーＩＤ・パスワード更新 */
+	public boolean updateUserIdPassword(int id, String nowUserId, String newUserId, String newPassword) {
+		String encodePass = (newPassword == null) ? null : encoder.encode(newPassword);
+		return mapper.updateUserIdPassword(id, nowUserId, newUserId, encodePass);
+	}
 }

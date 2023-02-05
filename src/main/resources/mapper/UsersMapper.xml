@@ -53,6 +53,25 @@
 		id = #{id}
 </update>
 
+<!-- ユーザー情報更新 -->
+<update id="updateUserIdPassword">
+	UPDATE
+		users
+	SET
+		<if test="newUserId != null">
+			userId = #{newUserId}
+		</if>
+		<if test="newUserId != null and newPassword != null">
+			,
+		</if>
+		<if test="newPassword != null">
+			password = #{newPassword}
+		</if>
+	WHERE
+		id = #{id} AND
+		userId = #{nowUserId}
+</update>
+
 <!--
 <select id="findUserOne" resultMap="muser">
 	select

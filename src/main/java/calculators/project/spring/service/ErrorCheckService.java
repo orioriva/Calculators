@@ -24,18 +24,12 @@ public class ErrorCheckService {
 		// エラーチェック
 		if(bindingResult.hasErrors()) {
 			// 入力エラーが見つかった場合
-
 			// エラーメッセージ取得
 			for(FieldError error: bindingResult.getFieldErrors()) {
 				String message = messageSource.getMessage(error, Locale.JAPAN);
 				errors.put(error.getField(), message);
 			}
-
-			// エラー結果の返却
-			return;
 		}
-
-		return;
 	}
 	
 	/** 同じユーザーIDが存在しているかチェック */
@@ -45,7 +39,27 @@ public class ErrorCheckService {
 			String message = messageSource.getMessage("ExistsUserId", null, Locale.JAPAN);
 			errors.put(errorKey, message);
 		}
-		return;
+	}
+	
+	/** 新しいパスワード２つが同じ値であるかチェック */
+	public void setNotMatchError(String pass1, String pass2, String[] errorKeys, Map<String, String> errors, String MessageKey) {
+		if(pass1.equals(pass2)) {
+			return;
+		}
+		String message = messageSource.getMessage(MessageKey, null, Locale.JAPAN);
+		for (String key : errorKeys) {
+			errors.put(key, message);
+		}
+	}
+	
+	/** 指定されたユーザーＩＤとパスワードが現在のものと等しいか？ */
+	public void setNotMatchUserIdPasswordError(int id, String userId, String password, String[] errorKeys, Map<String, String> errors) {
+		if(!userService.equalsUserIdPassword(id, userId, password)) {
+			String message = messageSource.getMessage("NotMatchUserIdPass", null, Locale.JAPAN);
+			for (String key : errorKeys) {
+				errors.put(key, message);
+			}
+		}
 	}
 
 	/** エラーの並び順を指定された順番に変更 */
@@ -67,5 +81,18 @@ public class ErrorCheckService {
         }
 
 		return sortErrors;
+	}
+	
+	/** Mapの該当データを削除 */
+	public void removeErrorKey(Map<String, String> errors, String[] removeKey) {
+		for (String key : removeKey) {
+			if(errors.containsKey(key)) {
+				errors.remove(key);
+			}
+		}
+	}
+	public void removeErrorKey(Map<String, String> errors, String removeKey) {
+		String key[] = {removeKey};
+		removeErrorKey(errors,key);
 	}
 }

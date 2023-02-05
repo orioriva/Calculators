@@ -1,25 +1,33 @@
 'use strict'
 
 /** ID変更のスイッチが押された時 */
-$('#newIdSwitch').change(function() {
+$('#changeId').change(function() {
 	if($(this).prop('checked')){
 		$('#newIdArea').animate({height:'show', opacity:'show'},'normal');
+		$('#confirmArea').animate({height:'show', opacity:'show'},'normal');
 	}else{
 		$('#newIdArea').animate({height:'hide', opacity:'hide'},'normal');
+		if(!$('#changePassword').prop('checked')){
+			$('#confirmArea').animate({height:'hide', opacity:'hide'},'normal');
+		}
 	}
 });
 
 /** パスワード変更のスイッチが押された時 */
-$('#newPasswordSwitch').change(function() {
+$('#changePassword').change(function() {
 	if($(this).prop('checked')){
 		$('#newPasswordArea').animate({height:'show', opacity:'show'},'normal');
+		$('#confirmArea').animate({height:'show', opacity:'show'},'normal');
 	}else{
 		$('#newPasswordArea').animate({height:'hide', opacity:'hide'},'normal');
+		if(!$('#changeId').prop('checked')){
+			$('#confirmArea').animate({height:'hide', opacity:'hide'},'normal');
+		}
 	}
 });
 
+/** ユーザー名変更 */
 function ajaxRename(){
-	// バリデーション結果をクリア
 	removeValidResult();
 
 	$.ajax({
@@ -43,6 +51,46 @@ function ajaxRename(){
 		// ajax失敗時の処理
 		alert('情報送信に失敗しました');
 	});
+	
+	return false;
+}
+
+/** ＩＤ・パスワード変更 */
+function ajaxChangeIdPassword(){
+	if(!confirm("本当に変更してよろしいですか？\r\n※　変更後にログアウトされます")){
+		return;
+	}
+	
+	removeValidResult();
+
+	$.ajax({
+		type : "POST",
+		cache : false,
+		url : '/mypage/userSettings/resetIdPassword/rest',
+		data : $('#changeIdPasswordForm').serializeArray(),
+		dataType : 'json'
+	}).done(function(data){
+		console.log(data);
+		removeValidResult();
+		if(data.result == 90){
+			// validationエラー時の処理
+			$.each(data.errors, function(key, value){
+				reflectValidResult(key, value)
+			});
+		}else if(data.result == 0){
+			alert("ＩＤ・パスワードを更新しました");
+			$('#logoutForm').submit();
+		}else if(data.result == 500){
+			alert("データの更新に失敗しました");
+		}else{
+			alert("想定外のエラーが発生しました");
+		}
+	}).fail(function(jqXHR, testStatus, errorThrown){
+		// ajax失敗時の処理
+		alert('情報送信に失敗しました');
+	});
+	
+	return false;
 }
 
 /** バリデーション結果をクリア */
