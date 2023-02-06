@@ -10,8 +10,8 @@
 	<!-- 画面が小さい時折りたたむ -->
 	<div class="collapse navbar-collapse" id="navbarNav">
 		<ul class="navbar-nav">
-			<li class="nav-item">
-				<a class="nav-link" th:href="@{/}">TOP</a>
+			<li class="nav-item mr-3">
+				<a class="nav-link h5 pb-0" th:href="@{/}">TOP</a>
 			</li>
 			<li class="nav-item">
 				<a class="nav-link" th:href="@{/calculator}"><i class="fas fa-calculator"></i>&ensp;計算表作成</a>
@@ -20,7 +20,7 @@
 				<a class="nav-link" th:href="@{/bbs}"><i class="fas fa-chalkboard"></i>&ensp;[[#{bbs}]]</a>
 			</li>
 			<li class="nav-item" sec:authorize="hasRole('ADMIN')">
-				<a class="nav-link" th:href="@{/admin}">アドミン専用</a>
+				<a class="nav-link" th:href="@{/admin}"><i class="fas fa-wrench"></i>&ensp;管理者専用</a>
 			</li>
 		</ul>
 	</div>
