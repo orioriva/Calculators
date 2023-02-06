@@ -51,7 +51,7 @@ function ajaxRename(){
 		// ajax失敗時の処理
 		alert('情報送信に失敗しました');
 	});
-	
+
 	return false;
 }
 
@@ -60,7 +60,7 @@ function ajaxChangeIdPassword(){
 	if(!confirm("本当に変更してよろしいですか？\r\n※　変更後にログアウトされます")){
 		return;
 	}
-	
+
 	removeValidResult();
 
 	$.ajax({
@@ -89,7 +89,45 @@ function ajaxChangeIdPassword(){
 		// ajax失敗時の処理
 		alert('情報送信に失敗しました');
 	});
-	
+
+	return false;
+}
+
+/** ユーザー削除 */
+function ajaxChangeIdPassword(){
+	if(!confirm("本当に登録解除してよろしいですか？\r\n※　ユーザーデータ削除後にログアウトされます")){
+		return;
+	}
+
+	removeValidResult();
+
+	$.ajax({
+		type : "DELETE",
+		cache : false,
+		url : '/mypage/userSettings/unregister/rest',
+		data : $('#unregisterForm').serializeArray(),
+		dataType : 'json'
+	}).done(function(data){
+		console.log(data);
+		removeValidResult();
+		if(data.result == 90){
+			// validationエラー時の処理
+			$.each(data.errors, function(key, value){
+				reflectValidResult(key, value)
+			});
+		}else if(data.result == 0){
+			alert("登録情報を削除いたしました。");
+			$('#logoutForm').submit();
+		}else if(data.result == 500){
+			alert("データの削除に失敗しました");
+		}else{
+			alert("想定外のエラーが発生しました");
+		}
+	}).fail(function(jqXHR, testStatus, errorThrown){
+		// ajax失敗時の処理
+		alert('情報送信に失敗しました');
+	});
+
 	return false;
 }
 

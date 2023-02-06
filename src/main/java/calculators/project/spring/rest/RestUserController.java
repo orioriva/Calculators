@@ -7,11 +7,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import calculators.project.spring.form.ChangeIdPasswordForm;
 import calculators.project.spring.form.ChangeUserNameForm;
+import calculators.project.spring.form.ConfirmIdPasswordForm;
 import calculators.project.spring.form.RegisterForm;
 import calculators.project.spring.model.LoginUser;
 import calculators.project.spring.model.LoginUserDetails;
@@ -69,7 +71,7 @@ public class RestUserController {
 		user.getLoginUser().setUserName(form.getUserName());
 		return new RestResult(0, null);
 	}
-	
+
 	/** ＩＤ・パスワード変更 */
 	@PostMapping("/mypage/userSettings/resetIdPassword/rest")
 	public RestResult restResetIdPassword(
@@ -80,13 +82,13 @@ public class RestUserController {
 		if(form.getChangeId() == null && form.getChangePassword() == null) {
 			return new RestResult(404, null);
 		}
-		
+
 		Map<String, String> errors = new HashMap<>();
 		errorCheck.setValidError(bindingResult, errors);
-		
+
 		String newUserId = null;
 		String newPassword = null;
-		
+
 		// IDを変更しないならＩＤエラー無視
 		if(form.getChangeId() == null)
 			errorCheck.removeErrorKey(errors, new String[]{"newUserId","newUserIdConfirm"});
@@ -105,14 +107,33 @@ public class RestUserController {
 		}
 		// 現在のＩＤ・パスワードが正しいか
 		errorCheck.setNotMatchUserIdPasswordError(user.getLoginUser().getId(), form.getNowUserId(), form.getNowPassword(), new String[]{"nowUserId","nowPassword"}, errors);
-		
+
 		if(!errors.isEmpty()) {
 			return new RestResult(90, errors);
 		}
 		if(!userService.updateUserIdPassword(user.getLoginUser().getId(), form.getNowUserId(), newUserId, newPassword)) {
 			return new RestResult(500, null);
 		}
-		
+
+		return new RestResult(0, null);
+	}
+
+	/** ユーザー削除 */
+	@DeleteMapping("/mypage/userSettings/unregister/rest")
+	public RestResult restUnregister(@Validated ConfirmIdPasswordForm form,
+			BindingResult bindingResult,
+			@AuthenticationPrincipal LoginUserDetails user
+	) {
+		Map<String, String> errors = new HashMap<>();
+		errorCheck.setValidError(bindingResult, errors);
+		// 現在のＩＤ・パスワードが正しいか
+		errorCheck.setNotMatchUserIdPasswordError(user.getLoginUser().getId(), form.getNowUserId(), form.getNowPassword(), new String[]{"nowUserId","nowPassword"}, errors);
+		if(!errors.isEmpty()) {
+			return new RestResult(90, errors);
+		}
+
+		userService.deleteUser(user.getLoginUser().getId());
+
 		return new RestResult(0, null);
 	}
 }

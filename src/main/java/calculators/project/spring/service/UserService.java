@@ -48,4 +48,8 @@ public class UserService {
 		String encodePass = (newPassword == null) ? null : encoder.encode(newPassword);
 		return mapper.updateUserIdPassword(id, nowUserId, newUserId, encodePass);
 	}
+	/** ユーザー１件削除 */
+	public boolean deleteUser(int id) {
+		return mapper.deleteUser(id);
+	}
 }

@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 
 import calculators.project.spring.form.ChangeIdPasswordForm;
 import calculators.project.spring.form.ChangeUserNameForm;
+import calculators.project.spring.form.ConfirmIdPasswordForm;
 import calculators.project.spring.model.LoginUserDetails;
 
 @Controller
@@ -39,6 +40,7 @@ public class MyPageController {
 	public String getMyPageUserSettings(Model model,
 		@ModelAttribute ChangeUserNameForm userNameForm,
 		@ModelAttribute ChangeIdPasswordForm idpassForm,
+		@ModelAttribute ConfirmIdPasswordForm confirmForm,
 		@AuthenticationPrincipal LoginUserDetails user
 	) {
 		userNameForm.setUserName(user.getUserViewName());

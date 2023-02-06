@@ -22,13 +22,13 @@ title = #{myPage}, scripts = ~{::script}, links = ~{::link})">
 					[[#{myPageTop}]]
 				</a>
 				<a th:href="@{/mypage/formulas}" class="list-group-item list-group-item-action" th:classappend="${viewPage == 'formulas'} ? 'active disabled'">
-					[[#{myFormulaList}]]
+					<i class="fas fa-calculator"></i>&ensp;[[#{myFormulaList}]]
 				</a>
 				<a th:href="@{/mypage/posts}" class="list-group-item list-group-item-action" th:classappend="${viewPage == 'posts'} ? 'active disabled'">
-					[[#{myPostList}]]
+					<i class="fas fa-edit"></i>&ensp;[[#{myPostList}]]
 				</a>
 				<a th:href="@{/mypage/userSettings}" class="list-group-item list-group-item-action" th:classappend="${viewPage == 'userSettings'} ? 'active disabled'">
-					[[#{userSettings}]]
+					<i class="fas fa-cog"></i>&ensp;[[#{userSettings}]]
 				</a>
 				<form name="logout" th:action="@{/logout}" method="post">
 				</form>

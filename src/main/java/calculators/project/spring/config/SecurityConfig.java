@@ -36,7 +36,6 @@ public class SecurityConfig{
         		.mvcMatchers("/bbs").permitAll()
         		.mvcMatchers("/bbs/rest").permitAll()
         		.mvcMatchers("/bbs/post").permitAll()
-        		.mvcMatchers("/general").hasRole("GENERAL")
         		.mvcMatchers("/admin").hasRole("ADMIN")
         		.anyRequest().authenticated()
         );

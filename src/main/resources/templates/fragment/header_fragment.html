@@ -14,13 +14,13 @@
 				<a class="nav-link" th:href="@{/}">TOP</a>
 			</li>
 			<li class="nav-item">
-				<a class="nav-link" th:href="@{/calculator}">計算表作成</a>
+				<a class="nav-link" th:href="@{/calculator}"><i class="fas fa-calculator"></i>&ensp;計算表作成</a>
 			</li>
 			<li class="nav-item">
-				<a class="nav-link" th:href="@{/bbs}" th:text="#{bbs}"></a>
+				<a class="nav-link" th:href="@{/bbs}"><i class="fas fa-chalkboard"></i>&ensp;[[#{bbs}]]</a>
 			</li>
-			<li class="nav-item">
-				<a class="nav-link disabled" href="#">Disabled</a>
+			<li class="nav-item" sec:authorize="hasRole('ADMIN')">
+				<a class="nav-link" th:href="@{/admin}">アドミン専用</a>
 			</li>
 		</ul>
 	</div>
@@ -39,11 +39,10 @@
 				<span th:text="#{welcomeUser(${#authentication.principal.loginUser.userName})}"></span>
 			</button>
 			<div class="dropdown-menu" aria-labelledby="dropdownMenu">
-				<!-- ユーザー情報編集 -->
-				<form th:action="@{/updateUser}" method="post">
-					<button class="dropdown-item" type="submit" th:text="ユーザー情報編集"></button>
-				</form>
-				<a class="dropdown-item" role="button" th:href="@{/mypage}">マイページ</a>
+				<a th:href="@{/mypage/top}" class="dropdown-item">[[#{myPageTop}]]</a>
+				<a th:href="@{/mypage/formulas}" class="dropdown-item"><i class="fas fa-calculator"></i>&ensp;[[#{myFormulaList}]]</a>
+				<a th:href="@{/mypage/posts}" class="dropdown-item"><i class="fas fa-edit"></i>&ensp;[[#{myPostList}]]</a>
+				<a th:href="@{/mypage/userSettings}" class="dropdown-item"><i class="fas fa-cog"></i>&ensp;[[#{userSettings}]]</a>
 				<!-- ログアウト -->
 				<div class="dropdown-divider"></div>
 				<form th:action="@{/logout}" method="post">

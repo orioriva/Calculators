@@ -72,6 +72,14 @@
 		userId = #{nowUserId}
 </update>
 
+<!-- ユーザー１件削除 -->
+<delete id="deleteUser">
+	DELETE FROM
+		users
+	WHERE
+		id = #{id}
+</delete>
+
 <!--
 <select id="findUserOne" resultMap="muser">
 	select
