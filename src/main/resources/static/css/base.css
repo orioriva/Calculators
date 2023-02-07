@@ -3,3 +3,11 @@
 .hide{
 	display: none;
 }
+
+.scroll-x{
+	overflow-x: scroll;
+}
+
+.scroll-y{
+	overflow-y: scroll;
+}

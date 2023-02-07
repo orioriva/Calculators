@@ -15,7 +15,7 @@ function ajaxAddData(title){
 	$.ajax({
 		type : "POST",
 		cache : false,
-		url : '/mypage/formulas/add/rest',
+		url : '/rest/formulas',
 		data : {
 			title: title,
 			json: objectsToString(),
@@ -39,9 +39,9 @@ function ajaxAddData(title){
 function ajaxGetFormulaList(){
 	// ajax通信
 	$.ajax({
-		type : "POST",
+		type : "GET",
 		cache : false,
-		url : '/mypage/formulas/rest',
+		url : '/rest/formulas',
 		data : {
 			_csrf: $("*[name=_csrf]").val()  // CSRFトークンを送信
 		},
@@ -60,9 +60,9 @@ function ajaxGetFormulaList(){
 function ajaxLoadFormula(){
 	// ajax通信
 	$.ajax({
-		type : "POST",
+		type : "GET",
 		cache : false,
-		url : '/mypage/formulas/load/rest',
+		url : '/rest/formulas/json',
 		data : {
 			formulaId: parseInt(event.currentTarget.value),
 			_csrf: $("*[name=_csrf]").val()  // CSRFトークンを送信
@@ -92,9 +92,9 @@ function ajaxUpdateFormulaJson(){
 
 	// ajax通信
 	$.ajax({
-		type : "POST",
+		type : "PUT",
 		cache : false,
-		url : '/mypage/formulas/updateJson/rest',
+		url : '/rest/formulas/json',
 		data : {
 			formulaId: parseInt(event.currentTarget.value),
 			json: objectsToString(),
@@ -125,9 +125,9 @@ function ajaxUpdateFormulaTitle(oldTitle){
 
 	// ajax通信
 	$.ajax({
-		type : "POST",
+		type : "PUT",
 		cache : false,
-		url : '/mypage/formulas/updateTitle/rest',
+		url : '/rest/formulas/title',
 		data : {
 			formulaId: parseInt(event.currentTarget.value),
 			title: title,
@@ -155,9 +155,9 @@ function ajaxDeleteFormula(){
 
 	// ajax通信
 	$.ajax({
-		type : "POST",
+		type : "DELETE",
 		cache : false,
-		url : '/mypage/formulas/delete/rest',
+		url : '/rest/formulas',
 		data : {
 			formulaId: parseInt(event.currentTarget.value),
 			_csrf: $("*[name=_csrf]").val()  // CSRFトークンを送信
@@ -172,6 +172,5 @@ function ajaxDeleteFormula(){
 		}
 	}).fail(function(jqXHR, testStatus, errorThrown){
 		alert('情報送信に失敗しました');
-	}).always(function(){
 	});
 }

@@ -24,7 +24,7 @@ function sendData(){
 	$.ajax({
 		type : "POST",
 		cache : false,
-		url : '/register/rest',
+		url : '/rest/users',
 		data : formData,
 		dataType : 'json',
 	}).done(function(data){

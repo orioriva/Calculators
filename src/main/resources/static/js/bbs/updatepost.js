@@ -27,9 +27,9 @@ $('#send-btn').click(function (){
 	var formData = $('#input-form').serializeArray();
 
 	$.ajax({
-		type : "POST",
+		type : "PUT",
 		cache : false,
-		url : '/bbs/post/update/rest',
+		url : '/rest/posts',
 		data : formData,
 		dataType : 'json'
 	}).done(function(data){

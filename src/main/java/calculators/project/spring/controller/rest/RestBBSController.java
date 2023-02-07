@@ -1,4 +1,4 @@
-package calculators.project.spring.rest;
+package calculators.project.spring.controller.rest;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -10,7 +10,9 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -34,19 +36,19 @@ public class RestBBSController {
 	private ErrorCheckService errorCheck;
 
 	/** 投稿一覧リスト取得 */
-	@PostMapping("/bbs/rest")
+	@GetMapping("/rest/posts")
 	public List<BBSPost> restGetPostList() {
 		return bbsFormulaService.getPostList();
 	}
 
-	/** 投稿一覧リスト取得 */
-	@PostMapping("/bbs/myPosts/rest")
+	/** 自分の投稿一覧リスト取得 */
+	@GetMapping("/rest/posts/myposts")
 	public List<BBSPost> restGetMyPostList(@AuthenticationPrincipal LoginUserDetails user) {
 		return bbsFormulaService.getPostList(user.getLoginUser().getId());
 	}
 
 	/** 新規投稿 */
-	@PostMapping("/bbs/newpost/rest")
+	@PostMapping("/rest/posts")
 	public RestResult restNewPost(
 			@AuthenticationPrincipal LoginUserDetails user,
 			@Validated BBSPostForm form,
@@ -75,7 +77,7 @@ public class RestBBSController {
 	}
 
 	/** 投稿内容変更 */
-	@PostMapping("/bbs/post/update/rest")
+	@PutMapping("/rest/posts")
 	public RestResult restUpdatePost(
 			@AuthenticationPrincipal LoginUserDetails user,
 			@Validated BBSPostForm form,
@@ -116,7 +118,7 @@ public class RestBBSController {
 	}
 
 	/** 投稿を論理削除 */
-	@DeleteMapping("/bbs/post/delete/rest")
+	@DeleteMapping("/rest/posts")
 	public boolean restDeletePost(
 		@AuthenticationPrincipal LoginUserDetails user,
 		@RequestParam int id

@@ -32,9 +32,9 @@ function setFormula(formulaId, title){
 function ajaxGetFormulaList(){
 	// ajax通信
 	$.ajax({
-		type : "POST",
+		type : "GET",
 		cache : false,
-		url : '/mypage/formulas/rest',
+		url : '/rest/formulas',
 		data : {
 			_csrf: $("*[name=_csrf]").val()  // CSRFトークンを送信
 		},

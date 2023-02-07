@@ -34,12 +34,24 @@ title = '計算式編集', scripts = ~{::script}, links = ~{::link})">
     <div class="navbar-nav d-flex flex-row align-items-center">
 		<!-- 操作ガイド -->
 		<button class="nav-item mr-2 btn btn-sm btn-secondary" id="guide-btn"><i class="fas fa-question-circle"></i>&ensp;操作ガイド</button>
+		<!-- Canvasサイズ変更 -->
+		<div class="nav-item mr-2">
+			<div class="input-group input-group-sm">
+				<div class="input-group-prepend">
+					<label class="input-group-text" for="selectCanvasSize" th:text="#{canvasSize}"></label>
+				</div>
+				<select class="custom-select" id="selectCanvasSize">
+					<option value="1" th:text="#{windowSize}"></option>
+					<option value="2" th:text="#{innerSize}"></option>
+				</select>
+			</div>
+		</div>
 		<!-- 全消去 -->
 		<button class="nav-item mr-2 btn btn-sm btn-danger" id="delete-btn"><i class="fas fa-trash-alt"></i>&ensp;全消去</button>
 		<!-- 開く -->
 		<button sec:authorize="${authenticated}" class="nav-item btn btn-sm btn-success" id="open-btn"><i class="fas fa-folder-open"></i>&ensp;開く</button>
-		<h6 sec:authorize="${!authenticated}" class="nav-item">※ ログインすると保存出来るようになります</h6>
-    </div>
+		<small sec:authorize="${!authenticated}" class="nav-item">※ ログインすると保存出来るようになります</small>
+	</div>
 </nav>
 
 <!-- 操作ガイド（ポップアップ表示） -->
@@ -54,21 +66,23 @@ title = '計算式編集', scripts = ~{::script}, links = ~{::link})">
 		<table id="dataTable" class="table table-sm table-bordered text-nowrap w-100">
 			<thead class="thead-light">
 				<tr>
-					<th>タイトル</th>
-					<th>更新日</th>
-					<th>操作</th>
+					<th th:text="#{title}"></th>
+					<th th:text="#{updateDate}"></th>
+					<th th:text="#{operation}"></th>
 				</tr>
 			</thead>
 			<tbody>
 			</tbody>
 		</table>
-		<button id="close-file" class="btn btn-secondary"><i class="fas fa-window-close"></i>&ensp;閉じる</button>
+		<button id="close-file" class="btn btn-secondary"><i class="fas fa-window-close"></i>&ensp;[[#{close}]]</button>
 	</div>
 </div>
 
 <!-- キャンバス -->
-<div class="" id="canvas-wrapper">
-    <canvas class="bg-light" id="canvas" width="1280" height="720">このブラウザは HTML5 Canvas に対応していません。</canvas>
+<div class="scroll-x">
+	<div class="" id="canvas-wrapper">
+	    <canvas class="bg-light" id="canvas" width="1280px" height="720px">このブラウザは HTML5 Canvas に対応していません。</canvas>
+	</div>
 </div>
 
 <input type="hidden" th:value="${jsonData}" id="jsonData">

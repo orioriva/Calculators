@@ -17,7 +17,7 @@ function ajaxDeletePost(postId){
 	$.ajax({
 		type : "DELETE",
 		cache : false,
-		url : '/bbs/post/delete/rest',
+		url : '/rest/posts',
 		data : {
 			id : postId,
 			_csrf: $("*[name=_csrf]").val()  // CSRFトークンを送信
@@ -38,9 +38,9 @@ function ajaxDeletePost(postId){
 
 function ajaxGetPostList(){
 	$.ajax({
-		type : "POST",
+		type : "GET",
 		cache : false,
-		url : '/bbs/myPosts/rest',
+		url : '/rest/posts/myposts',
 		data : {
 			_csrf: $("*[name=_csrf]").val()  // CSRFトークンを送信
 		},

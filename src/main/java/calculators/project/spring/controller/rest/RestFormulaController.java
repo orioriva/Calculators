@@ -1,11 +1,14 @@
-package calculators.project.spring.rest;
+package calculators.project.spring.controller.rest;
 
 import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -19,7 +22,7 @@ public class RestFormulaController {
 	private FormulasService formulasService;
 
 	/** 一覧表示処理 */
-	@PostMapping("/mypage/formulas/rest")
+	@GetMapping("/rest/formulas")
 	public List<Formula> postGetFormulaList(
 			@AuthenticationPrincipal LoginUserDetails user
 	){
@@ -27,7 +30,7 @@ public class RestFormulaController {
 	}
 
 	/** 新規保存処理 */
-	@PostMapping("/mypage/formulas/add/rest")
+	@PostMapping("/rest/formulas")
 	public int postAddFormula(
 			@AuthenticationPrincipal LoginUserDetails user,
 			@RequestParam String title,
@@ -47,7 +50,7 @@ public class RestFormulaController {
 	}
 
 	/** 計算表データ取得（json） */
-	@PostMapping("/mypage/formulas/load/rest")
+	@GetMapping("/rest/formulas/json")
 	public String postLoadFormula(
 			@AuthenticationPrincipal LoginUserDetails user,
 			@RequestParam int formulaId
@@ -56,7 +59,7 @@ public class RestFormulaController {
 	}
 
 	/** 計算表データ１件削除 */
-	@PostMapping("/mypage/formulas/delete/rest")
+	@DeleteMapping("/rest/formulas")
 	public int postDeleteFormula(
 			@AuthenticationPrincipal LoginUserDetails user,
 			@RequestParam int formulaId) {
@@ -67,7 +70,7 @@ public class RestFormulaController {
 	}
 
 	/** 計算表データ１件更新(json) */
-	@PostMapping("/mypage/formulas/updateJson/rest")
+	@PutMapping("/rest/formulas/json")
 	public int postUpdateFormulaJson(
 			@AuthenticationPrincipal LoginUserDetails user,
 			@RequestParam int formulaId,
@@ -85,9 +88,9 @@ public class RestFormulaController {
 		}
 		return 0;
 	}
-	
+
 	/** 計算表データ１件更新(タイトル名) */
-	@PostMapping("/mypage/formulas/updateTitle/rest")
+	@PutMapping("/rest/formulas/title")
 	public int postUpdateFormulaTitle(
 			@AuthenticationPrincipal LoginUserDetails user,
 			@RequestParam int formulaId,

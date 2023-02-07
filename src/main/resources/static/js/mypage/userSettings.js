@@ -31,9 +31,9 @@ function ajaxRename(){
 	removeValidResult();
 
 	$.ajax({
-		type : "POST",
+		type : "PUT",
 		cache : false,
-		url : '/mypage/userSettings/rename/rest',
+		url : '/rest/users/name',
 		data : $('#changeUserNameForm').serializeArray(),
 		dataType : 'json'
 	}).done(function(data){
@@ -64,13 +64,13 @@ function ajaxChangeIdPassword(){
 	removeValidResult();
 
 	$.ajax({
-		type : "POST",
+		type : "PUT",
 		cache : false,
-		url : '/mypage/userSettings/resetIdPassword/rest',
+		url : '/rest/users/id-password',
 		data : $('#changeIdPasswordForm').serializeArray(),
 		dataType : 'json'
 	}).done(function(data){
-		console.log(data);
+		//console.log(data);
 		removeValidResult();
 		if(data.result == 90){
 			// validationエラー時の処理
@@ -94,7 +94,7 @@ function ajaxChangeIdPassword(){
 }
 
 /** ユーザー削除 */
-function ajaxChangeIdPassword(){
+function ajaxDeleteUser(){
 	if(!confirm("本当に登録解除してよろしいですか？\r\n※　ユーザーデータ削除後にログアウトされます")){
 		return;
 	}
@@ -104,11 +104,10 @@ function ajaxChangeIdPassword(){
 	$.ajax({
 		type : "DELETE",
 		cache : false,
-		url : '/mypage/userSettings/unregister/rest',
+		url : '/rest/users',
 		data : $('#unregisterForm').serializeArray(),
 		dataType : 'json'
 	}).done(function(data){
-		console.log(data);
 		removeValidResult();
 		if(data.result == 90){
 			// validationエラー時の処理

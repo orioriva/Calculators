@@ -13,7 +13,7 @@ $('#send-btn').click(function (){
 	$.ajax({
 		type : "POST",
 		cache : false,
-		url : '/bbs/newpost/rest',
+		url : '/rest/posts',
 		data : formData,
 		dataType : 'json'
 	}).done(function(data){

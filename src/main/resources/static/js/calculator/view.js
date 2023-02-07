@@ -8,6 +8,15 @@ window.onbeforeunload = function(event){
     event.returnValue = 'ページを離れますか？\r\n保存していない内容は破棄されます！';
 };
 
+/** キャンバスサイズが変更されたら */
+$('#selectCanvasSize').change(function(){
+	if($(this).val() == "1"){
+		$('#canvas-wrapper').css({'width': '100%', 'height': '100vh'});
+	}else if($(this).val() == "2"){
+		$('#canvas-wrapper').css({'width': '1280px', 'height': '720px'});
+	}
+});
+
 /** 操作ガイドボタンが押された時 */
 $("#guide-btn").click(function() {
     $('.popup-guide').addClass('show').fadeIn();
@@ -106,15 +115,4 @@ function updateFormulaTable(formulaData){
 			}
 		]
 	});
-}
-
-// クリップボードへコピー（コピーの処理）
-function copyToClipboard (text) {
-    if (navigator.clipboard) { // navigator.clipboardが使えるか判定する
-        return navigator.clipboard.writeText(text).then(function () { // クリップボードへ書きむ
-            alert("クリップボードに書き込みました");
-        });
-    } else {
-        alert("お使いの環境ではこの機能を使用できません");
-    }
 }

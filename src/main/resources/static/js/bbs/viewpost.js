@@ -9,7 +9,7 @@ function ajaxDeletePost(postId){
 	$.ajax({
 		type : "DELETE",
 		cache : false,
-		url : '/bbs/post/delete/rest',
+		url : '/rest/posts',
 		data : {
 			id : postId,
 			_csrf: $("*[name=_csrf]").val()  // CSRFトークンを送信

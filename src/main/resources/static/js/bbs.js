@@ -11,9 +11,9 @@ $(document).ready(function () {
 /** 投稿一覧取得 */
 function ajaxGetPostList(){
 	$.ajax({
-		type : "POST",
+		type : "GET",
 		cache : false,
-		url : '/bbs/rest',
+		url : '/rest/posts',
 		data : {
 			_csrf: $("*[name=_csrf]").val()  // CSRFトークンを送信
 		},

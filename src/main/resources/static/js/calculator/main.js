@@ -9,19 +9,6 @@ var loading = {
 // ページのロードが終わったら
 window.addEventListener("load", init() );
 
-//リサイズイベントを検知してリサイズ処理を実行
-//window.addEventListener("resize", handleResize);
-
-// リサイズ処理
-function handleResize(event) {
-  // 画面幅・高さを取得
-  //var w = window.innerWidth;
-  //var h = window.innerHeight;
-  // Canvas要素の大きさを画面幅・高さに合わせる
-  //canvas.width = 1280;
-  //canvas.height = 720;
-}
-
 /** 起動時処理 */
 function init() {
 	setInterval(update, 60);
@@ -89,13 +76,6 @@ function loadObjects(){
 	loading.isLoading = false;
 }
 
-/*
-function getData(text,target){
-	const start = text.indexOf(target);
-	//return text.substr(,);
-}
-*/
-
 /** オブジェクト情報を文字列化（JSON） */
 function objectsToString(){
 	let save = new Array();
@@ -106,8 +86,6 @@ function objectsToString(){
 	// JSONへ変換
 	let jsonData = JSON.stringify(save);
 	console.log(jsonData.length);
-
-	//copyToClipboard(jsonData);
 
 	return jsonData;
 }

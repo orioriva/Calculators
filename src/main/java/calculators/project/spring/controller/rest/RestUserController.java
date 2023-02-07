@@ -1,4 +1,4 @@
-package calculators.project.spring.rest;
+package calculators.project.spring.controller.rest;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -9,6 +9,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import calculators.project.spring.form.ChangeIdPasswordForm;
@@ -29,7 +30,7 @@ public class RestUserController {
 	@Autowired
 	private ErrorCheckService errorCheck;
 
-	@PostMapping("/register/rest")
+	@PostMapping("/rest/users")
 	public RestResult restRegister(@Validated RegisterForm form,
 			BindingResult bindingResult)
 	{
@@ -54,7 +55,7 @@ public class RestUserController {
 	}
 
 	/** ユーザー名変更 */
-	@PostMapping("/mypage/userSettings/rename/rest")
+	@PutMapping("/rest/users/name")
 	public RestResult restRename(
 		@Validated ChangeUserNameForm form,
 		BindingResult bindingResult,
@@ -73,7 +74,7 @@ public class RestUserController {
 	}
 
 	/** ＩＤ・パスワード変更 */
-	@PostMapping("/mypage/userSettings/resetIdPassword/rest")
+	@PutMapping("/rest/users/id-password")
 	public RestResult restResetIdPassword(
 		@Validated ChangeIdPasswordForm form,
 		BindingResult bindingResult,
@@ -119,7 +120,7 @@ public class RestUserController {
 	}
 
 	/** ユーザー削除 */
-	@DeleteMapping("/mypage/userSettings/unregister/rest")
+	@DeleteMapping("/rest/users")
 	public RestResult restUnregister(@Validated ConfirmIdPasswordForm form,
 			BindingResult bindingResult,
 			@AuthenticationPrincipal LoginUserDetails user
