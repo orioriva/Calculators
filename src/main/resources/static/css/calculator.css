@@ -20,27 +20,3 @@ html, body{
 	height: 100vh;
 	border: 5px skyblue dashed;
 }
-
-[class^="popup"] {
-    display: none;
-    height: 100vh;
-    width: 100%;
-    background: #00000070;
-    position: fixed;
-    top: 0;
-    left: 0;
-}
-
-.content{
-    background: #ffffff;
-    padding: 30px;
-    width: 90%;
-	height: 90%;
-	overflow-y: scroll;
-}
-
-.show {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}

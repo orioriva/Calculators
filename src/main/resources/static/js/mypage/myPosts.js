@@ -5,51 +5,12 @@ setDataTablesStatus(4,3);
 
 /** ページの読み込みが終わったら */
 $(document).ready(function () {
-	ajaxGetPostList();
+	ajaxGetMyPostList();
 });
 
-function ajaxDeletePost(postId){
-	if(!confirm("本当にこの投稿を削除してよろしいですか？")){
-		return;
-	}
-
-	// ajax通信
-	$.ajax({
-		type : "DELETE",
-		cache : false,
-		url : '/rest/posts',
-		data : {
-			id : postId,
-			_csrf: $("*[name=_csrf]").val()  // CSRFトークンを送信
-		},
-		dataType : 'json'
-	}).done(function(data){
-		if(!data){
-			alert('削除出来ませんでした');
-			return;
-		}
-		alert('投稿を削除しました');
-		ajaxGetPostList();
-	}).fail(function(jqXHR, testStatus, errorThrown){
-		// ajax失敗時の処理
-		alert('情報送信に失敗しました');
-	});
-}
-
-function ajaxGetPostList(){
-	$.ajax({
-		type : "GET",
-		cache : false,
-		url : '/rest/posts/myposts',
-		data : {
-			_csrf: $("*[name=_csrf]").val()  // CSRFトークンを送信
-		},
-		dataType : 'json'
-	}).done(function(data){
-		createDataTable(data);
-	}).fail(function(jqXHR, testStatus, errorThrown){
-		alert('情報送信に失敗しました');
-	});
+/** 投稿削除ボタンが押されたら */
+function deletePostAfter(){
+	ajaxGetMyPostList();
 }
 
 function createDataTable(list){

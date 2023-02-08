@@ -4,8 +4,10 @@
 <head th:replace="fragment/head_fragment :: head_fragment(
 title = #{postEditing}, scripts = ~{::script}, links = ~{::link})">
 	<!-- 個別CSS、JSを引数に指定 -->
+	<link rel="stylesheet" type="text/css" th:href="@{/css/popup.css}">
 	<link rel="stylesheet" type="text/css" th:href="@{/css/bbspost.css}">
-	<link rel="stylesheet" type="text/css" th:href="@{/css/updatepost.css}">
+	<script type="text/javascript" th:src="@{/js/rest/rest-posts.js}" defer></script>
+	<script type="text/javascript" th:src="@{/js/rest/rest-formulas.js}" defer></script>
 	<script type="text/javascript" th:src="@{/js/bbs/bbspost.js}" defer></script>
 	<script type="text/javascript" th:src="@{/js/bbs/updatepost.js}" defer></script>
 </head>
@@ -15,7 +17,7 @@ title = #{postEditing}, scripts = ~{::script}, links = ~{::link})">
 <header th:replace="fragment/header_fragment :: header_fragment"></header>
 
 <!-- 投稿情報入力 -->
-<form class="container w-75 p-3" id="input-form" th:action="@{/bbs/post/update}" method="post" th:object="${BBSPostForm}" onsubmit="return false;">
+<form class="container w-75 p-3" id="input-form" th:action th:method="put" th:object="${BBSPostForm}" onsubmit="return ajaxUpdatePost();">
 	<!-- 見出し -->
 	<div class="border-bottom mb-3">
 		<h3 th:text="#{postEditing}"></h3>
@@ -28,7 +30,7 @@ title = #{postEditing}, scripts = ~{::script}, links = ~{::link})">
 
 	<div class="border rounded p-2 mb-3">
 		<!-- 計算表を変更するか？ -->
-		<div class="custom-control custom-switch">
+		<div class="custom-control custom-switch z-0">
 			<input type="checkbox" class="custom-control-input" name="changeFormula" id="changeFormula">
 			<label class="custom-control-label" for="changeFormula" th:text="#{formulaChange}"></label>
 		</div>
@@ -40,7 +42,7 @@ title = #{postEditing}, scripts = ~{::script}, links = ~{::link})">
 			</div>
 			<label class="form-control text-truncate" id="titleText" for="open-btn" th:text="${selectedName != ''} ? ${selectedName} : #{select.pls}"></label>
 			<div class="input-group-append">
-				<button class="btn btn-secondary" id="open-btn" type="button" th:text="#{select}"></button>
+				<button class="btn btn-secondary z-0" id="open-btn" type="button" th:text="#{select}"></button>
 			</div>
 		</div>
 		<input type="hidden" th:field="*{postFormula}" value="">
@@ -79,7 +81,7 @@ title = #{postEditing}, scripts = ~{::script}, links = ~{::link})">
 	</div>
 
 	<!-- 変更確定ボタン -->
-	<button class="btn btn-primary w-100" id="send-btn" type="button" th:text="#{register}"></button>
+	<button class="btn btn-primary w-100" type="submit" th:text="#{register}"></button>
 </form>
 
 <!-- ファイル読込 -->

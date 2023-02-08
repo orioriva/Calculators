@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import calculators.project.spring.form.ChangeIdForm;
 import calculators.project.spring.form.ChangeIdPasswordForm;
 import calculators.project.spring.form.ChangeUserNameForm;
 import calculators.project.spring.form.ConfirmIdPasswordForm;
@@ -70,6 +71,33 @@ public class RestUserController {
 			return new RestResult(999, null);
 		}
 		user.getLoginUser().setUserName(form.getUserName());
+		return new RestResult(0, null);
+	}
+
+	/** ＩＤ変更 */
+	@PutMapping("/rest/users/id")
+	public RestResult restResetId(
+		@Validated ChangeIdForm form,
+		BindingResult bindingResult,
+		@AuthenticationPrincipal LoginUserDetails user
+	) {
+		System.out.println(form);
+		Map<String, String> errors = new HashMap<>();
+		errorCheck.setValidError(bindingResult, errors);
+
+		// 現在のＩＤ・パスワードが正しいか
+		errorCheck.setNotMatchUserIdPasswordError(
+			user.getLoginUser().getId(),
+			form.getNowUserId(),
+			form.getNowPassword(),
+			new String[]{"nowUserId","nowPassword"},
+			errors
+		);
+
+		if(!errors.isEmpty()) {
+			return new RestResult(90, errors);
+		}
+
 		return new RestResult(0, null);
 	}
 

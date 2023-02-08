@@ -57,6 +57,18 @@ $('#close-file').click(function() {
     $('.popup-file').fadeOut();
 });
 
+/** 新規保存ボタンが押された時 */
+$('#addData').click(function() {
+	let title = prompt("保存する計算式のタイトルを入力", this.text);
+	if(title == null || title == ""){
+		alert("キャンセルしました");
+		return;
+	}
+
+	ajaxAddFormula(title);
+});
+
+
 /** 読み込み前の確認 */
 function loadConfirm(){
 	if(!confirm("データを読み込むと現在編集中の計算表は上書きされますがよろしいですか？")){

@@ -5,6 +5,7 @@
 title = ${postData != null} ? ${postData.title} : #{postNone}, scripts = ~{::script}, links = ~{::link})">
 	<!-- 個別CSS、JSを引数に指定 -->
 	<link rel="stylesheet" type="text/css" th:href="@{/css/blank.css}">
+	<script type="text/javascript" th:src="@{/js/rest/rest-posts.js}" defer></script>
 	<script type="text/javascript" th:src="@{/js/bbs/viewpost.js}" defer></script>
 </head>
 <body>

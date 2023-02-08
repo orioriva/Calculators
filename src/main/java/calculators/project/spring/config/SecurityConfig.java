@@ -34,7 +34,7 @@ public class SecurityConfig{
         		.mvcMatchers("/register").permitAll()
         		.mvcMatchers("/rest/users").permitAll()
         		.mvcMatchers("/bbs").permitAll()
-        		.mvcMatchers("/rest/bbs").permitAll()
+        		.mvcMatchers("/rest/posts").permitAll()
         		.mvcMatchers("/bbs/post").permitAll()
         		.mvcMatchers("/admin").hasRole("ADMIN")
         		.anyRequest().authenticated()

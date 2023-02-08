@@ -33,13 +33,13 @@ public class BBSController {
 	public String getNewPost(
 			Model model,
 			@ModelAttribute BBSPostForm form,
-			@RequestParam(value="selectedId", defaultValue="")String formulaId,
+			@RequestParam(value="selectedId", defaultValue="0")Integer formulaId,
 			@AuthenticationPrincipal LoginUserDetails user
 	) {
 		String name = "";
 		// 投稿する計算表が指定されてきた場合
-		if(!formulaId.isEmpty()) {
-			Formula formula = formulasService.getFormulaOne(user.getLoginUser().getId(), Integer.parseInt(formulaId));
+		if(formulaId != 0) {
+			Formula formula = formulasService.getFormulaOne(user.getLoginUser().getId(), formulaId);
 			if(formula != null) {
 				form.setPostFormula(String.valueOf(formula.getId()));
 				name = formula.getTitle();
@@ -52,9 +52,9 @@ public class BBSController {
 
 	@GetMapping("/bbs/post")
 	public String getPost(Model model,
-			@RequestParam(value="postId")String postId
+			@RequestParam(value="postId")Integer postId
 	) {
-		BBSPost postData = bbsFormulasService.getPostOne(Integer.parseInt(postId));
+		BBSPost postData = bbsFormulasService.getPostOne(postId);
 		model.addAttribute("postData", postData);
 		return "bbs/post";
 	}
@@ -63,10 +63,10 @@ public class BBSController {
 	public String getUpdatePost(
 		Model model,
 		@ModelAttribute BBSPostForm form,
-		@RequestParam(value="postId")String postId,
+		@RequestParam(value="postId")Integer postId,
 		@AuthenticationPrincipal LoginUserDetails user
 	) {
-		BBSPost postData = bbsFormulasService.getPostOne(Integer.parseInt(postId));
+		BBSPost postData = bbsFormulasService.getPostOne(postId);
 		if(postData == null || user.getLoginUser().getId() != postData.getCreatorId()) {
 			return "redirect:/bbs";
 		}

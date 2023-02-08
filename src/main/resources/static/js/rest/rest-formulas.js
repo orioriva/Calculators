@@ -1,16 +1,7 @@
-/** 新規保存ボタンが押された時 */
-$('#addData').click(function() {
-	let title = prompt("保存する計算式のタイトルを入力", this.text);
-	if(title == null || title == ""){
-		alert("キャンセルしました");
-		return;
-	}
-
-	ajaxAddData(title);
-});
+'use strict'
 
 /** 現在の計算表データを新規保存 */
-function ajaxAddData(title){
+function ajaxAddFormula(title){
 	// ajax通信
 	$.ajax({
 		type : "POST",
@@ -30,7 +21,6 @@ function ajaxAddData(title){
 			ajaxGetFormulaList();
 		}
 	}).fail(function(jqXHR, testStatus, errorThrown){
-		// ajax失敗時の処理
 		alert('情報送信に失敗しました');
 	});
 }
@@ -49,10 +39,7 @@ function ajaxGetFormulaList(){
 	}).done(function(data){
 		updateFormulaTable(data);
 	}).fail(function(jqXHR, testStatus, errorThrown){
-		// ajax失敗時の処理
 		alert('情報送信に失敗しました');
-	}).always(function(){
-		// 常に実行する処理
 	});
 }
 
@@ -80,7 +67,6 @@ function ajaxLoadFormula(){
 		alert('データを読み込みました');
 	}).fail(function(jqXHR, testStatus, errorThrown){
 		alert('情報送信に失敗しました');
-	}).always(function(){
 	});
 }
 
@@ -110,7 +96,6 @@ function ajaxUpdateFormulaJson(){
 		}
 	}).fail(function(jqXHR, testStatus, errorThrown){
 		alert('情報送信に失敗しました');
-	}).always(function(){
 	});
 }
 
@@ -143,7 +128,6 @@ function ajaxUpdateFormulaTitle(oldTitle){
 		}
 	}).fail(function(jqXHR, testStatus, errorThrown){
 		alert('情報送信に失敗しました');
-	}).always(function(){
 	});
 }
 

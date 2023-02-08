@@ -28,25 +28,6 @@ function setFormula(formulaId, title){
 	$('.popup-file').fadeOut();
 }
 
-/** 表の計算表一覧部分を取得 */
-function ajaxGetFormulaList(){
-	// ajax通信
-	$.ajax({
-		type : "GET",
-		cache : false,
-		url : '/rest/formulas',
-		data : {
-			_csrf: $("*[name=_csrf]").val()  // CSRFトークンを送信
-		},
-		dataType : 'json'
-	}).done(function(data){
-		updateFormulaTable(data);
-	}).fail(function(jqXHR, testStatus, errorThrown){
-		// ajax失敗時の処理
-		alert('情報送信に失敗しました');
-	});
-}
-
 /** リストデータを元にtbodyに要素を追加する */
 function updateFormulaTable(formulaData){
 	// 既にdataTableが定義されていれば削除
@@ -81,25 +62,4 @@ function updateFormulaTable(formulaData){
 			}
 		]
 	});
-}
-
-/** バリデーション結果をクリア */
-function removeValidResult(){
-	$('.is-invalid').removeClass('is-invalid');
-	$('.invalid-feedback').remove();
-	$('.text-danger').remove();
-}
-
-/** バリデーション結果の反映 */
-function reflectValidResult(key, value){
-	// CSS適用
-	if(key == 'postFormula'){
-		$('#titleText').addClass('is-invalid');
-	}else if(key == 'category'){
-		$('select[id=' + key +']').addClass('is-invalid');
-	}else{
-		$('input[id=' + key +']').addClass('is-invalid');
-	}
-	// エラーメッセージ追加
-	$('#errorMsg').append('<div class="text-danger">' + value + '</div>');
 }

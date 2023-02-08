@@ -8,26 +8,6 @@ $(document).ready(function () {
 	ajaxGetPostList();
 });
 
-/** 投稿一覧取得 */
-function ajaxGetPostList(){
-	$.ajax({
-		type : "GET",
-		cache : false,
-		url : '/rest/posts',
-		data : {
-			_csrf: $("*[name=_csrf]").val()  // CSRFトークンを送信
-		},
-		dataType : 'json'
-	}).done(function(data){
-		createDataTable(data);
-	}).fail(function(jqXHR, testStatus, errorThrown){
-		// ajax失敗時の処理
-		alert('情報送信に失敗しました');
-	}).always(function(){
-		// 常に実行する処理
-	});
-}
-
 /** 絞り込みボタンが押されたら */
 function toggleSearchForm(){
 	$('#search-form').animate({height:'toggle', opacity:'toggle'},'normal');
