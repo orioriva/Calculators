@@ -15,10 +15,10 @@ import org.springframework.validation.FieldError;
 public class ErrorCheckService {
 	@Autowired
 	private UserService userService;
-	
+
 	@Autowired
 	private MessageSource messageSource;
-	
+
 	/** バリデーションエラーがあるかのチェック */
 	public void setValidError(BindingResult bindingResult, Map<String, String> errors) {
 		// エラーチェック
@@ -31,7 +31,7 @@ public class ErrorCheckService {
 			}
 		}
 	}
-	
+
 	/** 同じユーザーIDが存在しているかチェック */
 	public void setSameUserIdError(String userId, String errorKey, Map<String, String> errors) {
 		if(userService.existsUserId(userId)) {
@@ -40,7 +40,7 @@ public class ErrorCheckService {
 			errors.put(errorKey, message);
 		}
 	}
-	
+
 	/** 新しいパスワード２つが同じ値であるかチェック */
 	public void setNotMatchError(String pass1, String pass2, String[] errorKeys, Map<String, String> errors, String MessageKey) {
 		if(pass1.equals(pass2)) {
@@ -51,7 +51,7 @@ public class ErrorCheckService {
 			errors.put(key, message);
 		}
 	}
-	
+
 	/** 指定されたユーザーＩＤとパスワードが現在のものと等しいか？ */
 	public void setNotMatchUserIdPasswordError(int id, String userId, String password, String[] errorKeys, Map<String, String> errors) {
 		if(!userService.equalsUserIdPassword(id, userId, password)) {
@@ -59,6 +59,14 @@ public class ErrorCheckService {
 			for (String key : errorKeys) {
 				errors.put(key, message);
 			}
+		}
+	}
+	/** 指定されたパスワードが現在のものと等しいか？ */
+	public void setNotMatchPasswordError(int id, String userId, String password, String errorKey, Map<String, String> errors) {
+		setNotMatchUserIdPasswordError(id, userId, password, new String[] {errorKey}, errors);
+		if(errors.containsKey(errorKey)) {
+			String message = messageSource.getMessage("NotMatchPass", null, Locale.JAPAN);
+			errors.put(errorKey, message);
 		}
 	}
 
@@ -82,7 +90,7 @@ public class ErrorCheckService {
 
 		return sortErrors;
 	}
-	
+
 	/** Mapの該当データを削除 */
 	public void removeErrorKey(Map<String, String> errors, String[] removeKey) {
 		for (String key : removeKey) {

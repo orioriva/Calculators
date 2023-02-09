@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import calculators.project.spring.form.ChangeIdForm;
-import calculators.project.spring.form.ChangeIdPasswordForm;
+import calculators.project.spring.form.ChangePasswordForm;
 import calculators.project.spring.form.ChangeUserNameForm;
 import calculators.project.spring.form.ConfirmIdPasswordForm;
 import calculators.project.spring.form.RegisterForm;
@@ -81,15 +81,12 @@ public class RestUserController {
 		BindingResult bindingResult,
 		@AuthenticationPrincipal LoginUserDetails user
 	) {
-		System.out.println(form);
 		Map<String, String> errors = new HashMap<>();
 		errorCheck.setValidError(bindingResult, errors);
 
 		// 現在のＩＤ・パスワードが正しいか
 		errorCheck.setNotMatchUserIdPasswordError(
-			user.getLoginUser().getId(),
-			form.getNowUserId(),
-			form.getNowPassword(),
+			user.getLoginUser().getId(),form.getNowUserId(),form.getNowPassword(),
 			new String[]{"nowUserId","nowPassword"},
 			errors
 		);
@@ -97,50 +94,43 @@ public class RestUserController {
 		if(!errors.isEmpty()) {
 			return new RestResult(90, errors);
 		}
+		// ID更新
+		if(!userService.updateUserId(user.getLoginUser().getId(), form.getNowUserId(), form.getNewUserId())) {
+			return new RestResult(500, null);
+		}
 
 		return new RestResult(0, null);
 	}
 
-	/** ＩＤ・パスワード変更 */
-	@PutMapping("/rest/users/id-password")
-	public RestResult restResetIdPassword(
-		@Validated ChangeIdPasswordForm form,
-		BindingResult bindingResult,
-		@AuthenticationPrincipal LoginUserDetails user
+	/** パスワード変更 */
+	@PutMapping("/rest/users/password")
+	public RestResult restResetPassword(
+			@Validated ChangePasswordForm form,
+			BindingResult bindingResult,
+			@AuthenticationPrincipal LoginUserDetails user
 	) {
-		if(form.getChangeId() == null && form.getChangePassword() == null) {
-			return new RestResult(404, null);
-		}
-
 		Map<String, String> errors = new HashMap<>();
 		errorCheck.setValidError(bindingResult, errors);
 
-		String newUserId = null;
-		String newPassword = null;
+		// パスワード2種が一致しているか
+		errorCheck.setNotMatchError(
+				form.getNewPassword(), form.getNewPasswordConfirm(),
+				new String[]{"newPassword","newPasswordConfirm"},
+				errors,
+				"NotMatchNewPassword");
 
-		// IDを変更しないならＩＤエラー無視
-		if(form.getChangeId() == null)
-			errorCheck.removeErrorKey(errors, new String[]{"newUserId","newUserIdConfirm"});
-		else {
-			newUserId = form.getNewUserId();
-			// ID2種が一致しているか
-			errorCheck.setNotMatchError(newUserId, form.getNewUserIdConfirm(), new String[]{"newUserId","newUserIdConfirm"}, errors, "NotMatchNewUserId");
-		}
-		// パスワード変更しないならパスワードエラー無視
-		if(form.getChangePassword() == null)
-			errorCheck.removeErrorKey(errors, new String[]{"newPassword","newPasswordConfirm"});
-		else {
-			newPassword = form.getNewPassword();
-			// パスワード2種が一致しているか
-			errorCheck.setNotMatchError(newPassword, form.getNewPasswordConfirm(), new String[]{"newPassword","newPasswordConfirm"}, errors, "NotMatchNewPassword");
-		}
-		// 現在のＩＤ・パスワードが正しいか
-		errorCheck.setNotMatchUserIdPasswordError(user.getLoginUser().getId(), form.getNowUserId(), form.getNowPassword(), new String[]{"nowUserId","nowPassword"}, errors);
+		// 現在のパスワードが正しいか
+		errorCheck.setNotMatchPasswordError(
+				user.getLoginUser().getId(), user.getLoginUser().getUserId(),
+				form.getNowPassword(),
+				"nowPassword",
+				errors);
 
 		if(!errors.isEmpty()) {
 			return new RestResult(90, errors);
 		}
-		if(!userService.updateUserIdPassword(user.getLoginUser().getId(), form.getNowUserId(), newUserId, newPassword)) {
+		// パスワード更新
+		if(!userService.updatePassword(user.getLoginUser().getId(), user.getLoginUser().getUserId(), form.getNewPassword())) {
 			return new RestResult(500, null);
 		}
 

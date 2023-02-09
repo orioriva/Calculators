@@ -43,7 +43,15 @@ public class UserService {
 				encoder.matches(password, user.getPassword())
 				);
 	}
-	/** ユーザーＩＤ・パスワード更新 */
+	/** ユーザーＩＤ更新 */
+	public boolean updateUserId(int id, String nowUserId, String newUserId) {
+		return updateUserIdPassword(id, nowUserId, newUserId, null);
+	}
+	/** パスワード更新 */
+	public boolean updatePassword(int id, String nowUserId, String newPassword) {
+		return updateUserIdPassword(id, nowUserId, null, newPassword);
+	}
+	/** ユーザーＩＤとパスワード更新 */
 	public boolean updateUserIdPassword(int id, String nowUserId, String newUserId, String newPassword) {
 		String encodePass = (newPassword == null) ? null : encoder.encode(newPassword);
 		return mapper.updateUserIdPassword(id, nowUserId, newUserId, encodePass);

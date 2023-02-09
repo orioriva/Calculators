@@ -14,6 +14,13 @@ function reflectValidResult(key, value){
 	// エラーメッセージ追加
 	$('input[id=' + key +']').parent().append('<div class="text-danger">' + value + '</div>');
 }
+function reflectValidResultName(parent, name, value){
+	// CSS適用
+	let target = parent.find('input[name=' + name +']');
+	target.addClass('is-invalid');
+	// エラーメッセージ追加
+	target.parent().append('<div class="text-danger">' + value + '</div>');
+}
 
 /** ユーザー登録 */
 function ajaxAddUser(){
@@ -63,7 +70,6 @@ function ajaxRename(){
 		data : $('#changeUserNameForm').serializeArray(),
 		dataType : 'json'
 	}).done(function(data){
-		removeValidResult();
 		if(data.result == 90){
 			// validationエラー時の処理
 			$.each(data.errors, function(key, value){
@@ -97,12 +103,10 @@ function ajaxChangeId(){
 		data : $('#changeIdForm').serializeArray(),
 		dataType : 'json'
 	}).done(function(data){
-		console.log(data);
-		removeValidResult();
 		if(data.result == 90){
 			// validationエラー時の処理
 			$.each(data.errors, function(key, value){
-				reflectValidResult(key, value)
+				reflectValidResultName($('#changeIdForm'), key, value)
 			});
 		}else if(data.result == 0){
 			alert("ＩＤを更新しました");
@@ -119,8 +123,8 @@ function ajaxChangeId(){
 	return false;
 }
 
-/** ＩＤ・パスワード変更 */
-function ajaxChangeIdPassword(){
+/** パスワード変更 */
+function ajaxChangePassword(){
 	if(!confirm("本当に変更してよろしいですか？\r\n※　変更後にログアウトされます")){
 		return false;
 	}
@@ -130,19 +134,17 @@ function ajaxChangeIdPassword(){
 	$.ajax({
 		type : "PUT",
 		cache : false,
-		url : '/rest/users/id-password',
-		data : $('#changeIdPasswordForm').serializeArray(),
+		url : '/rest/users/password',
+		data : $('#changePasswordForm').serializeArray(),
 		dataType : 'json'
 	}).done(function(data){
-		//console.log(data);
-		removeValidResult();
 		if(data.result == 90){
 			// validationエラー時の処理
 			$.each(data.errors, function(key, value){
-				reflectValidResult(key, value)
+				reflectValidResultName($('#changePasswordForm'), key, value)
 			});
 		}else if(data.result == 0){
-			alert("ＩＤ・パスワードを更新しました");
+			alert("パスワードを更新しました");
 			$('#logoutForm').submit();
 		}else if(data.result == 500){
 			alert("データの更新に失敗しました");

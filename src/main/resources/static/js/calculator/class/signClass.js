@@ -30,6 +30,73 @@ BigNumber.config({
     ROUNDING_MODE: BigNumber.ROUND_DOWN // 切り下げ
 });
 
+class Direction{
+	constructor(str,dirX,dirY){
+		this.str = str;
+		// ベクトルの長さ
+		this.distance = Math.hypot(Math.abs(dirX), Math.abs(dirY));
+	}
+}
+
+function getDirection(baseObj,toObj){
+	let directions = new Array();
+	directions.push(new Direction("R", toObj.getLeftPos() - baseObj.getRightPos(), toObj.y - baseObj.y));
+	directions.push(new Direction("L", toObj.getRightPos() - baseObj.getLeftPos(), toObj.y - baseObj.y));
+	directions.push(new Direction("T", toObj.x - baseObj.x, toObj.getBottomPos() - baseObj.getTopPos()));
+	directions.push(new Direction("B", toObj.x - baseObj.x, toObj.getTopPos() - baseObj.getBottomPos()));
+
+	let result = directions[0];
+	directions.forEach(function(value,index){
+		if(index == 0) return;
+		if(value.distance < result.distance) result = value;
+	});
+	return result.str;
+}
+
+function drawLineDirection(dir,baseObj,toObj,space){
+	switch(dir){
+		case "R":
+			ctx.moveTo( toObj.getLeftPos(), toObj.y + space);
+			ctx.lineTo( baseObj.getRightPos(), baseObj.y + space);
+			break;
+		case "L":
+			ctx.moveTo( toObj.getRightPos(), toObj.y + space);
+			ctx.lineTo( baseObj.getLeftPos(), baseObj.y + space);
+			break;
+		case "T":
+			ctx.moveTo( toObj.x + space, toObj.getBottomPos());
+			ctx.lineTo( baseObj.x + space, baseObj.getTopPos());
+			break;
+		case "B":
+			ctx.moveTo( toObj.x + space, toObj.getTopPos());
+			ctx.lineTo( baseObj.x + space, baseObj.getBottomPos());
+			break;
+		default:
+			alert("不明な方向が指定されました");
+			break;
+	}
+}
+
+function drawALineDirection(dir,baseObj,toObj){
+	switch(dir){
+		case "R":
+			aline(baseObj.getRightPos(), baseObj.y, toObj.getLeftPos(), toObj.y, 30, 10);
+			break;
+		case "L":
+			aline(baseObj.getLeftPos(), baseObj.y, toObj.getRightPos(), toObj.y, 30, 10);
+			break;
+		case "T":
+			aline(baseObj.x, baseObj.getTopPos(), toObj.x, toObj.getBottomPos(), 30, 10);
+			break;
+		case "B":
+			aline(baseObj.x, baseObj.getBottomPos(), toObj.x, toObj.getTopPos(), 30, 10);
+			break;
+		default:
+			alert("不明な方向が指定されました");
+			break;
+	}
+}
+
 /** ポインタクラス */
 class Pointer extends ObjectClass{
 	constructor(parent,x,y,fillCollor){
@@ -174,12 +241,14 @@ class SignClass extends ObjectClass{
 			lineToObj = this.nextPointer;
 		}
 		// 計算先へ矢印を引く
-		aline(
+		let dir = getDirection(this,lineToObj);
+		drawALineDirection(dir, this, lineToObj);
+		/*aline(
 			this.getRightPos(), this.y,
 			lineToObj.getLeftPos(), lineToObj.y,
 			30,
 			10
-		);
+		);*/
 
 		this.signBG.draw();
 		this.signText.draw();
@@ -206,8 +275,10 @@ class SignClass extends ObjectClass{
 	drawLineForPrevObj(){
 		ctx.beginPath();
 
-		ctx.moveTo( this.prevObj[0].getRightPos(), this.prevObj[0].y );
-		ctx.lineTo( this.getLeftPos(), this.y );
+		//ctx.moveTo( this.prevObj[0].getRightPos(), this.prevObj[0].y );
+		//ctx.lineTo( this.getLeftPos(), this.y );
+		let dir = getDirection(this.prevObj[0],this);
+		drawLineDirection(dir,this.prevObj[0],this,0);
 
 		ctx.globalAlpha = this.alpha;
 		ctx.strokeStyle = this.fillColor;
@@ -228,14 +299,17 @@ class SignClass extends ObjectClass{
 			return;
 		}
 		
-		let space = 5;
+		let space = 5; // 線２本の間の間隔（これの２倍）
 		ctx.beginPath();
 
-		ctx.moveTo( this.nextObj[0].getRightPos(), this.nextObj[0].y - space );
-		ctx.lineTo( this.resultObj.getLeftPos(), this.resultObj.y - space );
+		let dir = getDirection(this.nextObj[0],this.resultObj);
+		drawLineDirection(dir,this.nextObj[0],this.resultObj,-space);
+		drawLineDirection(dir,this.nextObj[0],this.resultObj,space);
+		//ctx.moveTo( this.nextObj[0].getRightPos(), this.nextObj[0].y - space );
+		//ctx.lineTo( this.resultObj.getLeftPos(), this.resultObj.y - space );
 
-		ctx.moveTo( this.nextObj[0].getRightPos(), this.nextObj[0].y + space );
-		ctx.lineTo( this.resultObj.getLeftPos(), this.resultObj.y + space );
+		//ctx.moveTo( this.nextObj[0].getRightPos(), this.nextObj[0].y + space );
+		//ctx.lineTo( this.resultObj.getLeftPos(), this.resultObj.y + space );
 
 		ctx.globalAlpha = this.alpha;
 		ctx.strokeStyle = this.fillColor;

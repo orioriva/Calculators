@@ -55,9 +55,6 @@ title = '計算式編集', scripts = ~{::script}, links = ~{::link})">
 	</div>
 </nav>
 
-<!-- 操作ガイド（ポップアップ表示） -->
-<div th:replace="fragment/calculatorGuide_fragment :: calculatorGuide_fragment"></div>
-
 <!-- ファイル読込 -->
 <div class="popup-file">
 	<div class="content">
@@ -80,11 +77,14 @@ title = '計算式編集', scripts = ~{::script}, links = ~{::link})">
 </div>
 
 <!-- キャンバス -->
-<div class="scroll-x">
-	<div class="" id="canvas-wrapper">
+<div class="scroll-x reverse-y">
+	<div class="reverse-y" id="canvas-wrapper">
 	    <canvas class="bg-light" id="canvas" width="1280px" height="720px">このブラウザは HTML5 Canvas に対応していません。</canvas>
 	</div>
 </div>
+
+<!-- 操作ガイド（ポップアップ表示） -->
+<div th:replace="fragment/calculatorGuide_fragment :: calculatorGuide_fragment"></div>
 
 <input type="hidden" th:value="${jsonData}" id="jsonData">
 

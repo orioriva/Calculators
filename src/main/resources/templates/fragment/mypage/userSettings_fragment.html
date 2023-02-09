@@ -4,8 +4,6 @@
 	th:fragment="userSettings_fragment">
 
 <script type="text/javascript" th:src="@{/js/rest/rest-users.js}" defer></script>
-<script type="text/javascript" th:src="@{/js/mypage/userSettings.js}" defer></script>
-
 
 <div class="container">
 	<div class="mt-2 mb-2 border-bottom">
@@ -77,78 +75,36 @@
 			</div>
 		</div>
 
-		<!-- ログインID・パスワードの変更 -->
+		<!-- ログインパスワードの変更 -->
 		<div class="card">
 			<div class="card-header">
 				<h5 class="mb-0">
 					<button class="btn btn-link" type="button" data-toggle="collapse"
-						data-target="#id-password" aria-expanded="false">
-						ログインユーザーID・パスワードの変更
+						data-target="#password-change" aria-expanded="false">
+						ログインパスワードの変更
 					</button>
 				</h5>
 			</div>
-			<div id="id-password" class="collapse" data-parent="#accordion">
+			<div id="password-change" class="collapse" data-parent="#accordion">
 				<div class="card-body">
-					※　変更後、ログアウトを行います
-					<form class="form-input" id="changeIdPasswordForm" th:action th:method="put" onsubmit="return ajaxChangeIdPassword();" th:object="${changeIdPasswordForm}">
-						<div class="mt-3">
-							<!-- ID変更 -->
-							<div class="card mb-3">
-								<div class="card-header">
-									<div class="custom-control custom-switch">
-										<input type="checkbox" class="custom-control-input" id="changeId" name="changeId" th:checked="*{changeId}">
-										<label class="custom-control-label" for="changeId">ログインユーザーIDを変更する</label>
-									</div>
-								</div>
-								<div class="hide card-body" id="newIdArea">
-									<div class="form-group">
-										<label for="newUserId" th:text="#{new} + #{userId}"></label>
-										<input type="text" class="form-control" th:field="*{newUserId}">
-									</div>
-									<div class="form-group">
-										<label for="newUserIdConfirm" th:text="#{new} + #{userId} + #{confirm}"></label>
-										<input type="text" class="form-control" th:field="*{newUserIdConfirm}">
-									</div>
-								</div>
+					<form class="form-input" id="changePasswordForm" th:action th:method="put" onsubmit="return ajaxChangePassword();">
+						<div class="bg-light border rounded p-3 mb-3">
+							<div class="form-group">
+								<label for="newPassword" th:text="#{new} + #{password}"></label>
+								<input type="password" class="form-control" name="newPassword">
 							</div>
-							<!-- パスワード変更 -->
-							<div class="card mb-3">
-								<div class="card-header">
-									<div class="custom-control custom-switch">
-										<input type="checkbox" class="custom-control-input" id="changePassword" name="changePassword" th:checked="*{changePassword}">
-										<label class="custom-control-label" for="changePassword">パスワードを変更する</label>
-									</div>
-								</div>
-								<div class="hide card-body" id="newPasswordArea">
-									<div class="form-group">
-										<label for="newPassword" th:text="#{new} + #{password}"></label>
-										<input type="password" class="form-control" th:field="*{newPassword}">
-									</div>
-									<div class="form-group">
-										<label for="newPasswordConfirm" th:text="#{new} + #{password} + #{confirm}"></label>
-										<input type="password" class="form-control" th:field="*{newPasswordConfirm}">
-									</div>
-								</div>
+							<div class="form-group">
+								<label for="newPasswordConfirm" th:text="#{new} + #{password} + #{confirm}"></label>
+								<input type="password" class="form-control" name="newPasswordConfirm">
 							</div>
-							<!-- 確認用のＩＤパスワード入力 -->
-							<div class="hide" id="confirmArea">
-								<div class="card mb-3">
-									<div class="card-header">確認の為、現在のID・パスワードを入力して下さい</div>
-									<div class="card-body">
-										<div class="form-group">
-											<label for="nowUserId" th:text="#{now} + #{userId}"></label>
-											<input type="text" class="form-control" th:field="*{nowUserId}">
-										</div>
-										<div class="form-group">
-											<label for="nowPassword" th:text="#{now} + #{password}"></label>
-											<input type="password" class="form-control" th:field="*{nowPassword}">
-										</div>
-									</div>
-								</div>
-								<button class="btn btn-primary" type="submit">[[#{change}]]</button>
-							</div>
-
 						</div>
+						<div class="border rounded p-3 mb-3">
+							<div class="form-group">
+								<label for="nowPassword" th:text="#{now} + #{password}"></label>
+								<input type="password" class="form-control" name="nowPassword">
+							</div>
+						</div>
+						<button class="btn btn-primary" type="submit" th:text="#{change}"></button>
 					</form>
 				</div>
 			</div>
