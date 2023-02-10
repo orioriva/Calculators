@@ -15,6 +15,7 @@ title = '計算式編集', scripts = ~{::script}, links = ~{::link})">
 <script type="text/javascript" th:src="@{/js/rest/rest-formulas.js}" defer></script>
 <script type="text/javascript" th:src="@{/js/calculator/view.js}" defer></script>
 <script type="text/javascript" th:src="@{/js/calculator/global.js}" defer></script>
+<script type="text/javascript" th:src="@{/js/calculator/direction.js}" defer></script>
 <script type="text/javascript" th:src="@{/js/calculator/class/saveObjClass.js}" defer></script>
 <script type="text/javascript" th:src="@{/js/calculator/class/drawTextClass.js}" defer></script>
 <script type="text/javascript" th:src="@{/js/calculator/class/drawRectClass.js}" defer></script>
@@ -55,6 +56,13 @@ title = '計算式編集', scripts = ~{::script}, links = ~{::link})">
 	</div>
 </nav>
 
+<!-- キャンバス -->
+<div class="scroll-x reverse-y">
+	<div class="reverse-y" id="canvas-wrapper">
+	    <canvas class="bg-light" id="canvas" width="1280px" height="720px">このブラウザは HTML5 Canvas に対応していません。</canvas>
+	</div>
+</div>
+
 <!-- ファイル読込 -->
 <div class="popup-file">
 	<div class="content">
@@ -73,13 +81,6 @@ title = '計算式編集', scripts = ~{::script}, links = ~{::link})">
 			</tbody>
 		</table>
 		<button id="close-file" class="btn btn-secondary"><i class="fas fa-window-close"></i>&ensp;[[#{close}]]</button>
-	</div>
-</div>
-
-<!-- キャンバス -->
-<div class="scroll-x reverse-y">
-	<div class="reverse-y" id="canvas-wrapper">
-	    <canvas class="bg-light" id="canvas" width="1280px" height="720px">このブラウザは HTML5 Canvas に対応していません。</canvas>
 	</div>
 </div>
 

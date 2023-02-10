@@ -3,8 +3,10 @@ package calculators.project.spring.model;
 import java.util.Date;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
 public class Formula {
 	private int id;
 	private int creatorId;
@@ -12,7 +14,6 @@ public class Formula {
 	private String title;
 	private String jsonData;
 
-	public Formula(){}
 	public Formula(
 			int creatorId,
 			Date updateDate,

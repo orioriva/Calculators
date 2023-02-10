@@ -42,13 +42,13 @@
 		bbsformulas.updateDate,
 		bbsformulas.title,
 		bbsformulas.comment,
-		users.userName
+		`users`.userName
 	FROM
 		bbsformulas
 		LEFT JOIN
-			users
+			`users`
 		ON
-			bbsformulas.creatorId = users.id
+			bbsformulas.creatorId = `users`.id
 		LEFT JOIN
 			categories
 		ON
@@ -70,13 +70,13 @@
 		bbsformulas.updateDate,
 		bbsformulas.title,
 		bbsformulas.comment,
-		users.userName
+		`users`.userName
 	FROM
 		bbsformulas
 		LEFT JOIN
-			users
+			`users`
 		ON
-			bbsformulas.creatorId = users.id
+			bbsformulas.creatorId = `users`.id
 		LEFT JOIN
 			categories
 		ON
@@ -113,7 +113,7 @@
 			#{updateDate},
 			#{title},
 			#{comment},
-			#{jsonData}
+			#{jsonData} FORMAT JSON
 		)
 </insert>
 
@@ -127,7 +127,7 @@
 		title = #{title},
 		comment = #{comment}
 		<if test="jsonData != null">
-			,jsonData = #{jsonData}
+			,jsonData = #{jsonData} FORMAT JSON
 		</if>
 	WHERE
 		id = #{id} AND

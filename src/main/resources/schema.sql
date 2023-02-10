@@ -1,0 +1,36 @@
+/* ユーザーデータテーブル */
+CREATE TABLE IF NOT EXISTS `users`(
+	id INT PRIMARY KEY AUTO_INCREMENT,
+	userName VARCHAR(50) NOT NULL,
+	userId VARCHAR(100) NOT NULL,
+	password VARCHAR(100) NOT NULL,
+	role VARCHAR(20) DEFAULT 'ROLE_GENERAL' NOT NULL
+);
+
+/* 計算表データテーブル */
+CREATE TABLE IF NOT EXISTS `formulas`(
+	id INT PRIMARY KEY AUTO_INCREMENT,
+	creatorId INT NOT NULL,
+	updateDate DATETIME NOT NULL,
+	title VARCHAR(50) NOT NULL,
+	jsonData JSON
+);
+
+/* 掲示板データテーブル */
+CREATE TABLE IF NOT EXISTS `bbsformulas`(
+	id INT PRIMARY KEY AUTO_INCREMENT,
+	category INT DEFAULT 1 NOT NULL,
+	creatorId INT NOT NULL,
+	updateDate DATETIME NOT NULL,
+	title VARCHAR(50) NOT NULL,
+	comment TEXT,
+	jsonData JSON,
+	view BOOLEAN DEFAULT true NOT NULL
+);
+
+/* カテゴリーリストテーブル */
+CREATE TABLE `categories`(
+	id INT PRIMARY KEY AUTO_INCREMENT,
+	ja TINYTEXT,
+	en TINYTEXT
+);

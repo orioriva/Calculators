@@ -36,8 +36,14 @@ public class SecurityConfig{
         		.mvcMatchers("/bbs").permitAll()
         		.mvcMatchers("/rest/posts").permitAll()
         		.mvcMatchers("/bbs/post").permitAll()
+        		.antMatchers("/h2-console/**").permitAll()
         		.mvcMatchers("/admin").hasRole("ADMIN")
         		.anyRequest().authenticated()
+        ).headers(header -> header
+        		.frameOptions()
+        		.disable()
+        ).csrf(csrf -> csrf
+        		.ignoringAntMatchers("/h2-console/**")
         );
         return http.build();
     }

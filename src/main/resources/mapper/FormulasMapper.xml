@@ -52,7 +52,7 @@
 			#{creatorId},
 			#{updateDate},
 			#{title},
-			#{jsonData}
+			#{jsonData} FORMAT JSON
 		)
 </insert>
 

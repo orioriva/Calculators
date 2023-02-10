@@ -50,6 +50,10 @@ public class BBSFormulasService {
 	/** カテゴリ選択肢のリストを取得 */
 	public List<Category> getCategoryList(String locale){
 		List<Category> categoryList = mapper.getCategoryList(locale);
+		if(categoryList.isEmpty()) {
+			categoryList.add(new Category(0,"データ取得失敗"));
+			return categoryList;
+		}
 		// その他が最後に来るよう並び替え
 		categoryList.add(categoryList.get(0));
 		categoryList.remove(0);

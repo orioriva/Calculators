@@ -14,7 +14,7 @@
 		password,
 		role
 	FROM
-		users
+		`users`
 	WHERE
 		#{userId} = userId
 </select>
@@ -22,7 +22,7 @@
 <!-- ユーザー１件追加 -->
 <insert id="addUserOne">
 	INSERT INTO
-		users(
+		`users`(
 			userName,
 			userId,
 			password
@@ -36,7 +36,7 @@
 <!-- ユーザー名更新 -->
 <update id="updateUserName">
 	UPDATE
-		users
+		`users`
 	SET
 		userName = #{userName}
 	WHERE
@@ -46,7 +46,7 @@
 <!-- ユーザー情報更新 -->
 <update id="updateUserIdPassword">
 	UPDATE
-		users
+		`users`
 	SET
 		<if test="newUserId != null">
 			userId = #{newUserId}
@@ -65,7 +65,7 @@
 <!-- ユーザー１件削除 -->
 <delete id="deleteUser">
 	DELETE FROM
-		users
+		`users`
 	WHERE
 		id = #{id}
 </delete>
