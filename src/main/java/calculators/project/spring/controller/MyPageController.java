@@ -6,7 +6,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
-import calculators.project.spring.form.ChangeIdPasswordForm;
 import calculators.project.spring.form.ChangeUserNameForm;
 import calculators.project.spring.form.ConfirmIdPasswordForm;
 import calculators.project.spring.model.LoginUserDetails;
@@ -39,7 +38,6 @@ public class MyPageController {
 	@GetMapping("/mypage/userSettings")
 	public String getMyPageUserSettings(Model model,
 		@ModelAttribute ChangeUserNameForm userNameForm,
-		@ModelAttribute ChangeIdPasswordForm idpassForm,
 		@ModelAttribute ConfirmIdPasswordForm confirmForm,
 		@AuthenticationPrincipal LoginUserDetails user
 	) {
