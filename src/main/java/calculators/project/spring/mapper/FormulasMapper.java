@@ -14,4 +14,5 @@ public interface FormulasMapper {
 	public boolean addFormulaOne(Formula formula);
 	public boolean updateFormulaOne(Formula formula);
 	public boolean deleteFormulaOne(int creatorId, int formulaId);
+	public boolean deleteFormulaAll(int creatorId);
 }

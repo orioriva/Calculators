@@ -29,7 +29,7 @@ CREATE TABLE IF NOT EXISTS `bbsformulas`(
 );
 
 /* カテゴリーリストテーブル */
-CREATE TABLE `categories`(
+CREATE TABLE IF NOT EXISTS `categories`(
 	id INT PRIMARY KEY AUTO_INCREMENT,
 	ja TINYTEXT,
 	en TINYTEXT

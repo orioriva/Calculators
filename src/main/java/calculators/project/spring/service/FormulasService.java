@@ -37,4 +37,8 @@ public class FormulasService {
 	public boolean deleteFormulaOne(int creatorId, int formulaId) {
 		return mapper.deleteFormulaOne(creatorId, formulaId);
 	}
+	/** 計算表を全件削除 */
+	public boolean deleteFormulaAll(int creatorId) {
+		return mapper.deleteFormulaAll(creatorId);
+	}
 }

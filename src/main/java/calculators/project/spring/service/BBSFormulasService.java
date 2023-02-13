@@ -47,6 +47,11 @@ public class BBSFormulasService {
 		return mapper.hidePostOne(id, creatorId);
 	}
 
+	/** 自身の投稿を全件論理削除 */
+	public boolean hidePostAll(int creatorId) {
+		return mapper.hidePostAll(creatorId);
+	}
+
 	/** カテゴリ選択肢のリストを取得 */
 	public List<Category> getCategoryList(String locale){
 		List<Category> categoryList = mapper.getCategoryList(locale);

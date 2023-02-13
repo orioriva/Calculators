@@ -78,4 +78,12 @@
 		creatorId = #{creatorId}
 </delete>
 
+<!-- 自身の数式表全件削除 -->
+<delete id="deleteFormulaAll">
+	DELETE FROM
+		formulas
+	WHERE
+		creatorId = #{creatorId}
+</delete>
+
 </mapper>

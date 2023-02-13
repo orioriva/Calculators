@@ -147,6 +147,17 @@
 		view = true
 </update>
 
+<!-- 数式表１件削除(論理) -->
+<update id="hidePostAll">
+	UPDATE
+		bbsformulas
+	SET
+		view = false
+	WHERE
+		creatorId = #{creatorId} AND
+		view = true
+</update>
+
 <!-- 数式表１件削除(物理) -->
 <delete id="deletePostOne">
 	DELETE FROM

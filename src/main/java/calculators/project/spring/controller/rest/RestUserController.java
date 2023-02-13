@@ -20,13 +20,21 @@ import calculators.project.spring.form.RegisterForm;
 import calculators.project.spring.model.LoginUser;
 import calculators.project.spring.model.LoginUserDetails;
 import calculators.project.spring.model.RestResult;
+import calculators.project.spring.service.BBSFormulasService;
 import calculators.project.spring.service.ErrorCheckService;
+import calculators.project.spring.service.FormulasService;
 import calculators.project.spring.service.UserService;
 
 @RestController
 public class RestUserController {
 	@Autowired
 	private UserService userService;
+
+	@Autowired
+	private FormulasService formulasService;
+
+	@Autowired
+	private BBSFormulasService bbsFormulasService;
 
 	@Autowired
 	private ErrorCheckService errorCheck;
@@ -144,14 +152,20 @@ public class RestUserController {
 			@AuthenticationPrincipal LoginUserDetails user
 	) {
 		Map<String, String> errors = new HashMap<>();
+		int myId = user.getLoginUser().getId();
 		errorCheck.setValidError(bindingResult, errors);
 		// 現在のＩＤ・パスワードが正しいか
-		errorCheck.setNotMatchUserIdPasswordError(user.getLoginUser().getId(), form.getNowUserId(), form.getNowPassword(), new String[]{"nowUserId","nowPassword"}, errors);
+		errorCheck.setNotMatchUserIdPasswordError(myId, form.getNowUserId(), form.getNowPassword(), new String[]{"nowUserId","nowPassword"}, errors);
 		if(!errors.isEmpty()) {
 			return new RestResult(90, errors);
 		}
 
-		userService.deleteUser(user.getLoginUser().getId());
+		// 保存した計算表削除
+		formulasService.deleteFormulaAll(myId);
+		// 自身の投稿を論理削除（非表示）
+		bbsFormulasService.hidePostAll(myId);
+		// ユーザーデータ削除
+		userService.deleteUser(myId);
 
 		return new RestResult(0, null);
 	}
