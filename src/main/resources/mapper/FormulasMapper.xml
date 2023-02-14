@@ -63,7 +63,7 @@
 	SET
 		updateDate = #{updateDate},
 		title = #{title},
-		jsonData = #{jsonData}
+		jsonData = #{jsonData} FORMAT JSON
 	WHERE
 		id = #{id} AND
 		creatorId = #{creatorId}

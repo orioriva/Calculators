@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <!-- 共通 <head> 読込 -->
-<head th:replace="fragment/head_fragment :: head_fragment(
+<head th:replace="fragment/head-fragment :: head-fragment(
 title = #{login}, scripts = ~{::script}, links = ~{::link})">
 	<!-- 個別CSS、JSを引数に指定 -->
 	<link rel="stylesheet" type="text/css" th:href="@{/css/blank.css}"/>
@@ -10,7 +10,7 @@ title = #{login}, scripts = ~{::script}, links = ~{::link})">
 <body>
 
 <!-- 共通ヘッダー読込 -->
-<header th:replace="fragment/header_fragment :: header_fragment"></header>
+<header th:replace="fragment/header-fragment :: header-fragment"></header>
 
 <!-- 情報入力 -->
 <div class="container w-50 mt-3">

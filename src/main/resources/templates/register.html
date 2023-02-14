@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <!-- 共通 <head> 読込 -->
-<head th:replace="fragment/head_fragment :: head_fragment(
+<head th:replace="fragment/head-fragment :: head-fragment(
 title = #{signup}, scripts = ~{::script}, links = ~{::link})">
 	<!-- 個別CSS、JSを引数に指定 -->
 	<link rel="stylesheet" type="text/css" th:href="@{/css/blank.css}"/>
@@ -10,7 +10,7 @@ title = #{signup}, scripts = ~{::script}, links = ~{::link})">
 <body>
 
 <!-- 共通ヘッダー読込 -->
-<header th:replace="fragment/header_fragment :: header_fragment"></header>
+<header th:replace="fragment/header-fragment :: header-fragment"></header>
 
 <!-- 入力フォーム -->
 <div class="container w-50 mt-3">
@@ -19,17 +19,17 @@ title = #{signup}, scripts = ~{::script}, links = ~{::link})">
 		<!-- ユーザー名 -->
 		<div class="form-group">
 			<label for="userName" th:text="#{userName}"></label>
-			<input type="text" id="userName" class="form-control" th:field="*{userName}" placeholder="20文字以内">
+			<input type="text" id="userName" class="form-control" th:field="*{userName}" th:placeholder="#{userNameLimit}">
 		</div>
 		<!-- ユーザーＩＤ -->
 		<div class="form-group">
 			<label for="userId" th:text="#{userId}"></label>
-			<input type="text" id="userId" class="form-control" th:field="*{userId}" placeholder="半角英数記号100文字以内">
+			<input type="text" id="userId" class="form-control" th:field="*{userId}" th:placeholder="#{userIdLimit}">
 		<!-- パスワード -->
 		</div>
 		<div class="form-group">
 			<label for="password" th:text="#{password}"></label>
-			<input type="password" id="password" class="form-control" th:field="*{password}" placeholder="半角英数記号100文字以内">
+			<input type="password" id="password" class="form-control" th:field="*{password}" th:placeholder="#{passwordLimit}">
 		</div>
 		<div class="text-center">
 			<button class="mt-3 btn btn-success w-100" id="btn-send" type="submit">

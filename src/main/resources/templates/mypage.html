@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <!-- 共通 <head> 読込 -->
-<head th:replace="fragment/head_fragment :: head_fragment(
+<head th:replace="fragment/head-fragment :: head-fragment(
 title = #{myPage}, scripts = ~{::script}, links = ~{::link})">
 	<!-- 個別CSS、JSを引数に指定 -->
 	<link rel="stylesheet" type="text/css" th:href="@{/css/blank.css}"/>
@@ -10,7 +10,7 @@ title = #{myPage}, scripts = ~{::script}, links = ~{::link})">
 <body>
 
 <!-- 共通ヘッダー読込 -->
-<header th:replace="fragment/header_fragment :: header_fragment"></header>
+<header th:replace="fragment/header-fragment :: header-fragment"></header>
 
 <div class="container-fluid">
 	<div class="row">
@@ -39,16 +39,16 @@ title = #{myPage}, scripts = ~{::script}, links = ~{::link})">
 		<div class="col-md-10">
 			<th:block th:switch="${viewPage}">
 				<th:block th:case="top">
-					<div th:replace="fragment/mypage/myTop_fragment :: myTop_fragment"></div>
+					<div th:replace="fragment/mypage/mytop-fragment :: mytop-fragment"></div>
 				</th:block>
 				<th:block th:case="formulas">
-					<div th:replace="fragment/mypage/myFormulas_fragment :: myFormulas_fragment"></div>
+					<div th:replace="fragment/mypage/myformulas-fragment :: myformulas-fragment"></div>
 				</th:block>
 				<th:block th:case="posts">
-					<div th:replace="fragment/mypage/myPosts_fragment :: myPosts_fragment"></div>
+					<div th:replace="fragment/mypage/myposts-fragment :: myposts-fragment"></div>
 				</th:block>
 				<th:block th:case="userSettings">
-					<div th:replace="fragment/mypage/userSettings_fragment :: userSettings_fragment"></div>
+					<div th:replace="fragment/mypage/usersettings-fragment :: usersettings-fragment"></div>
 				</th:block>
 			</th:block>
 		</div>

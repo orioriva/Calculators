@@ -1,7 +1,7 @@
 <!-- 自分の投稿一覧 -->
 <div xmlns:th="http://www.thymeleaf.org"
 	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
-	th:fragment="userSettings_fragment">
+	th:fragment="usersettings-fragment">
 
 <script type="text/javascript" th:src="@{/js/rest/rest-users.js}" defer></script>
 
@@ -28,8 +28,7 @@
 						<div class="form-group">
 							<label for="userName" th:text="#{new} + #{userName}"></label>
 							<input type="text" class="form-control" th:field="*{userName}"
-								th:value="${#authentication.principal.loginUser.userName}" th:placeholder="#{new} + #{userName} + '(20文字以内)'">
-
+								th:value="${#authentication.principal.loginUser.userName}" th:placeholder="#{userNameLimit}">
 						</div>
 						<button id="userName-change" class="btn btn-primary" type="submit">[[#{change}]]</button>
 					</form>
@@ -53,7 +52,7 @@
 						<div class="bg-light border rounded p-3 mb-3">
 							<div class="form-group">
 								<label for="newUserId" th:text="#{new} + #{userId}"></label>
-								<input type="text" class="form-control" name="newUserId">
+								<input type="text" class="form-control" name="newUserId" th:placeholder="#{userIdLimit}">
 							</div>
 						</div>
 						<div class="card mb-3">
@@ -91,11 +90,11 @@
 						<div class="bg-light border rounded p-3 mb-3">
 							<div class="form-group">
 								<label for="newPassword" th:text="#{new} + #{password}"></label>
-								<input type="password" class="form-control" name="newPassword">
+								<input type="password" class="form-control" name="newPassword" th:placeholder="#{passwordLimit}">
 							</div>
 							<div class="form-group">
 								<label for="newPasswordConfirm" th:text="#{new} + #{password} + #{confirm}"></label>
-								<input type="password" class="form-control" name="newPasswordConfirm">
+								<input type="password" class="form-control" name="newPasswordConfirm" th:placeholder="#{passwordLimit}">
 							</div>
 						</div>
 						<div class="border rounded p-3 mb-3">
@@ -124,7 +123,8 @@
 				<div class="card-body">
 					<form id="unregisterForm" th:action th:method="delete" th:object="${confirmIdPasswordForm}" onsubmit="return ajaxDeleteUser();">
 						<div class="bg-danger text-white p-2 mb-3">
-							<i class="fas fa-exclamation-triangle"></i>&ensp;一度登録を解除すると元には戻せません！！
+							<i class="fas fa-exclamation-triangle"></i>&ensp;一度登録を解除すると元には戻せません！！<br>
+							<i class="fas fa-exclamation-triangle"></i>&ensp;また、掲示板に投稿した計算表が全て削除されます！！
 						</div>
 						<div class="card mb-3">
 							<div class="card-header" th:text="#{confirmInput}"></div>

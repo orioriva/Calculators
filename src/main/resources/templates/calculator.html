@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <!-- 共通 <head> 読込 -->
-<head th:replace="fragment/head_fragment :: head_fragment(
+<head th:replace="fragment/head-fragment :: head-fragment(
 title = '計算式編集', scripts = ~{::script}, links = ~{::link})">
 
 <!-- CSS -->
@@ -29,7 +29,7 @@ title = '計算式編集', scripts = ~{::script}, links = ~{::link})">
 <body>
 
 <!-- 共通ヘッダー読込 -->
-<header th:replace="fragment/header_fragment :: header_fragment"></header>
+<header th:replace="fragment/header-fragment :: header-fragment"></header>
 
 <!-- ナビゲーションバー -->
 <nav class="container-fluid navbar">
@@ -85,7 +85,7 @@ title = '計算式編集', scripts = ~{::script}, links = ~{::link})">
 </div>
 
 <!-- 操作ガイド（ポップアップ表示） -->
-<div th:replace="fragment/calculatorGuide_fragment :: calculatorGuide_fragment"></div>
+<div th:replace="fragment/calculator-guide-fragment :: calculator-guide-fragment"></div>
 
 <input type="hidden" th:value="${jsonData}" id="jsonData">
 

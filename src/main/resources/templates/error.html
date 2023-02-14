@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <!-- 共通 <head> 読込 -->
-<head th:replace="fragment/head_fragment :: head_fragment(title = #{error}, scripts = ~{::script}, links = ~{::link})">
+<head th:replace="fragment/head-fragment :: head-fragment(title = #{error}, scripts = ~{::script}, links = ~{::link})">
 	<!-- 個別CSS、JSを引数に指定 -->
 	<link rel="stylesheet" type="text/css" th:href="@{/css/blank.css}"/>
 	<script type="text/javascript" th:src="@{/js/blank.js}"></script>
@@ -9,7 +9,7 @@
 <body>
 
 <!-- 共通ヘッダー読込 -->
-<header th:replace="fragment/header_fragment :: header_fragment"></header>
+<header th:replace="fragment/header-fragment :: header-fragment"></header>
 
 <h1 th:text="${status} + ' ' + ${error}"></h1>
 <p th:text="${message}"></p>
