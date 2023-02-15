@@ -4,10 +4,10 @@
 <head th:replace="fragment/head-fragment :: head-fragment(
 title = 'トップページ', scripts = ~{::script}, links = ~{::link})">
 	<!-- 個別CSS、JSを引数に指定 -->
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css"/>
-	<link rel="stylesheet" type="text/css" th:href="@{/css/swiper.css}"/>
-	<script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js" defer></script>
-	<script type="text/javascript" th:src="@{/js/swiper.js}" defer></script>
+	<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+	<link rel="stylesheet" type="text/css" th:href="@{/css/index.css}"/>
+	<script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js" defer></script>
+	<script type="text/javascript" th:src="@{/js/index.js}" defer></script>
 </head>
 <body>
 
@@ -19,30 +19,41 @@ title = 'トップページ', scripts = ~{::script}, links = ~{::link})">
 		<h2>計算式作成サイト</h2>
 	</div>
 	<div class="mt-3">
-		電卓でちょっとした計算をしている時、さっきの数値をまた使いたくなった事がありませんか？<br>
-		でもExcelとか使うほどじゃ…って時、是非このサイトを利用してみて下さい！！
+		電卓でちょっとした計算をしている時、さっき使った数値をまた使いたくなった事がありませんか？<br>
+		でもExcelとか使うほどじゃ…って事が多いなら、是非このサイトを利用してみて下さい！！
 	</div>
 	<div class="mt-3">
-		このサイトの<a th:href="@{/calculator}">計算表作成ページ</a>では、入力した数値や計算結果を画面に"自由に置いておく"事ができます！
+		このサイトの<a th:href="@{/calculator}">計算表作成ページ</a>では、入力した数値や計算結果を画面に"自由に置いておく"事ができ、<br>
+		またそれぞれの数値に名前を付けておく事も出来るのでどういう計算をしていたか分かりやすい！
 	</div>
 
-	<!-- スライダーのコンテナ -->
-	<div class="swiper m-3 rounded-lg">
-		<!-- 必要に応じたwrapper -->
-		<div class="swiper-wrapper">
-			<!-- スライド -->
-			<div class="swiper-slide">
-				このサイトの<a th:href="@{/calculator}">計算表作成ページ</a>では、入力した数値や計算結果を画面に"自由に置いておく"事ができます！
+	<div id="double-slider">
+		<div class="bg-success text-white rounded-lg p-2">
+			<div id="text-slider">
+				<p class="txt">
+					このサイトの<a th:href="@{/calculator}">計算表作成ページ</a>では、入力した数値や計算結果を画面に"自由に置いておく"事ができ、
+					またそれぞれの数値に名前を付けておく事も出来るのでどういう計算をしていたか後から分かりやすくできます。
+				</p>
+				<p class="txt">
+					二つ目のスライドのテキストが入ります<br> 二つ目のスライドのテキストが入ります<br>
+					二つ目のスライドのテキストが入ります<br>
+				</p>
+				<p class="txt">
+					三つ目のスライドのテキストが入ります<br> 三つ目のスライドのテキストが入ります<br>
+					三つ目のスライドのテキストが入ります<br>
+				</p>
 			</div>
-			<div class="swiper-slide">Slide 2</div>
-			<div class="swiper-slide">Slide 3</div>
 		</div>
-		<!-- 必要に応じてナビボタン -->
-		<div class="swiper-button-prev"></div>
-		<div class="swiper-button-next"></div>
+		<div class="border">
+			<div id="main-slider" class="main-slider">
+				<img th:src="@{/img/slide1.png}">
+				<img th:src="@{/img/slide1.png}">
+				<img th:src="@{/img/slide1.png}">
+			</div>
+		</div>
+		<div class="dots"></div>
 	</div>
-	<!-- 必要に応じてページネーション -->
-	<div class="swiper-pagination"></div>
+
 </div>
 
 </body>
