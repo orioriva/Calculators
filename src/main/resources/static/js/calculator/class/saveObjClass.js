@@ -13,12 +13,12 @@ class SaveObj{
 
         if(obj.type == "number"){
             this.tag = obj.text;
-            this.number = obj.number;
             let sourceIndex = objects.indexOf(obj.calcSource);
             if(sourceIndex >= 0){
                 this.calcSource = sourceIndex;
                 return;
             }
+            this.number = obj.number;
             this.calcSource = null;
         }else if(obj.type == "sign"){
             this.typeText = obj.typeText;

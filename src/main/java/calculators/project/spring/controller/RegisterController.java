@@ -16,7 +16,7 @@ public class RegisterController {
 			@ModelAttribute RegisterForm form)
 	{
 		if(user != null) {
-			return "redirect:/";
+			return "redirect:/mypage/top";
 		}
 		return "register";
 	}

@@ -35,12 +35,13 @@ canvas.addEventListener('mousedown', e => {
 			dragPointX = _mouseX - selectedObj.x;
 			dragPointY = _mouseY - selectedObj.y;
 			dragOn = true;
-			return;
+			continue;
 		}
 		objects[i].alpha = 1.0;
 	}
 
-	selectedObj = null;
+	if(!dragOn)
+		selectedObj = null;
 });
 
 /** マウスがダブルクリックされた時の処理 */
@@ -153,8 +154,7 @@ window.addEventListener('keydown', e => {
 		case '9':
 			if(selectedObj == null){
 				let obj = addNumber(_mouseX, _mouseY, "NEW", parseInt(e.key));
-				selectedObj = obj;
-				selectedObj.alpha = 0.7;
+				selectedChange(obj);
 			}else if(selectedObj.type == "number"){
 				selectedObj.addNumberOne(e.key);
 			}else if(selectedObj.type == "sign"){
@@ -246,8 +246,4 @@ function deleteArrayItem(array, item){
 /** 描画領域を超えているなら描画領域内の座標(x)を返す */
 function limitPosX(pos){
 	return (pos > canvas.width-5) ? canvas.width-5 : pos;
-}
-
-function limitPos(){
-
 }

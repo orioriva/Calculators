@@ -1,5 +1,9 @@
 'use strict'
 
+BigNumber.config({
+    ROUNDING_MODE: BigNumber.ROUND_DOWN // 切り下げ
+});
+
 /** ポインタクラス */
 class Pointer extends ObjectClass{
 	constructor(parent,x,y,fillCollor){
@@ -146,12 +150,6 @@ class SignClass extends ObjectClass{
 		// 計算先へ矢印を引く
 		let dir = getDirection(this,lineToObj);
 		drawALineDirection(dir, this, lineToObj);
-		/*aline(
-			this.getRightPos(), this.y,
-			lineToObj.getLeftPos(), lineToObj.y,
-			30,
-			10
-		);*/
 
 		this.signBG.draw();
 		this.signText.draw();
@@ -178,8 +176,6 @@ class SignClass extends ObjectClass{
 	drawLineForPrevObj(){
 		ctx.beginPath();
 
-		//ctx.moveTo( this.prevObj[0].getRightPos(), this.prevObj[0].y );
-		//ctx.lineTo( this.getLeftPos(), this.y );
 		let dir = getDirection(this.prevObj[0],this);
 		drawLineDirection(dir,this.prevObj[0],this,0);
 
@@ -208,11 +204,6 @@ class SignClass extends ObjectClass{
 		let dir = getDirection(this.nextObj[0],this.resultObj);
 		drawLineDirection(dir,this.nextObj[0],this.resultObj,-space);
 		drawLineDirection(dir,this.nextObj[0],this.resultObj,space);
-		//ctx.moveTo( this.nextObj[0].getRightPos(), this.nextObj[0].y - space );
-		//ctx.lineTo( this.resultObj.getLeftPos(), this.resultObj.y - space );
-
-		//ctx.moveTo( this.nextObj[0].getRightPos(), this.nextObj[0].y + space );
-		//ctx.lineTo( this.resultObj.getLeftPos(), this.resultObj.y + space );
 
 		ctx.globalAlpha = this.alpha;
 		ctx.strokeStyle = this.fillColor;

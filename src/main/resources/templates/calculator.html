@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <!-- 共通 <head> 読込 -->
 <head th:replace="fragment/head-fragment :: head-fragment(
-title = '計算式編集', scripts = ~{::script}, links = ~{::link})">
+title = #{createFormula}, scripts = ~{::script}, links = ~{::link})">
 
 <!-- CSS -->
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css">

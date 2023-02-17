@@ -42,7 +42,7 @@ title = 'トップページ', scripts = ~{::script}, links = ~{::link})">
 					</div>
 					<div class="swiper-slide">
 						<img th:src="@{/img/slide3.png}">
-						<p>途中の数字を変化させるとリアルタイムで結果が変わります！</p>
+						<p>途中の数値を変えるとリアルタイムで結果が変わります！</p>
 					</div>
 					<div class="swiper-slide">
 						<img th:src="@{/img/slide4.png}">
@@ -53,6 +53,17 @@ title = 'トップページ', scripts = ~{::script}, links = ~{::link})">
 			<div class="swiper-button-prev"></div>
 			<div class="swiper-button-next"></div>
 			<div class="swiper-pagination"></div>
+		</div>
+	</div>
+
+	<div class="d-flex justify-content-center">
+		<div class="p-3">
+			<label><i class="far fa-hand-point-down"></i>&ensp;とりあえず作ってみる</label><br>
+			<button class="btn btn-info"><i class="fas fa-calculator"></i>&ensp;[[#{for(#{createFormula})}]]</button>
+		</div>
+		<div class="p-3">
+			<label><i class="far fa-hand-point-down"></i>&ensp;誰かが作ったものを見てみる</label><br>
+			<a th:href="@{/bbs}" class="btn btn-success"><i class="fas fa-chalkboard"></i>&ensp;[[#{for(#{bbs})}]]</a>
 		</div>
 	</div>
 

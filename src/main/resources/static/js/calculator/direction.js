@@ -26,10 +26,6 @@ function aline(x1, y1, x2, y2, r, len){
 	ctx.stroke();
 }
 
-BigNumber.config({
-    ROUNDING_MODE: BigNumber.ROUND_DOWN // 切り下げ
-});
-
 class Direction{
 	constructor(str,dirX,dirY){
 		this.str = str;
