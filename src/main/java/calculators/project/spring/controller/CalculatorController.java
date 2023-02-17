@@ -22,16 +22,16 @@ public class CalculatorController {
 	@GetMapping("/calculator")
 	public String getCalculator(
 			Model model,
-			@RequestParam(value="openMine", defaultValue="")String formulaId,
-			@RequestParam(value="openBBS", defaultValue="")String bbsFormulaId,
+			@RequestParam(value="openMine", defaultValue="0")Integer formulaId,
+			@RequestParam(value="openBBS", defaultValue="0")Integer bbsFormulaId,
 			@AuthenticationPrincipal LoginUserDetails user
 	) {
 		String jsonData = "";
 		try {
-			if(user != null && !formulaId.isEmpty()) {
-				jsonData = formulasService.getJsonOne(user.getLoginUser().getId(), Integer.parseInt(formulaId));
-			}else if(!bbsFormulaId.isEmpty()) {
-				jsonData = bbsFormulaService.getJsonOne(Integer.parseInt(bbsFormulaId));
+			if(user != null && formulaId != 0) {
+				jsonData = formulasService.getJsonOne(user.getLoginUser().getId(), formulaId);
+			}else if(bbsFormulaId != 0) {
+				jsonData = bbsFormulaService.getJsonOne(bbsFormulaId);
 			}
 		}catch (Exception e) {}
 

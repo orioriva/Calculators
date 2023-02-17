@@ -108,7 +108,7 @@
 			comment,
 			jsonData
 		) VALUES(
-			#{category},
+			#{categoryId},
 			#{creatorId},
 			#{updateDate},
 			#{title},
@@ -122,7 +122,7 @@
 	UPDATE
 		bbsformulas
 	SET
-		category = #{category},
+		category = #{categoryId},
 		updateDate = #{updateDate},
 		title = #{title},
 		comment = #{comment}

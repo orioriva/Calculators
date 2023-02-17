@@ -41,7 +41,7 @@ public class BBSController {
 		if(formulaId != 0) {
 			Formula formula = formulasService.getFormulaOne(user.getLoginUser().getId(), formulaId);
 			if(formula != null) {
-				form.setPostFormula(String.valueOf(formula.getId()));
+				form.setPostFormula(formula.getId());
 				name = formula.getTitle();
 			}
 		}
@@ -72,7 +72,7 @@ public class BBSController {
 		}
 		form.setPostId(postData.getId());
 		form.setTitle(postData.getTitle());
-		form.setCategory(postData.getCategoryId().toString());
+		form.setCategory(postData.getCategoryId());
 		form.setComment(postData.getComment());
 		model.addAttribute("categoryList", bbsFormulasService.getCategoryList("ja"));
 		model.addAttribute("selectedName", "");

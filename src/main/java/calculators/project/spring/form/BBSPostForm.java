@@ -1,7 +1,7 @@
 package calculators.project.spring.form;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 import lombok.Data;
 
@@ -9,11 +9,11 @@ import lombok.Data;
 public class BBSPostForm {
 	private Integer postId;
 	private String changeFormula;
-	@NotEmpty
-	private String postFormula;
+	@NotNull
+	private Integer postFormula;
 	@NotBlank
 	private String title;
-	@NotEmpty
-	private String category;
+	@NotNull
+	private Integer category;
 	private String comment;
 }

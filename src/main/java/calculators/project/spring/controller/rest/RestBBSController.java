@@ -64,8 +64,8 @@ public class RestBBSController {
 		// 投稿データ登録
 		BBSPost post = new BBSPost();
 		int userId = user.getLoginUser().getId();
-		int formulaId = Integer.parseInt(form.getPostFormula());
-		post.setCategory(form.getCategory());
+		int formulaId = form.getPostFormula();
+		post.setCategoryId(form.getCategory());
 		post.setCreatorId(userId);
 		post.setUpdateDate(new Date());
 		post.setTitle(form.getTitle());
@@ -99,14 +99,14 @@ public class RestBBSController {
 		int userId = user.getLoginUser().getId();
 		post.setId(form.getPostId());
 		post.setCreatorId(userId);
-		post.setCategory(form.getCategory());
+		post.setCategoryId(form.getCategory());
 		post.setUpdateDate(new Date());
 		post.setTitle(form.getTitle());
 		post.setComment(form.getComment());
 
 		if(form.getChangeFormula() != null) {
 			System.out.println(form.getPostFormula());
-			int formulaId = Integer.parseInt(form.getPostFormula());
+			int formulaId = form.getPostFormula();
 			post.setJsonData(formulasService.getJsonOne(userId, formulaId));
 		}else {
 			post.setJsonData(null);
