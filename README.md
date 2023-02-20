@@ -17,6 +17,8 @@
 H2 Databaseを使用している為、実行後に`/h2-console`にアクセスする事でデータベースを操作可能です。
 ```
 H2 Database 初期ログイン情報
+Driver Class：org.h2.Driver
+JDBC URL：jdbc:h2:mem:calculators
 ID：root
 Password：（無し）
 ```
