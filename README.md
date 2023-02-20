@@ -6,6 +6,13 @@
 
 [確認用デモページ（計算表作成画面のみ）](https://orioriva.github.io/)
 
+## 実行方法
+<details>
+<summary>開く</summary>
+
+
+</details>
+
 ## 出来る事
 ・キャンバス上に数値を配置し、簡単な四則演算を使用した計算表が作成出来ます。<br>
 ・掲示板から他人が作成した計算表を使用出来、また自身の作成した計算表を掲示板へ投稿して共有する事も出来ます。
@@ -27,10 +34,6 @@ Password：（無し）
 
 
 ## 使用したもの
-
-<details>
-<summary>開く</summary>
-
 ### 開発環境
 - Eclipse
 - Visual Studio Code（計算表のJavaScript部分やHTMLとCSSの動作テスト）
@@ -40,8 +43,8 @@ Password：（無し）
 - H2 Database（アップロード時）
 
 ### 使用言語
-- Java
-- HTML
+- Java ver8(JavaSE-1.8)
+- HTML ver5
 - JavaScript
 - CSS
 - SQL
@@ -52,12 +55,10 @@ Password：（無し）
 ### 主な使用ライブラリ
 - jquery ver3.5.1
 - MyBatis ver2.1.4
-- SpringSecurity
-- Thymeleaf
+- SpringSecurity ver5.7.5
+- Thymeleaf ver3.0.15
 
 #### その他見た目要素
 - bootstrap ver4.5.3
-- dataTables
-- font-awesome
-
-</details>
+- dataTables ver1.13.1
+- font-awesome ver5.15.4
