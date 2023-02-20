@@ -1,14 +1,20 @@
 # 計算表作成サイト
 電卓でちょっとした計算をしている時、さっき使った数値をまた使いたくなった事がありませんか？<br>
-でもExcelとか使うほどじゃ…って事が多いなら、是非このサイトを利用してみて下さい！！
+でもExcelとか使うほどじゃ…って事が多いなら、是非このサイトを使用してみて下さい！！
 
 <img src="calculatorpage.png" width="800px">
 
-[確認用デモページ（計算表作成画面のみ）](https://orioriva.github.io/)
-
 ## 実行方法
+計算表の作成だけであれば下記デモページから行えます。<br>
+[動作確認用デモページ（計算表作成画面のみ）](https://orioriva.github.io/)
+### 完全なプロジェクトの実行方法
 <details>
 <summary>開く</summary>
+
+1. gitBashでプロジェクトのクローンを作成したい場所を指定する
+```$ cd [ファイルパス]```
+1. aa
+```$ git clone https://github.com/orioriva/Calculators```
 
 
 </details>
