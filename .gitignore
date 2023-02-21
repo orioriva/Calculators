@@ -34,4 +34,4 @@ build/
 /.apt_generated_tests/
 
 ### Project ###
-src/main/resources/application.properties
+/application.properties
