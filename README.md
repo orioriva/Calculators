@@ -28,13 +28,43 @@
   <img src="/../../../../orioriva/orioriva.github.io/blob/main/img/projectDL4-1.png" width="600px"><br>
   <br>
   <img src="/../../../../orioriva/orioriva.github.io/blob/main/img/projectDL4-2.png" width="600px"><br>
-  1. プロジェクトを動かしてみる（Eclipse使用）
-  ```$ git clone https://github.com/orioriva/Calculators```
+  
+  #### 2. プロジェクトを動かしてみる（Eclipse使用）
+  ※説明画像のEclipseは[Pleiades](https://mergedoc.osdn.jp/)によって日本語化されています<br>
+  <br>
+  ① Eclipseを開き、画面左上の「ファイル」から「ファイル・システムからプロジェクトを開く...」を選択<br>
+  <img src="/../../../../orioriva/orioriva.github.io/blob/main/img/projectBuild1.png" width="400px"><br>
+  <br>
+  ② 「ディレクトリー(R)...」をクリック<br>
+  <img src="/../../../../orioriva/orioriva.github.io/blob/main/img/projectBuild2.png" width="600px"><br>
+  <br>
+  ③ プロジェクトを展開したファイルを選択<br>
+  <img src="/../../../../orioriva/orioriva.github.io/blob/main/img/projectBuild3.png" width="600px"><br>
+  <br>
+  ④ 検査が完了すると「完了」が押せるようになるのでクリック<br>
+  <img src="/../../../../orioriva/orioriva.github.io/blob/main/img/projectBuild4.png" width="600px"><br>
+  <br>
+  ⑤ しばらくしてファイルが全て読み込まれたら<br>
+  プロジェクト・エクスプローラー上のプロジェクト（名前を変えていなければ「Calculators-main」）を右クリックし<br>
+  「実行」＞「Spring Bootアプリケーション」をクリック<br>
+  <img src="/../../../../orioriva/orioriva.github.io/blob/main/img/projectBuild5.png" width="600px"><br>
+  <br>
+  ⑥ コンソール画面にエラー無く最後まで行ったら実行出来ていますので次へ<br>
+  <img src="/../../../../orioriva/orioriva.github.io/blob/main/img/projectBuild6.png" width="600px"><br>
+  <br>
+  ⑦ 各Webブラウザ上(画像はGoogle Chrome)のURL入力欄に「localhost:（ポート番号※）」を打ち込んで移動します。<br>
+  　※ポート番号のデフォルトは「8080」<br>
+  <img src="/../../../../orioriva/orioriva.github.io/blob/main/img/projectBuild7.png" width="600px"><br>
+  <br>
+  ⑧ すると計算表作成サイトのトップページへ移動出来るので、色々と操作してみて下さい！<br>
+  <img src="/../../../../orioriva/orioriva.github.io/blob/main/img/projectBuild8.png" width="600px"><br>
+  <br>
+  
 </details>
 
 ## 出来る事
-・キャンバス上に数値を配置し、簡単な四則演算を使用した計算表が作成出来ます。<br>
-・掲示板から他人が作成した計算表を使用出来、また自身の作成した計算表を掲示板へ投稿して共有する事も出来ます。
+- キャンバス上に数値を配置し、簡単な四則演算を使用した計算表が作成出来ます。<br>
+- 掲示板から他人が作成した計算表を使用出来、また自身の作成した計算表を掲示板へ投稿して共有する事も出来ます。
 
 ### 初期登録ユーザー
 ユーザー名|ログインID|ログインパスワード|補足
