@@ -2,7 +2,7 @@
 電卓でちょっとした計算をしている時、さっき使った数値をまた使いたくなった事がありませんか？<br>
 でもExcelとか使うほどじゃ…って事が多いなら、是非このサイトを使用してみて下さい！！
 
-<img src="calculatorpage.png" width="800px">
+<img src="/../../../../orioriva/orioriva.github.io/blob/main/img/calculatorpage.png" width="800px">
 
 ## 実行方法
 計算表の作成だけであれば下記デモページから行えます。<br>
