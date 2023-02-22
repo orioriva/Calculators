@@ -15,54 +15,56 @@ title = #{bbs}, scripts = ~{::script}, links = ~{::link})">
 
 <div class="container">
 
-	<div class="mt-2 mb-2">
-		<!-- 新規投稿ボタン -->
-		<a sec:authorize="${authenticated}" th:href="@{/bbs/newpost}" class="btn btn-primary" role="button">
-			<i class="fas fa-edit"></i>&ensp;[[#{newpost}]]
-		</a>
-		<!-- 検索フォーム表示・非表示切り替え -->
-		<button class="btn btn-outline-info" data-toggle="button" aria-pressed="true" onclick="toggleSearchForm();">
-			<i class="fas fa-search"></i>&ensp;[[#{searchOn}]]
-		</button>
-		<small class="ml-3" sec:authorize="${!authenticated}">
-			※ ログインすると投稿が可能になります
-		</small>
-	</div>
+	<div class="mb-4">
+		<div class="mt-2">
+			<!-- 新規投稿ボタン -->
+			<a sec:authorize="${authenticated}" th:href="@{/bbs/newpost}" class="btn btn-primary mr-3" role="button">
+				<i class="fas fa-edit"></i>&ensp;[[#{newpost}]]
+			</a>
+			<!-- 検索フォーム表示・非表示切り替え -->
+			<button class="btn btn-outline-info mr-3" data-toggle="button" aria-pressed="true" onclick="toggleSearchForm();">
+				<i class="fas fa-search"></i>&ensp;[[#{searchOn}]]
+			</button>
+			<small sec:authorize="${!authenticated}">
+				※ ログインすると投稿が可能になります
+			</small>
+		</div>
 
-	<!-- 検索フォーム -->
-	<form class="form-inline p-2 mb-2 border border-info rounded-lg" id="search-form" style="display:none">
-		<!-- カテゴリ選択 -->
-		<div class="input-group mr-2 mb-2">
-			<div class="input-group-prepend">
-				<label class="input-group-text" for="category" th:text="#{category}"></label>
+		<!-- 検索フォーム -->
+		<form class="form-inline p-2 mb-2 mt-2 border border-info rounded-lg" id="search-form" style="display:none">
+			<!-- カテゴリ選択 -->
+			<div class="input-group mr-2 mb-2">
+				<div class="input-group-prepend">
+					<label class="input-group-text" for="category" th:text="#{category}"></label>
+				</div>
+				<select class="custom-select" id="category" onchange="filterColumn(0);">
+					<option value="" th:text="#{all}"></option>
+					<option th:each="category : ${categoryList}" th:value="${category.name}" th:text="${category.name}"></option>
+				</select>
 			</div>
-			<select class="custom-select" id="category" onchange="filterColumn(0);">
-				<option value="" th:text="#{all}"></option>
-				<option th:each="category : ${categoryList}" th:value="${category.name}" th:text="${category.name}"></option>
-			</select>
-		</div>
-		<!-- 作成者 -->
-		<div class="input-group mr-2 mb-2">
-			<div class="input-group-prepend">
-				<label class="input-group-text" th:text="#{poster}"></label>
+			<!-- 作成者 -->
+			<div class="input-group mr-2 mb-2">
+				<div class="input-group-prepend">
+					<label class="input-group-text" th:text="#{poster}"></label>
+				</div>
+				<input type="text" class="form-control" oninput="filterColumn(1);">
 			</div>
-			<input type="text" class="form-control" oninput="filterColumn(1);">
-		</div>
-		<!-- タイトル -->
-		<div class="input-group mr-2 mb-2">
-			<div class="input-group-prepend">
-				<label class="input-group-text" th:text="#{title}"></label>
+			<!-- タイトル -->
+			<div class="input-group mr-2 mb-2">
+				<div class="input-group-prepend">
+					<label class="input-group-text" th:text="#{title}"></label>
+				</div>
+				<input type="text" class="form-control" oninput="filterColumn(2);">
 			</div>
-			<input type="text" class="form-control" oninput="filterColumn(2);">
-		</div>
-		<!-- 更新日 -->
-		<div class="input-group mr-2 mb-2">
-			<div class="input-group-prepend">
-				<label class="input-group-text" th:text="#{updateDate}"></label>
+			<!-- 更新日 -->
+			<div class="input-group mr-2 mb-2">
+				<div class="input-group-prepend">
+					<label class="input-group-text" th:text="#{updateDate}"></label>
+				</div>
+				<input type="text" class="form-control" oninput="filterColumn(3);">
 			</div>
-			<input type="text" class="form-control" oninput="filterColumn(3);">
-		</div>
-	</form>
+		</form>
+	</div>
 
 	<!-- 投稿表示テーブル -->
 	<table id="dataTable" class="table table-bordered table-hover table-sm w-100">

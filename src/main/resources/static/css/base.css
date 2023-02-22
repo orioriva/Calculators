@@ -19,3 +19,16 @@
 .reverse-y{
 	transform: scale(1, -1);
 }
+
+body{
+	padding-bottom: 100px;
+}
+
+@media screen and (max-width: 768px) {
+	.btn{
+		font-size: 80% !important;
+	}
+	tr{
+		font-size: 80%;
+	}
+}

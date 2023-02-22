@@ -13,7 +13,7 @@ title = #{login}, scripts = ~{::script}, links = ~{::link})">
 <header th:replace="fragment/header-fragment :: header-fragment"></header>
 
 <!-- 情報入力 -->
-<div class="container w-50 mt-3">
+<div class="container w-50">
 	<h3 class="text-center" th:text="#{login}"></h3>
 	<p th:if="${param.error}"
 		th:text="${session['SPRING_SECURITY_LAST_EXCEPTION'].message}"
