@@ -7,7 +7,7 @@ window.onbeforeunload = function(event){
 
 /** 操作ガイドボタンが押された時 */
 $("#guide-btn").click(function() {	
-    $('.popup').addClass('show').fadeIn();
+    $('.popup').addClass('popup-show').fadeIn();
 });
 
 /** 操作ガイドを閉じる時 */

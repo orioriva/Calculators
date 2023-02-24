@@ -28,12 +28,13 @@ function update(){
 }
 
 /** オブジェクトの読込 */
-function loadObjects(){
+function loadObjects(jsonData){
 	loading.isLoading = true;
 
-	const jsonData = $('#jsonData').val();
+	if(jsonData === undefined)
+		jsonData = $('#jsonData').val();
 
-	if(jsonData == undefined || jsonData == null || jsonData == ''){
+	if(jsonData == null || jsonData == ''){
 		return;
 	}
 

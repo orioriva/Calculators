@@ -11,13 +11,6 @@ function getParam(name, url) {
     return decodeURIComponent(results[2].replace(/\+/g, " "));
 }
 
-/** バリデーション結果をクリア */
-function removeValidResult(){
-	$('.is-invalid').removeClass('is-invalid');
-	$('.invalid-feedback').remove();
-	$('.text-danger').remove();
-}
-
 /** バリデーション結果の反映 */
 function reflectValidResult(key, value){
 	// CSS適用

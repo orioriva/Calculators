@@ -19,7 +19,7 @@ $('#selectCanvasSize').change(function(){
 
 /** 操作ガイドボタンが押された時 */
 $("#guide-btn").click(function() {
-    $('.popup-guide').addClass('show').fadeIn();
+    $('.popup-guide').addClass('popup-show').fadeIn();
 });
 
 /** 操作ガイドを閉じる時 */
@@ -41,7 +41,7 @@ $('#delete-btn').click(function() {
 
 /** ファイルを開くボタンが押された時 */
 $('#open-btn').click(function() {
-    $('.popup-file').addClass('show').fadeIn();
+    $('.popup-file').addClass('popup-show').fadeIn();
     ajaxGetFormulaList();
 });
 

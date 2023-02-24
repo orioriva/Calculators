@@ -1,12 +1,5 @@
 'use strict'
 
-/** バリデーション結果をクリア */
-function removeValidResult(){
-	$('.is-invalid').removeClass('is-invalid');
-	$('.invalid-feedback').remove();
-	$('.text-danger').remove();
-}
-
 /** バリデーション結果の反映 */
 function reflectValidResult(key, value){
 	// CSS適用
@@ -30,31 +23,25 @@ function ajaxAddUser(){
 	// フォームの値を取得
 	var formData = $('#input-form').serializeArray();
 
-	// ajax通信
-	$.ajax({
-		type : "POST",
-		cache : false,
-		url : '/rest/users',
-		data : formData,
-		dataType : 'json',
-	}).done(function(data){
-		if(data.result == 90){
-			// validationエラー時の処理
-			$.each(data.errors, function(key, value){
-				reflectValidResult(key, value)
-			});
-		}else if(data.result == 999){
-			alert("データベースへの追加に失敗しました");
-		}else if(data.result == 0){
-			// 入力情報を送信
-			alert("登録完了しました");
-			window.location.href= '/login';
-		}else{
-			alert("想定外のエラーが発生しました");
+	setAjax(
+		'POST',
+		'/rest/users',
+		formData,
+		function(data){
+			if(data.result == 90){
+				// validationエラー時の処理
+				$.each(data.errors, function(key, value){
+					reflectValidResult(key, value)
+				});
+			}else if(data.result == 0){
+				// 入力情報を送信
+				alert("登録完了しました");
+				window.location.href= '/login';
+			}else{
+				errorCodeCheck(data.result);
+			}
 		}
-	}).fail(function(jqXHR, testStatus, errorThrown){
-		alert('情報送信に失敗しました');
-	});
+	);
 
 	return false;
 }

@@ -5,7 +5,7 @@ setDataTablesStatus(2,1);
 
 /** ファイルを開くボタンが押された時 */
 $('#open-btn').click(function() {
-    $('.popup-file').addClass('show').fadeIn();
+    $('.popup-file').addClass('popup-show').fadeIn();
     ajaxGetFormulaList();
 });
 
