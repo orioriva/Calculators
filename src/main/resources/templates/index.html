@@ -60,7 +60,7 @@ title = 'トップページ', scripts = ~{::script}, links = ~{::link})">
 		<div class="p-3 mr-5">
 			<label><i class="far fa-hand-point-down"></i>&ensp;とりあえず作ってみる</label><br>
 			<div>
-				<button class="btn btn-info w-100"><i class="fas fa-calculator"></i>&ensp;[[#{for(#{createFormula})}]]</button>
+				<a th:href="@{/calculator}" class="btn btn-info w-100"><i class="fas fa-calculator"></i>&ensp;[[#{for(#{createFormula})}]]</a>
 			</div>
 		</div>
 		<div class="p-3">

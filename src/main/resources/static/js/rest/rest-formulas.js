@@ -3,7 +3,7 @@
 /** 現在の計算表データを新規保存 */
 function ajaxAddFormula(title){
 	setAjax(
-		''POST',
+		'POST',
 		'/rest/formulas',
 		{
 			title: title,
