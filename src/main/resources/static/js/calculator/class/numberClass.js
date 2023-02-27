@@ -72,6 +72,8 @@ class NumberClass extends ObjectClass{
 			"#ffffff",
 			this.fillColor
 		);
+
+		limitPos(this);
 	}
 
 	/** 削除時 */
@@ -105,9 +107,8 @@ class NumberClass extends ObjectClass{
 
 	/** 計算先に符号を追加 */
 	addSign(type){
-		let obj = new SignClass( limitPosX( this.getRightPos() + 50 ), this.y, type);
+		let obj = new SignClass( this.getRightPos() + 50, this.y, type);
 		insertObj(obj,this,null);
-		objects.push(obj);
 		selectedChange(obj);
 		return obj;
 	}

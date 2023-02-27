@@ -17,7 +17,6 @@ class Pointer extends ObjectClass{
 	/** 初期化 */
 	init(){
 		this.setPositions();
-		objects.push(this);
 	}
 
 	/** */
@@ -29,6 +28,7 @@ class Pointer extends ObjectClass{
 			7,
 			this.fillCollor
 		);
+		limitPos(this);
 	}
 
 	/** 描画 */
@@ -121,6 +121,7 @@ class SignClass extends ObjectClass{
 			15,
 			this.fillColor
 		);
+		limitPos(this);
 	}
 
 	/** 描画 */
@@ -166,7 +167,7 @@ class SignClass extends ObjectClass{
 
 		this.nextPointer = new Pointer(
 			this,
-			limitPosX( this.getRightPos() + 50 ),
+			this.getRightPos() + 50,
 			this.y,
 			this.fillColor
 		);
@@ -240,8 +241,8 @@ class SignClass extends ObjectClass{
 				this.calculate(),
 				this
 			);
-			this.resultObj.x = limitPosX( this.nextObj[0].getRightPos() + (this.resultObj.bounds.width / 2) + 50 );
-			objects.push(this.resultObj);
+			this.resultObj.x = this.nextObj[0].getRightPos() + (this.resultObj.bounds.width / 2) + 50;
+			limitPos(this.resultObj);
 		}else{
 			this.resultObj.setNumber(this.calculate());
 		}

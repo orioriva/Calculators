@@ -10,11 +10,24 @@ window.onbeforeunload = function(event){
 
 /** キャンバスサイズが変更されたら */
 $('#selectCanvasSize').change(function(){
-	if($(this).val() == "1"){
+	changeCanvasSize($(this).val());
+});
+function changeCanvasSize(value){
+	if(value == "1"){
 		$('#canvas-wrapper').css({'width': '100%', 'height': '100vh'});
-	}else if($(this).val() == "2"){
+	}else if(value == "2"){
 		$('#canvas-wrapper').css({'width': '1280px', 'height': '720px'});
 	}
+}
+
+/** スマホ用入力ボタン表示/非表示 */
+$('#calc-keys-show').click(function(){
+	$('#calc-keys').animate({height: 'show', opacity:'show'},'slow');
+	$(this).animate({height: 'hide', opacity:'hide'},'slow');
+});
+$('#calc-keys-hide').click(function(){
+	$('#calc-keys').animate({height: 'hide', opacity:'hide'},'slow');
+	$('#calc-keys-show').animate({height: 'show', opacity:'show'},'slow');
 });
 
 /** 操作ガイドボタンが押された時 */

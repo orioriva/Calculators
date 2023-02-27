@@ -20,3 +20,17 @@ html, body{
 	height: 100vh;
 	border: 5px skyblue dashed;
 }
+
+#calc-keys, #calc-keys-show{
+	position: sticky;
+	z-index: 3 !important;
+}
+
+#calc-keys button{
+	font-size: 80%;
+	height: 30px;
+	width: 30px;
+	padding: 1px;
+	border-radius: 0px !important;
+	border: 2px solid #cce2ec;
+}

@@ -18,7 +18,6 @@ function init() {
 
 function addNumber(x,y,text,number){
 	let obj = new NumberClass(x,y,text,number);
-	objects.push(obj);
 	return obj;
 }
 
@@ -28,13 +27,12 @@ function update(){
 }
 
 /** オブジェクトの読込 */
-function loadObjects(jsonData){
+function loadObjects(){
 	loading.isLoading = true;
 
-	if(jsonData === undefined)
-		jsonData = $('#jsonData').val();
+	const jsonData = $('#jsonData').val();
 
-	if(jsonData == null || jsonData == ''){
+	if(jsonData == undefined || jsonData == null || jsonData == ''){
 		return;
 	}
 
