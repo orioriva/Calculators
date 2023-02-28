@@ -22,7 +22,7 @@ function setAjax(type, url, sendData, func){
 /** 共通エラー処理 */
 function errorCodeCheck(errorCode){
 	switch(errorCode){
-		case 999:
+		case 500:
 			alert("データベース操作に失敗しました");
 			break;
 		default:

@@ -57,7 +57,7 @@ public class RestUserController {
 		user.setUserId(form.getUserId());
 		user.setPassword(form.getPassword());
 		if(!userService.addUserOne(user)) {
-			return new RestResult(999, null);
+			return new RestResult(500, null);
 		}
 
 		return new RestResult(0, null);
@@ -76,7 +76,7 @@ public class RestUserController {
 			return new RestResult(90, errors);
 		}
 		if(!userService.updateUserName(user.getLoginUser().getId(), form.getUserName())) {
-			return new RestResult(999, null);
+			return new RestResult(500, null);
 		}
 		user.getLoginUser().setUserName(form.getUserName());
 		return new RestResult(0, null);

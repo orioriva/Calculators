@@ -43,7 +43,7 @@ public class RestFormulaController {
 				json);
 
 		if(!formulasService.addFormulaOne(formula)) {
-			return 999;
+			return 500;
 		}
 
 		return 0;
@@ -64,7 +64,7 @@ public class RestFormulaController {
 			@AuthenticationPrincipal LoginUserDetails user,
 			@RequestParam int formulaId) {
 		if(!formulasService.deleteFormulaOne(user.getLoginUser().getId(), formulaId)) {
-			return 999;
+			return 500;
 		}
 		return 0;
 	}
@@ -84,7 +84,7 @@ public class RestFormulaController {
 			formula.setUpdateDate(new Date());
 			formulasService.updateFormulaOne(formula);
 		}catch (Exception e) {
-			return 999;
+			return 500;
 		}
 		return 0;
 	}
@@ -103,7 +103,7 @@ public class RestFormulaController {
 			formula.setTitle(title);
 			formulasService.updateFormulaOne(formula);
 		}catch (Exception e) {
-			return 999;
+			return 500;
 		}
 		return 0;
 	}

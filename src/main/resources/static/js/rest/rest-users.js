@@ -17,11 +17,15 @@ function reflectValidResultName(parent, name, value){
 
 /** ユーザー登録 */
 function ajaxAddUser(){
+	if(!confirm("この内容で登録してよろしいですか？")){
+		return false;
+	}
+
 	// バリデーション結果をクリア
 	removeValidResult();
 
 	// フォームの値を取得
-	var formData = $('#input-form').serializeArray();
+	const formData = $('#input-form').serializeArray();
 
 	setAjax(
 		'POST',
@@ -48,29 +52,32 @@ function ajaxAddUser(){
 
 /** ユーザー名変更 */
 function ajaxRename(){
+	if(!confirm("本当に変更してよろしいですか？")){
+		return false;
+	}
+
 	removeValidResult();
 
-	$.ajax({
-		type : "PUT",
-		cache : false,
-		url : '/rest/users/name',
-		data : $('#changeUserNameForm').serializeArray(),
-		dataType : 'json'
-	}).done(function(data){
-		if(data.result == 90){
-			// validationエラー時の処理
-			$.each(data.errors, function(key, value){
-				reflectValidResult(key, value)
-			});
-		}else if(data.result == 0){
-			alert("ユーザー名を変更しました");
-			window.location.reload();
-		}else{
-			alert("想定外のエラーが発生しました");
+	const formData = $('#changeUserNameForm').serializeArray();
+
+	setAjax(
+		'PUT',
+		'/rest/users/name',
+		formData,
+		function(data){
+			if(data.result == 90){
+				// validationエラー時の処理
+				$.each(data.errors, function(key, value){
+					reflectValidResult(key, value)
+				});
+			}else if(data.result == 0){
+				alert("ユーザー名を変更しました");
+				window.location.reload();
+			}else{
+				errorCodeCheck(data.result);
+			}
 		}
-	}).fail(function(jqXHR, testStatus, errorThrown){
-		alert('情報送信に失敗しました');
-	});
+	);
 
 	return false;
 }
@@ -83,29 +90,26 @@ function ajaxChangeId(){
 
 	removeValidResult();
 
-	$.ajax({
-		type : "PUT",
-		cache : false,
-		url : '/rest/users/id',
-		data : $('#changeIdForm').serializeArray(),
-		dataType : 'json'
-	}).done(function(data){
-		if(data.result == 90){
-			// validationエラー時の処理
-			$.each(data.errors, function(key, value){
-				reflectValidResultName($('#changeIdForm'), key, value)
-			});
-		}else if(data.result == 0){
-			alert("ＩＤを更新しました");
-			$('#logoutForm').submit();
-		}else if(data.result == 500){
-			alert("データの更新に失敗しました");
-		}else{
-			alert("想定外のエラーが発生しました");
+	const formData = $('#changeIdForm').serializeArray();
+
+	setAjax(
+		'PUT',
+		'/rest/users/id',
+		formData,
+		function(data){
+			if(data.result == 90){
+				// validationエラー時の処理
+				$.each(data.errors, function(key, value){
+					reflectValidResultName($('#changeIdForm'), key, value)
+				});
+			}else if(data.result == 0){
+				alert("ＩＤを更新しました");
+				$('#logoutForm').submit();
+			}else{
+				errorCodeCheck(data.result);
+			}
 		}
-	}).fail(function(jqXHR, testStatus, errorThrown){
-		alert('情報送信に失敗しました');
-	});
+	);
 
 	return false;
 }
@@ -118,29 +122,26 @@ function ajaxChangePassword(){
 
 	removeValidResult();
 
-	$.ajax({
-		type : "PUT",
-		cache : false,
-		url : '/rest/users/password',
-		data : $('#changePasswordForm').serializeArray(),
-		dataType : 'json'
-	}).done(function(data){
-		if(data.result == 90){
-			// validationエラー時の処理
-			$.each(data.errors, function(key, value){
-				reflectValidResultName($('#changePasswordForm'), key, value)
-			});
-		}else if(data.result == 0){
-			alert("パスワードを更新しました");
-			$('#logoutForm').submit();
-		}else if(data.result == 500){
-			alert("データの更新に失敗しました");
-		}else{
-			alert("想定外のエラーが発生しました");
+	const formData = $('#changePasswordForm').serializeArray();
+
+	setAjax(
+		'PUT',
+		'/rest/users/password',
+		formData,
+		function(data){
+			if(data.result == 90){
+				// validationエラー時の処理
+				$.each(data.errors, function(key, value){
+					reflectValidResultName($('#changePasswordForm'), key, value)
+				});
+			}else if(data.result == 0){
+				alert("パスワードを更新しました");
+				$('#logoutForm').submit();
+			}else{
+				errorCodeCheck(data.result);
+			}
 		}
-	}).fail(function(jqXHR, testStatus, errorThrown){
-		alert('情報送信に失敗しました');
-	});
+	);
 
 	return false;
 }
@@ -153,30 +154,26 @@ function ajaxDeleteUser(){
 
 	removeValidResult();
 
-	$.ajax({
-		type : "DELETE",
-		cache : false,
-		url : '/rest/users',
-		data : $('#unregisterForm').serializeArray(),
-		dataType : 'json'
-	}).done(function(data){
-		removeValidResult();
-		if(data.result == 90){
-			// validationエラー時の処理
-			$.each(data.errors, function(key, value){
-				reflectValidResult(key, value)
-			});
-		}else if(data.result == 0){
-			alert("登録情報を削除いたしました。");
-			$('#logoutForm').submit();
-		}else if(data.result == 500){
-			alert("データの削除に失敗しました");
-		}else{
-			alert("想定外のエラーが発生しました");
+	const formData = $('#unregisterForm').serializeArray();
+
+	setAjax(
+		'DELETE',
+		'/rest/users',
+		formData,
+		function(data){
+			if(data.result == 90){
+				// validationエラー時の処理
+				$.each(data.errors, function(key, value){
+					reflectValidResult(key, value)
+				});
+			}else if(data.result == 0){
+				alert("登録情報を削除いたしました。");
+				$('#logoutForm').submit();
+			}else{
+				errorCodeCheck(data.result);
+			}
 		}
-	}).fail(function(jqXHR, testStatus, errorThrown){
-		alert('情報送信に失敗しました');
-	});
+	);
 
 	return false;
 }
