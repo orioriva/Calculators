@@ -1,7 +1,9 @@
 # 計算表作成サイト
 電卓でちょっとした計算をしている時、さっき使った数値をまた使いたくなった事がありませんか？<br>
 でもExcelとか使うほどじゃ…って事がしばしばあったので、こういうのがあったらいいなと思い制作してみました！
-<img src="/../../../../orioriva/orioriva.github.io/blob/main/img/calculatorpage.png" width="800px">
+<img src="/../../../../orioriva/orioriva.github.io/blob/main/img/calculatorpage.png">|<img src="/../../../../orioriva/orioriva.github.io/blob/main/img/calculatorpage-phone.png">
+---|---
+<sub>PC表示</sub>|<sub>スマートフォン表示</sub>
 
 ## 実行方法
 計算表の作成だけであれば下記デモページから行えます。<br>
