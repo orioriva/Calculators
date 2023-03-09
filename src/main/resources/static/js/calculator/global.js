@@ -156,32 +156,30 @@ window.addEventListener('keydown', e => {
 	keyAction(e.key);
 });
 function keyAction(key){
-	switch(key){
-		case '+':
-		case '-':
-		case '*':
-		case '/':
-			createSign(key);
-			break;
-		case 'Delete':
-			deleteObj();
-			break;
-		case 'Backspace':
-			if(selectedObj == null)
+	if(selectedObj != null && selectedObj.type == "number"){
+		switch(key){
+			case '+':
+			case '-':
+			case '*':
+			case '/':
+				createSign(key);
 				break;
-			if(selectedObj.type == "number"){
+			case 'Delete':
+				deleteObj();
+				break;
+			case 'Backspace':
 				selectedObj.removeNumberOne();
-			}
-			break;
-		case 'c':
-			if(selectedObj == null)
 				break;
-			if(selectedObj.type == "number"){
+			case 'c':
 				selectedObj.clearNumber();
-			}
-			break;
-		case '.':
-			if(selectedObj == null || selectedObj.type == "sign") break;
+				break;
+			case '.':
+				selectedObj.addNumberOne(key);
+				break;
+		}
+	}
+
+	switch(key){
 		case '0':
 		case '1':
 		case '2':
@@ -192,18 +190,17 @@ function keyAction(key){
 		case '7':
 		case '8':
 		case '9':
+			let obj = null;
 			if(selectedObj == null){
-				let obj = addNumber(_mouseX, _mouseY, "NEW", parseInt(key));
-				selectedChange(obj);
+				obj = addNumber(_mouseX, _mouseY, "NEW", parseInt(key));
 			}else if(selectedObj.type == "number"){
 				selectedObj.addNumberOne(key);
 			}else if(selectedObj.type == "sign"){
-				let obj = addNumber(selectedObj.getRightPos() + 100, selectedObj.y, "NEW", parseInt(key));
+				obj = addNumber(selectedObj.getRightPos() + 100, selectedObj.y, "NEW", parseInt(key));
 				selectedObj.setNextObj(obj);
-				selectedChange(obj);
 			}
-			break;
-		default:
+			if(obj !== null)
+				selectedChange(obj);
 			break;
 	}
 }
@@ -242,12 +239,13 @@ function drawObj(){
 
 /** 選択オブジェクト削除 */
 function deleteObj(){
-	if(selectedObj != null && selectedObj.type != "pointer"){
-		const save = selectedObj;
-		selectedObj.isDelete();
-		if(selectedObj == save)
-			selectedObj = null;
+	if(selectedObj === null || selectedObj.type == "pointer"){
+		return;
 	}
+	const save = selectedObj;
+	selectedObj.isDelete();
+	if(selectedObj == save)
+		selectedObj = null;
 }
 
 /** 符号オブジェクトを生成 */
