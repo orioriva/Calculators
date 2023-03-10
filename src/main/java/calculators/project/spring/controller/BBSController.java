@@ -1,5 +1,7 @@
 package calculators.project.spring.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -10,9 +12,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import calculators.project.spring.form.BBSPostForm;
 import calculators.project.spring.model.BBSPost;
+import calculators.project.spring.model.Comment;
 import calculators.project.spring.model.Formula;
 import calculators.project.spring.model.LoginUserDetails;
 import calculators.project.spring.service.BBSFormulasService;
+import calculators.project.spring.service.CommentsService;
 import calculators.project.spring.service.FormulasService;
 
 @Controller
@@ -22,6 +26,9 @@ public class BBSController {
 
 	@Autowired
 	private BBSFormulasService bbsFormulasService;
+
+	@Autowired
+	private CommentsService commentsService;
 
 	@GetMapping("/bbs")
 	public String getBBS(Model model) {
@@ -55,7 +62,9 @@ public class BBSController {
 			@RequestParam(value="postId")Integer postId
 	) {
 		BBSPost postData = bbsFormulasService.getPostOne(postId);
+		List<Comment> commentList = commentsService.getCommentList(postId);
 		model.addAttribute("postData", postData);
+		model.addAttribute("commentList", commentList);
 		return "bbs/post";
 	}
 

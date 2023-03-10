@@ -60,6 +60,19 @@ title = ${postData != null} ? ${postData.title} : #{postNone}, scripts = ~{::scr
 				</div>
 			</div>
 		</div>
+		<!--
+		<div class="w-100 border rounded mt-2 p-2">
+			コメント
+			<th:block th:each="comment : ${commentList}">
+				<div class="m-1 border rounded">
+					<small class="p-1">投稿者：[[${comment.posterName}]]　　投稿日時：[[${#dates.format(comment.postDate, 'yyyy/MM/dd HH:mm')}]]</small><br>
+					<div class="p-1 border-top">
+						<pre>[[${comment.comment}]]</pre>
+					</div>
+				</div>
+			</th:block>
+		</div>
+		-->
 	</th:block>
 </div>
 

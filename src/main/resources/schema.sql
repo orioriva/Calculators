@@ -28,6 +28,16 @@ CREATE TABLE IF NOT EXISTS `bbsformulas`(
 	view BOOLEAN DEFAULT true NOT NULL
 );
 
+/* コメントテーブル */
+CREATE TABLE IF NOT EXISTS `comments`(
+	postId INT NOT NULL,
+	no INT NOT NULL,
+	posterId INT NOT NULL,
+	postDate DATETIME NOT NULL,
+	comment TEXT,
+	view BOOLEAN DEFAULT true NOT NULL
+);
+
 /* カテゴリーリストテーブル */
 CREATE TABLE IF NOT EXISTS `categories`(
 	id INT PRIMARY KEY AUTO_INCREMENT,

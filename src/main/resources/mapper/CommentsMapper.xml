@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- Mapperとxmlのマッピング -->
+<mapper namespace="calculators.project.spring.mapper.CommentsMapper">
+
+<!-- 投稿のコメント一覧取得 -->
+<select id="getCommentList" resultType="Comment">
+	SELECT
+		no,
+		CASE users.userName
+			WHEN NULL THEN '退会済みユーザー'
+			ELSE `users`.userName
+		END posterName,
+		postDate,
+		CASE view
+			WHEN true THEN comment
+			ELSE '※　このコメントは削除されました　※'
+		END comment,
+	FROM
+		comments
+		LEFT JOIN
+			`users`
+		ON
+			`users`.id = comments.posterId
+	WHERE
+		postId = #{postId}
+</select>
+
+</mapper>
