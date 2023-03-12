@@ -28,4 +28,26 @@
 		postId = #{postId}
 </select>
 
+<!-- コメント追加 -->
+<insert id="addCommentOne">
+	INSERT INTO
+		comments(
+			postId,
+			no,
+			posterId,
+			postDate,
+			comment
+		)VALUES(
+			#{postId},
+			(
+				SElECT COUNT(*)
+				FROM comments
+				WHERE postId = #{postId}
+			)+1,
+			#{posterId},
+			#{postDate},
+			#{comment}
+		)
+</insert>
+
 </mapper>

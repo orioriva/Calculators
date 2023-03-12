@@ -1,0 +1,7 @@
+@charset "UTF-8";
+
+p{
+	white-space: pre-wrap;
+	word-wrap: break-word;
+	margin-bottom: 0 !important;
+}

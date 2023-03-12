@@ -71,7 +71,9 @@ public class RestBBSController {
 		post.setTitle(form.getTitle());
 		post.setComment(form.getComment());
 		post.setJsonData(formulasService.getJsonOne(userId, formulaId));
-		bbsFormulaService.newPostOne(post);
+		if(bbsFormulaService.newPostOne(post)) {
+			return new RestResult(500, null);
+		}
 
 		return new RestResult(0, null);
 	}
@@ -112,7 +114,9 @@ public class RestBBSController {
 			post.setJsonData(null);
 		}
 
-		bbsFormulaService.updatePostOne(post);
+		if(!bbsFormulaService.updatePostOne(post)) {
+			return new RestResult(500, null);
+		}
 
 		return new RestResult(0, null);
 	}

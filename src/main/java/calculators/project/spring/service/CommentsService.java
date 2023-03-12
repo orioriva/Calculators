@@ -13,7 +13,13 @@ public class CommentsService {
 	@Autowired
 	private CommentsMapper mapper;
 
+	/** コメント一覧取得 */
 	public List<Comment> getCommentList(int postId){
 		return mapper.getCommentList(postId);
+	}
+	
+	/** コメント１件追加 */
+	public boolean addCommentOne(Comment comment) {
+		return mapper.addCommentOne(comment);
 	}
 }

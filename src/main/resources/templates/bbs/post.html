@@ -4,8 +4,9 @@
 <head th:replace="fragment/head-fragment :: head-fragment(
 title = ${postData != null} ? ${postData.title} : #{postNone}, scripts = ~{::script}, links = ~{::link})">
 	<!-- 個別CSS、JSを引数に指定 -->
-	<link rel="stylesheet" type="text/css" th:href="@{/css/blank.css}">
+	<link rel="stylesheet" type="text/css" th:href="@{/css/post.css}">
 	<script type="text/javascript" th:src="@{/js/rest/rest-posts.js}" defer></script>
+	<script type="text/javascript" th:src="@{/js/rest/rest-comments.js}" defer></script>
 	<script type="text/javascript" th:src="@{/js/bbs/viewpost.js}" defer></script>
 </head>
 <body>
@@ -32,12 +33,12 @@ title = ${postData != null} ? ${postData.title} : #{postNone}, scripts = ~{::scr
 			</div>
 		</div>
 		<!-- 投稿詳細部分 -->
-		<div class="w-100 border rounded mt-2">
+		<div class="w-100 border border-info rounded mt-2">
 			<div class="p-2">
 				<small th:text="#{updateDate} + '：' + ${#dates.format(postData.updateDate, 'yyyy/MM/dd HH:mm')}"></small>
 				<h5 th:text="#{poster} + '：' + ${postData.creatorName}"></h5>
-				<div class="p-3 border rounded">
-					<pre th:text="${postData.comment}"></pre>
+				<div class="p-2 border border-info rounded">
+					<p th:text="${postData.comment}"></p>
 				</div>
 				<div class="d-flex flex-row mt-2">
 					<!-- 開く -->
@@ -60,19 +61,34 @@ title = ${postData != null} ? ${postData.title} : #{postNone}, scripts = ~{::scr
 				</div>
 			</div>
 		</div>
-		<!--
-		<div class="w-100 border rounded mt-2 p-2">
+		<div class="w-100 border border-secondary rounded mt-3 p-2">
 			コメント
-			<th:block th:each="comment : ${commentList}">
-				<div class="m-1 border rounded">
-					<small class="p-1">投稿者：[[${comment.posterName}]]　　投稿日時：[[${#dates.format(comment.postDate, 'yyyy/MM/dd HH:mm')}]]</small><br>
-					<div class="p-1 border-top">
-						<pre>[[${comment.comment}]]</pre>
+			<th:block th:if="${commentList.size() != 0}" th:each="comment : ${commentList}">
+				<div class="m-1 border border-secondary rounded">
+					<small class="p-1">[[${comment.no}]]　投稿者：[[${comment.posterName}]]　　投稿日時：[[${#dates.format(comment.postDate, 'yyyy/MM/dd HH:mm')}]]</small><br>
+					<div class="p-1 border-top border-secondary">
+						<p>[[${comment.comment}]]</p>
 					</div>
 				</div>
 			</th:block>
+			<th:block th:if="${commentList.size() == 0}">
+				<div>-- コメントはまだありません --</div>
+			</th:block>
 		</div>
-		-->
+		<div class="w-100 border border-secondary rounded mt-3 p-2">
+			コメント投稿
+			<div sec:authorize="${authenticated}">
+				<form id="comment-form" th:action method="post" onsubmit="return ajaxAddComment();">
+					<div>
+						<textarea class="mt-2 mb-2 form-control"></textarea>
+					</div>
+					<button type="submit" class="btn btn-primary">投稿</button>
+				</form>
+			</div>
+			<div sec:authorize="${!authenticated}">
+				-- ログインするとコメントが出来るようになります --
+			</div>
+		</div>
 	</th:block>
 </div>
 

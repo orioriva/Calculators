@@ -9,4 +9,5 @@ import calculators.project.spring.model.Comment;
 @Mapper
 public interface CommentsMapper {
 	public List<Comment> getCommentList(int postId);
+	public boolean addCommentOne(Comment comment);
 }
