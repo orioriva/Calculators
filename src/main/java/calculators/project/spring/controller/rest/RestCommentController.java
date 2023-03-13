@@ -22,10 +22,10 @@ import calculators.project.spring.service.ErrorCheckService;
 public class RestCommentController {
 	@Autowired
 	private CommentsService commentService;
-	
+
 	@Autowired
 	private ErrorCheckService errorCheck;
-	
+
 	@PostMapping("/rest/comment")
 	public RestResult postAddFormula(
 			@AuthenticationPrincipal LoginUserDetails user,
@@ -38,15 +38,13 @@ public class RestCommentController {
 		if(!errors.isEmpty()) {
 			return new RestResult(90, errors);
 		}
-		
+
 		Comment comment = new Comment();
 		comment.setComment(form.getComment());
 		comment.setPostDate(new Date());
 		comment.setPosterId(user.getLoginUser().getId());
 		comment.setPostId(form.getPostId());
-		
-		System.out.println(comment);
-		
+
 		if(!commentService.addCommentOne(comment)) {
 			return new RestResult(500, null);
 		}

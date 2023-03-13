@@ -82,9 +82,13 @@ function ajaxUpdateFormulaJson(){
 /** 計算表タイトル名１件更新 */
 function ajaxUpdateFormulaTitle(oldTitle){
 	if(oldTitle == undefined) oldTitle = "";
-	let title = prompt("新しいタイトル名を入力\r\n※　これによる更新日の変更は起こりません", oldTitle);
+	let title = prompt("新しいタイトル名を入力(50文字以内)\r\n※　これによる更新日の変更は起こりません", oldTitle);
 	if(title == null || title == ""){
 		alert("キャンセルしました");
+		return;
+	}else if(title.length > 50){
+		alert("タイトルは50文字以内で入力して下さい");
+		ajaxUpdateFormulaTitle(title);
 		return;
 	}
 

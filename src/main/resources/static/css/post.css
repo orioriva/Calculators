@@ -5,3 +5,7 @@ p{
 	word-wrap: break-word;
 	margin-bottom: 0 !important;
 }
+
+#title-text{
+	word-wrap: break-word;
+}

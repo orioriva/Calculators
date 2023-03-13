@@ -4,7 +4,7 @@
 <head th:replace="fragment/head-fragment :: head-fragment(
 title = #{bbs}, scripts = ~{::script}, links = ~{::link})">
 	<!-- 個別CSS、JSを引数に指定 -->
-	<link rel="stylesheet" type="text/css" th:href="@{/css/blank.css}">
+	<link rel="stylesheet" type="text/css" th:href="@{/css/bbs.css}">
 	<script type="text/javascript" th:src="@{/js/rest/rest-posts.js}" defer></script>
 	<script type="text/javascript" th:src="@{/js/bbs.js}" defer></script>
 </head>
@@ -31,7 +31,7 @@ title = #{bbs}, scripts = ~{::script}, links = ~{::link})">
 		</div>
 
 		<!-- 検索フォーム -->
-		<form class="form-inline p-2 mb-2 mt-2 border border-info rounded-lg" id="search-form" style="display:none">
+		<form class="hide form-inline p-2 mb-2 mt-2 border border-info rounded-lg" id="search-form">
 			<!-- カテゴリ選択 -->
 			<div class="input-group mr-2 mb-2">
 				<div class="input-group-prepend">
@@ -70,11 +70,11 @@ title = #{bbs}, scripts = ~{::script}, links = ~{::link})">
 	<table id="dataTable" class="table table-bordered table-hover table-sm w-100">
 		<thead class="thead-light">
 			<tr>
-				<th scope="col" th:text="#{category}"></th>
-				<th scope="col" th:text="#{poster}"></th>
-				<th scope="col" th:text="#{title}"></th>
-				<th scope="col" th:text="#{updateDate}"></th>
-				<th scope="col" th:text="#{operation}"></th>
+				<th scope="col" class="col-1" th:text="#{category}"></th>
+				<th scope="col" class="col-2" th:text="#{poster}"></th>
+				<th scope="col" class="col-4" th:text="#{title}"></th>
+				<th scope="col" class="col-2" th:text="#{updateDate}"></th>
+				<th scope="col" class="col-1" th:text="#{operation}"></th>
 			</tr>
 		</thead>
 		<tbody>

@@ -1,0 +1,10 @@
+@charset "UTF-8";
+
+th,td{
+	white-space: normal !important;
+	word-wrap: break-word !important;
+}
+
+table{
+
+}
