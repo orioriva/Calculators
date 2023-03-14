@@ -162,10 +162,7 @@ function keyAction(key){
 			case '-':
 			case '*':
 			case '/':
-				createSign(key);
-				break;
-			case 'Delete':
-				deleteObj();
+				selectedObj.addSign(key);
 				break;
 			case 'Backspace':
 				selectedObj.removeNumberOne();
@@ -201,6 +198,9 @@ function keyAction(key){
 			}
 			if(obj !== null)
 				selectedChange(obj);
+			break;
+		case 'Delete':
+			deleteObj();
 			break;
 	}
 }
@@ -246,14 +246,6 @@ function deleteObj(){
 	selectedObj.isDelete();
 	if(selectedObj == save)
 		selectedObj = null;
-}
-
-/** 符号オブジェクトを生成 */
-function createSign(type){
-	if(selectedObj === null || selectedObj.type != 'number'){
-		return;
-	}
-	selectedObj.addSign(type);
 }
 
 /** 選択オブジェクト変更 */
