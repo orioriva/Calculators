@@ -61,20 +61,27 @@ function onMousedown(e){
 	updateMousePos(e);
 
 	// どのオブジェクトがタッチされたか探す（逆順）
+	let touchObj = null;
 	for (let i = objects.length - 1; i >= 0 ; i--){
-		if(objects[i].hitTest(_mouseX,_mouseY)){
-			selectedChange(objects[i]);
-			// ドラッグを開始した座標を覚えておく
-			dragPointX = _mouseX - selectedObj.x;
-			dragPointY = _mouseY - selectedObj.y;
-			dragOn = true;
+		objects[i].alpha = 1.0;
+		// タッチ判定は数値オブジェクト以外を優先
+		if(touchObj != null && touchObj.type != "number" && objects[i].type == "number"){
 			continue;
 		}
-		objects[i].alpha = 1.0;
+		if(objects[i].hitTest(_mouseX,_mouseY)){
+			touchObj = objects[i];
+		}
 	}
 
-	if(!dragOn)
+	if(touchObj == null){
 		selectedObj = null;
+	}else{
+		dragOn = true;
+		selectedChange(touchObj);
+		// ドラッグを開始した座標を覚えておく
+		dragPointX = _mouseX - selectedObj.x;
+		dragPointY = _mouseY - selectedObj.y;
+	}
 }
 /** ダブルクリックされた時の処理 */
 function onDoubleClick(e){
@@ -116,18 +123,10 @@ function mouseMove(){
 	}
 	limitPos(selectedObj);
 	// ポインタを動かしているなら
-	if(selectedObj.type == "pointer"){
-		for (let i = objects.length - 1; i >= 0 ; i--){
-			if(objects[i].type != "number" || objects[i] == selectedObj || objects[i] == selectedObj.parent.prevObj[0]){
-				continue;
-			}
-			if(objects[i].hitTest(selectedObj.x,selectedObj.y)){
-				objects[i].alpha = 0.7;
-			}else{
-				objects[i].alpha = 1.0;
-			}
-		}
-	}
+	hitTestPointer(
+		(obj)=>{ obj.alpha = 0.7; return true; },
+		(obj)=>{ obj.alpha = 1.0; }
+	);
 }
 
 /** マウスボタンを離した時の処理 */
@@ -138,14 +137,29 @@ function onMouseUp(){
 		return;
 	}
 
+	hitTestPointer((obj)=>{
+		selectedObj.parent.setNextObj(obj);
+		return false;
+	});
+}
+
+/** ポインタの当たり判定 */
+function hitTestPointer(hitFunc,nohitFunc){
+	// ポインタを動かしているなら
 	if(selectedObj.type == "pointer"){
 		for (let i = objects.length - 1; i >= 0 ; i--){
-			if(objects[i].type != "number" || objects[i] == selectedObj || objects[i] == selectedObj.parent.prevObj[0]){
+			if(	objects[i].type != "number" ||
+				objects[i] == selectedObj ||
+				objects[i] == selectedObj.parent.prevObj[0])
+			{
 				continue;
 			}
 			if(objects[i].hitTest(selectedObj.x,selectedObj.y)){
-				selectedObj.parent.setNextObj(objects[i]);
-				return;
+				if(!hitFunc(objects[i])){
+					return;
+				}
+			}else if(nohitFunc !== undefined){
+				nohitFunc(objects[i]);
 			}
 		}
 	}
@@ -221,9 +235,15 @@ function drawObj(){
 	// 画面クリア
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-	// 各オブジェクト描画
+	// 数値オブジェクトを奥に描画
 	for(let value of objects){
-		value.draw();
+		if(value.type == "number")
+			value.draw();
+	}
+	// それ以外を手前に描画
+	for(let value of objects){
+		if(value.type != "number")
+			value.draw();
 	}
 
 	// マウス位置（デバッグ）
