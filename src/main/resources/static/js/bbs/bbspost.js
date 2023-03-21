@@ -3,6 +3,14 @@
 /** DataTables初期設定 */
 setDataTablesStatus(2,1);
 
+Vue.createApp({
+	data(){
+		return{
+			str: '-- 選択して下さい --'
+		}
+	}
+}).mount('#titleText')
+
 /** ファイルを開くボタンが押された時 */
 $('#open-btn').click(function() {
     $('.popup-file').addClass('popup-show').fadeIn();
