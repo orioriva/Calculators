@@ -49,6 +49,15 @@ public class RestFormulaController {
 		return 0;
 	}
 
+	/** 計算表データ取得 */
+	@GetMapping("/rest/formulas/selected")
+	public Formula postGetFormulaOne(
+			@AuthenticationPrincipal LoginUserDetails user,
+			@RequestParam int formulaId
+	) {
+		return formulasService.getFormulaOne(user.getLoginUser().getId(), formulaId);
+	}
+
 	/** 計算表データ取得（json） */
 	@GetMapping("/rest/formulas/json")
 	public String postLoadFormula(

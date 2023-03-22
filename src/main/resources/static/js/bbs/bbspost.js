@@ -3,13 +3,17 @@
 /** DataTables初期設定 */
 setDataTablesStatus(2,1);
 
-Vue.createApp({
+const vm = Vue.createApp({
 	data(){
 		return{
-			str: '-- 選択して下さい --'
+			title: '-- 選択して下さい --',
+			formulaId: 0
 		}
+	},
+	mounted(){
+		ajaxGetFormula()
 	}
-}).mount('#titleText')
+}).mount('#input-form')
 
 /** ファイルを開くボタンが押された時 */
 $('#open-btn').click(function() {
