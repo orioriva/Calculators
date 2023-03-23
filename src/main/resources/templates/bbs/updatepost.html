@@ -31,7 +31,7 @@ title = #{postEditing}, scripts = ~{::script}, links = ~{::link})">
 	<div class="border rounded p-2 mb-3">
 		<!-- 計算表を変更するか？ -->
 		<div class="custom-control custom-switch z-0">
-			<input type="checkbox" class="custom-control-input" name="changeFormula" id="changeFormula">
+			<input type="checkbox" class="custom-control-input" name="changeFormula" id="changeFormula" v-model="isChange">
 			<label class="custom-control-label" for="changeFormula" th:text="#{formulaChange}"></label>
 		</div>
 
@@ -40,12 +40,12 @@ title = #{postEditing}, scripts = ~{::script}, links = ~{::link})">
 			<div class="input-group-prepend">
 				<label class="input-group-text" for="myFormulas" th:text="#{postFormula}"></label>
 			</div>
-			<label class="form-control text-truncate" id="titleText" for="open-btn" th:text="${selectedName != ''} ? ${selectedName} : #{select.pls}"></label>
+			<label class="form-control text-truncate" for="open-btn">{{ title }}</label>
 			<div class="input-group-append">
 				<button class="btn btn-secondary z-0" id="open-btn" type="button" th:text="#{select}"></button>
 			</div>
 		</div>
-		<input type="hidden" th:field="*{postFormula}" value="">
+		<input type="hidden" name="postFormula" v-model="formulaId">
 	</div>
 
 	<div class="row">

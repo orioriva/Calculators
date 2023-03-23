@@ -35,6 +35,25 @@ public class RestBBSController {
 	@Autowired
 	private ErrorCheckService errorCheck;
 
+	// 投稿フォームに入力された内容をデータベース登録用のクラスに変換
+	private BBSPost formToPost(BBSPostForm form, int userId, boolean isOverwrite) {
+		BBSPost post = new BBSPost();
+		post.setCategoryId(form.getCategory());
+		post.setCreatorId(userId);
+		post.setUpdateDate(new Date());
+		post.setTitle(form.getTitle());
+		post.setComment(form.getComment());
+		if(isOverwrite) {
+			post.setId(form.getPostId());
+		}
+		if(isOverwrite && form.getChangeFormula() == null) {
+			post.setJsonData(null);
+		}else{
+			post.setJsonData(formulasService.getJsonOne(userId, form.getPostFormula()));
+		}
+		return post;
+	}
+
 	/** 投稿一覧リスト取得 */
 	@GetMapping("/rest/posts")
 	public List<BBSPost> restGetPostList() {
@@ -62,16 +81,8 @@ public class RestBBSController {
 		}
 
 		// 投稿データ登録
-		BBSPost post = new BBSPost();
-		int userId = user.getLoginUser().getId();
-		int formulaId = form.getPostFormula();
-		post.setCategoryId(form.getCategory());
-		post.setCreatorId(userId);
-		post.setUpdateDate(new Date());
-		post.setTitle(form.getTitle());
-		post.setComment(form.getComment());
-		post.setJsonData(formulasService.getJsonOne(userId, formulaId));
-		if(bbsFormulaService.newPostOne(post)) {
+		BBSPost post = formToPost(form, user.getLoginUser().getId(),false);
+		if(!bbsFormulaService.newPostOne(post)) {
 			return new RestResult(500, null);
 		}
 
@@ -87,6 +98,7 @@ public class RestBBSController {
 	) {
 		Map<String, String> errors = new HashMap<>();
 		errorCheck.setValidError(bindingResult, errors);
+		System.out.println(form);
 		// 計算表を変更しないなら計算表が指定されていないエラーは無視する
 		if(errors.containsKey("postFormula") && form.getChangeFormula() == null) {
 			errors.remove("postFormula");
@@ -97,23 +109,7 @@ public class RestBBSController {
 		}
 
 		// 投稿データ登録
-		BBSPost post = new BBSPost();
-		int userId = user.getLoginUser().getId();
-		post.setId(form.getPostId());
-		post.setCreatorId(userId);
-		post.setCategoryId(form.getCategory());
-		post.setUpdateDate(new Date());
-		post.setTitle(form.getTitle());
-		post.setComment(form.getComment());
-
-		if(form.getChangeFormula() != null) {
-			System.out.println(form.getPostFormula());
-			int formulaId = form.getPostFormula();
-			post.setJsonData(formulasService.getJsonOne(userId, formulaId));
-		}else {
-			post.setJsonData(null);
-		}
-
+		BBSPost post = formToPost(form, user.getLoginUser().getId(), true);
 		if(!bbsFormulaService.updatePostOne(post)) {
 			return new RestResult(500, null);
 		}

@@ -50,8 +50,7 @@ function ajaxGetFormula(){
 			_csrf: $("*[name=_csrf]").val()  // CSRFトークンを送信
 		},
 		function(data){
-			vm.title = data.title;
-			vm.formulaId = data.id;
+			setFormula(data.id, data.title);
 		}
 	);
 }

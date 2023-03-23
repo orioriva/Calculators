@@ -7,13 +7,18 @@ const vm = Vue.createApp({
 	data(){
 		return{
 			title: '-- 選択して下さい --',
-			formulaId: 0
+			formulaId: 0,
+			isChange: false
 		}
 	},
-	mounted(){
-		ajaxGetFormula()
+	methods: {
+		toggleChange() {
+			this.isChange = !this.isChange
+		}
 	}
 }).mount('#input-form')
+
+ajaxGetFormula();
 
 /** ファイルを開くボタンが押された時 */
 $('#open-btn').click(function() {
@@ -35,8 +40,8 @@ $('#close-file').click(function() {
 
 /** 計算表をセットする */
 function setFormula(formulaId, title){
-	$('#titleText').text(title);
-	$('#postFormula').val(formulaId);
+	vm.title = title;
+	vm.formulaId = formulaId;
 	$('.popup-file').fadeOut();
 }
 

@@ -53,7 +53,7 @@ function ajaxAddPost(){
 
 	// フォームの値を取得
 	let formData = $('#input-form').serializeArray();
-	
+
 	setAjax(
 		'POST',
 		'/rest/posts',
@@ -78,12 +78,16 @@ function ajaxAddPost(){
 
 /** 投稿内容更新 */
 function ajaxUpdatePost(){
+	if(!confirm("この内容で更新してよろしいですか？")){
+		return false;
+	}
+
 	// バリデーション結果をクリア
 	removeValidResult();
 
 	// フォームの値を取得
 	let formData = $('#input-form').serializeArray();
-	
+
 	setAjax(
 		'PUT',
 		'/rest/posts',
@@ -111,7 +115,7 @@ function ajaxDeletePost(postId){
 	if(!confirm("本当にこの投稿を削除してよろしいですか？")){
 		return false;
 	}
-	
+
 	setAjax(
 		'DELETE',
 		'/rest/posts',
