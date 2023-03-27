@@ -36,20 +36,22 @@ public class RestBBSController {
 	private ErrorCheckService errorCheck;
 
 	// 投稿フォームに入力された内容をデータベース登録用のクラスに変換
-	private BBSPost formToPost(BBSPostForm form, int userId, boolean isOverwrite) {
+	private BBSPost formToPost(BBSPostForm form, int userId) {
 		BBSPost post = new BBSPost();
 		post.setCategoryId(form.getCategory());
 		post.setCreatorId(userId);
 		post.setUpdateDate(new Date());
 		post.setTitle(form.getTitle());
 		post.setComment(form.getComment());
-		if(isOverwrite) {
-			post.setId(form.getPostId());
-		}
-		if(isOverwrite && form.getChangeFormula() == null) {
+		post.setJsonData(formulasService.getJsonOne(userId, form.getPostFormula()));
+		return post;
+	}
+	// 更新の場合
+	private BBSPost formToUpdatePost(BBSPostForm form, int userId) {
+		BBSPost post = formToPost(form, userId);
+		post.setId(form.getPostId());
+		if(form.getChangeFormula() == null) {
 			post.setJsonData(null);
-		}else{
-			post.setJsonData(formulasService.getJsonOne(userId, form.getPostFormula()));
 		}
 		return post;
 	}
@@ -81,7 +83,7 @@ public class RestBBSController {
 		}
 
 		// 投稿データ登録
-		BBSPost post = formToPost(form, user.getLoginUser().getId(),false);
+		BBSPost post = formToPost(form, user.getLoginUser().getId());
 		if(!bbsFormulaService.newPostOne(post)) {
 			return new RestResult(500, null);
 		}
@@ -109,7 +111,7 @@ public class RestBBSController {
 		}
 
 		// 投稿データ登録
-		BBSPost post = formToPost(form, user.getLoginUser().getId(), true);
+		BBSPost post = formToUpdatePost(form, user.getLoginUser().getId());
 		if(!bbsFormulaService.updatePostOne(post)) {
 			return new RestResult(500, null);
 		}
