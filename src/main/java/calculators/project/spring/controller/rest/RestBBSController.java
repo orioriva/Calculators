@@ -100,7 +100,6 @@ public class RestBBSController {
 	) {
 		Map<String, String> errors = new HashMap<>();
 		errorCheck.setValidError(bindingResult, errors);
-		System.out.println(form);
 		// 計算表を変更しないなら計算表が指定されていないエラーは無視する
 		if(errors.containsKey("postFormula") && form.getChangeFormula() == null) {
 			errors.remove("postFormula");

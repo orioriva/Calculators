@@ -3,15 +3,20 @@
 /** バリデーション結果の反映 */
 function reflectValidResult(key, value){
 	// CSS適用
-	if(key == 'postFormula'){
-		$('#titleText').addClass('is-invalid');
-	}else if(key == 'category'){
-		$('select[id=' + key +']').addClass('is-invalid');
-	}else{
-		$('input[id=' + key +']').addClass('is-invalid');
+	switch(key){
+		case 'postFormula':
+			$('#titleText').addClass('is-invalid');
+			break;
+		case 'category':
+			$('select[id=' + key +']').addClass('is-invalid');
+			break;
+		default:
+			$('input[id=' + key +']').addClass('is-invalid');
+			break;
 	}
 	// エラーメッセージ追加
 	$('#errorMsg').append('<div class="text-danger">' + value + '</div>');
+	window.scrollTo({top: 0, behavior: 'smooth'});
 }
 
 /** 投稿一覧取得 */

@@ -40,7 +40,7 @@ title = #{postEditing}, scripts = ~{::script}, links = ~{::link})">
 			<div class="input-group-prepend">
 				<label class="input-group-text" for="myFormulas" th:text="#{postFormula}"></label>
 			</div>
-			<label class="form-control text-truncate" for="open-btn">{{ title }}</label>
+			<label class="form-control text-truncate" id="titleText" for="open-btn">{{ title }}</label>
 			<div class="input-group-append">
 				<button class="btn btn-secondary z-0" id="open-btn" type="button" th:text="#{select}"></button>
 			</div>
