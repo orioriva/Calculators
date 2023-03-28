@@ -3,22 +3,20 @@
 /** DataTables初期設定 */
 setDataTablesStatus(2,1);
 
-const vm = Vue.createApp({
+const vmForm = Vue.createApp({
 	data(){
 		return{
-			title: '-- 選択して下さい --',
+			formulaTitle: '-- 選択して下さい --',
 			formulaId: 0,
-			isChange: false
-		}
-	},
-	methods: {
-		toggleChange() {
-			this.isChange = !this.isChange
+			isChange: false,
+			title: '',
+			category: null,
+			comment: ''
 		}
 	}
 }).mount('#input-form')
 
-ajaxGetFormula();
+ajaxGetFormula(getParam("selectedId"));
 
 /** ファイルを開くボタンが押された時 */
 $('#open-btn').click(function() {
@@ -39,9 +37,9 @@ $('#close-file').click(function() {
 });
 
 /** 計算表をセットする */
-function setFormula(formulaId, title){
-	vm.title = title;
-	vm.formulaId = formulaId;
+function setFormula(formulaId, formulaTitle){
+	vmForm.formulaTitle = formulaTitle;
+	vmForm.formulaId = formulaId;
 	$('.popup-file').fadeOut();
 }
 

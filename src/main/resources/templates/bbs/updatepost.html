@@ -26,8 +26,6 @@ title = #{postEditing}, scripts = ~{::script}, links = ~{::link})">
 	<div class="mb-3 text-center" id="errorMsg">
 	</div>
 
-	<input type="hidden" th:field="*{postId}">
-
 	<div class="border rounded p-2 mb-3">
 		<!-- 計算表を変更するか？ -->
 		<div class="custom-control custom-switch z-0">
@@ -37,13 +35,7 @@ title = #{postEditing}, scripts = ~{::script}, links = ~{::link})">
 
 		<!-- 計算表選択 -->
 		<div class="input-group mt-1 z-0" id="selectFormula" style="display:none">
-			<div class="input-group-prepend">
-				<label class="input-group-text" for="myFormulas" th:text="#{postFormula}"></label>
-			</div>
-			<label class="form-control text-truncate" id="titleText" for="open-btn">{{ title }}</label>
-			<div class="input-group-append">
-				<button class="btn btn-secondary z-0" id="open-btn" type="button" th:text="#{select}"></button>
-			</div>
+			<div th:replace="fragment/createpost-fragment :: selectFormula-fragment"></div>
 		</div>
 		<input type="hidden" name="postFormula" v-model="formulaId">
 	</div>
@@ -84,24 +76,8 @@ title = #{postEditing}, scripts = ~{::script}, links = ~{::link})">
 	<button class="mt-3 btn btn-primary w-100" type="submit" th:text="#{register}"></button>
 </form>
 
-<!-- ファイル読込 -->
-<div class="popup-file">
-	<div class="content">
-		<!-- 計算表一覧 -->
-		<table id="dataTable" class="table table-sm table-bordered text-nowrap w-100">
-			<thead class="thead-light">
-				<tr>
-					<th th:text="#{title}"></th>
-					<th th:text="#{updateDate}"></th>
-					<th th:text="#{operation}"></th>
-				</tr>
-			</thead>
-			<tbody>
-			</tbody>
-		</table>
-		<button id="close-file" class="btn btn-secondary"><i class="fas fa-window-close"></i>&ensp;[[#{close}]]</button>
-	</div>
-</div>
+<!-- ファイル読込ポップアップ -->
+<header th:replace="fragment/popup-formulaList-fragment :: popup-formulaList-fragment"></header>
 
 </body>
 </html>

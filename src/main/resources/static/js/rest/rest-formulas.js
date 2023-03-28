@@ -36,9 +36,8 @@ function ajaxGetFormulaList(){
 }
 
 /** 該当計算表を読み込む */
-function ajaxGetFormula(){
-	const formulaId = getParam("selectedId");
-	if(formulaId == null){
+function ajaxGetFormula(formulaId){
+	if(!formulaId){
 		return;
 	}
 

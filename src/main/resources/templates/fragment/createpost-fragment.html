@@ -1,0 +1,10 @@
+<!-- 計算表選択 -->
+<th:block xmlns:th="http://www.thymeleaf.org" th:fragment="selectFormula-fragment">
+	<div class="input-group-prepend">
+		<label class="input-group-text" for="myFormulas" th:text="#{postFormula}"></label>
+	</div>
+	<label class="form-control text-truncate" id="titleText" for="open-btn">{{ formulaTitle }}</label>
+	<div class="input-group-append">
+		<button class="btn btn-secondary z-0" id="open-btn" type="button" th:text="#{select}"></button>
+	</div>
+</th:block>

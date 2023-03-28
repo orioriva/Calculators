@@ -8,10 +8,10 @@ function reflectValidResult(key, value){
 			$('#titleText').addClass('is-invalid');
 			break;
 		case 'category':
-			$('select[id=' + key +']').addClass('is-invalid');
+			$('select[name=' + key +']').addClass('is-invalid');
 			break;
 		default:
-			$('input[id=' + key +']').addClass('is-invalid');
+			$('input[name=' + key +']').addClass('is-invalid');
 			break;
 	}
 	// エラーメッセージ追加
@@ -92,6 +92,10 @@ function ajaxUpdatePost(){
 
 	// フォームの値を取得
 	let formData = $('#input-form').serializeArray();
+	formData.push({
+		name: 'postId',
+		value: getParam("postId")
+	});
 
 	setAjax(
 		'PUT',
