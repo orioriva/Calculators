@@ -1,5 +1,36 @@
 'use strict'
 
+const vmCategoryList = Vue.createApp({
+	data(){
+		return{
+			categories: [{
+				id: 100,
+				name: "bbb"
+			}]
+		}
+	},
+	methods:{
+		setCategories(array){
+			let categories = [];
+			array.forEach((element) => {
+				categories.push(element);
+			})
+			this.categories = categories;
+		}
+	},
+	errorCaptured(){
+		alert("error")
+	}
+})
+
+function setCategories(value){
+	vmCategoryList.categories.push(value);
+}
+
+ajaxGetCategoryList();
+
+//vmCategoryList.setCategories([{id:1, name:"その他"},{id:2, name:"aaa"}]);
+
 /** バリデーション結果の反映 */
 function reflectValidResult(key, value){
 	// CSS適用
@@ -17,6 +48,26 @@ function reflectValidResult(key, value){
 	// エラーメッセージ追加
 	$('#errorMsg').append('<div class="text-danger">' + value + '</div>');
 	window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+/** カテゴリーリスト取得 */
+function ajaxGetCategoryList(){
+	setAjax(
+		'GET',
+		'/rest/category',
+		{
+			_csrf: $("*[name=_csrf]").val()  // CSRFトークンを送信
+		},
+		function(data){
+			/*$.each(data, function(index,value){
+				console.log(value);
+				setCategories(value);
+			});*/
+			//vmCategoryList.setCategories(data);
+			vmForm.test.push(data);
+			//vmCategoryList.categories.push(data);
+		}
+	);
 }
 
 /** 投稿一覧取得 */

@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import calculators.project.spring.form.BBSPostForm;
 import calculators.project.spring.model.BBSPost;
+import calculators.project.spring.model.Category;
 import calculators.project.spring.model.LoginUserDetails;
 import calculators.project.spring.model.RestResult;
 import calculators.project.spring.service.BBSFormulasService;
@@ -27,7 +28,7 @@ import calculators.project.spring.service.FormulasService;
 @RestController
 public class RestBBSController {
 	@Autowired
-	private BBSFormulasService bbsFormulaService;
+	private BBSFormulasService bbsFormulasService;
 
 	@Autowired
 	private FormulasService formulasService;
@@ -56,16 +57,22 @@ public class RestBBSController {
 		return post;
 	}
 
+	/** カテゴリーリスト取得 */
+	@GetMapping("/rest/category")
+	public List<Category> restGetCategoryList(){
+		return bbsFormulasService.getCategoryList("ja");
+	}
+
 	/** 投稿一覧リスト取得 */
 	@GetMapping("/rest/posts")
 	public List<BBSPost> restGetPostList() {
-		return bbsFormulaService.getPostList();
+		return bbsFormulasService.getPostList();
 	}
 
 	/** 自分の投稿一覧リスト取得 */
 	@GetMapping("/rest/posts/myposts")
 	public List<BBSPost> restGetMyPostList(@AuthenticationPrincipal LoginUserDetails user) {
-		return bbsFormulaService.getPostList(user.getLoginUser().getId());
+		return bbsFormulasService.getPostList(user.getLoginUser().getId());
 	}
 
 	/** 新規投稿 */
@@ -84,7 +91,7 @@ public class RestBBSController {
 
 		// 投稿データ登録
 		BBSPost post = formToPost(form, user.getLoginUser().getId());
-		if(!bbsFormulaService.newPostOne(post)) {
+		if(!bbsFormulasService.newPostOne(post)) {
 			return new RestResult(500, null);
 		}
 
@@ -111,7 +118,7 @@ public class RestBBSController {
 
 		// 投稿データ登録
 		BBSPost post = formToUpdatePost(form, user.getLoginUser().getId());
-		if(!bbsFormulaService.updatePostOne(post)) {
+		if(!bbsFormulasService.updatePostOne(post)) {
 			return new RestResult(500, null);
 		}
 
@@ -124,6 +131,6 @@ public class RestBBSController {
 		@AuthenticationPrincipal LoginUserDetails user,
 		@RequestParam int id
 	) {
-		return bbsFormulaService.hidePostOne(id, user.getLoginUser().getId());
+		return bbsFormulasService.hidePostOne(id, user.getLoginUser().getId());
 	}
 }

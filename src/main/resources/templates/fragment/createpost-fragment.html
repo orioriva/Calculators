@@ -8,3 +8,39 @@
 		<button class="btn btn-secondary z-0" id="open-btn" type="button" th:text="#{select}"></button>
 	</div>
 </th:block>
+
+<!-- 共通入力部分 -->
+<th:block xmlns:th="http://www.thymeleaf.org" th:fragment="form-fragment">
+<div class="row">
+	<!-- タイトル -->
+	<div class="col-md-8">
+		<div class="input-group mr-2 mb-3">
+			<div class="input-group-prepend">
+				<label class="input-group-text" th:text="#{title}"></label>
+			</div>
+			<input type="text" class="form-control" name="title" v-model="title">
+		</div>
+	</div>
+
+	<!-- カテゴリ -->
+	<div class="col-md-4">
+		<div class="input-group mb-3">
+			<div class="input-group-prepend">
+				<label class="input-group-text" for="category" th:text="#{category}"></label>
+			</div>
+			<select class="custom-select" id="category" name="category" v-model="category">
+				<option disabled value="0" th:text="#{unselected}"></option>
+				<option th:each="category : ${categoryList}"
+					th:value="${category.id}" th:text="${category.name}"></option>
+			</select>
+		</div>
+	</div>
+</div>
+
+<!-- コメント -->
+<div class="form-group">
+	<label class="mt-2 mb-0 p-2 border-bottom-0 rounded" id="commentLavel"
+		for="comment" th:text="#{comment.sup}"></label>
+	<textarea class="form-control" id="comment" rows="8" name="comment" v-model="comment"></textarea>
+</div>
+</th:block>

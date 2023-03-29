@@ -10,8 +10,10 @@ const vmForm = Vue.createApp({
 			formulaId: 0,
 			isChange: false,
 			title: '',
-			category: null,
-			comment: ''
+			category: 0,
+			comment: '',
+			test: [
+			],
 		}
 	}
 }).mount('#input-form')
