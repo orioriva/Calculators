@@ -3,6 +3,7 @@
 /** DataTables初期設定 */
 setDataTablesStatus(2,1);
 
+/** 投稿用vueインスタンス */
 const vmForm = Vue.createApp({
 	data(){
 		return{
@@ -12,13 +13,27 @@ const vmForm = Vue.createApp({
 			title: '',
 			category: 0,
 			comment: '',
-			test: [
-			],
+			options: [],
 		}
+	},
+	methods: {
+		addOption(options) {
+			options.forEach(element => this.options.push(element))
+		},
+		init(data){
+			this.title = data.title;
+			this.category = data.categoryId;
+			this.comment = data.comment;
+		}
+	},
+	mounted(){
+		addCategoryListFunc = this.addOption;
 	}
 }).mount('#input-form')
 
 ajaxGetFormula(getParam("selectedId"));
+ajaxGetMyPost(getParam("postId"));
+ajaxGetCategoryList();
 
 /** ファイルを開くボタンが押された時 */
 $('#open-btn').click(function() {

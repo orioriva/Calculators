@@ -30,8 +30,7 @@
 				</div>
 				<select class="custom-select" id="category" name="category" v-model="category">
 					<option disabled value="0" th:text="#{unselected}"></option>
-					<option th:each="category : ${categoryList}"
-						th:value="${category.id}" th:text="${category.name}"></option>
+					<option v-for="option in options" :value="option.id">{{ option.name }}</option>
 				</select>
 			</div>
 		</div>

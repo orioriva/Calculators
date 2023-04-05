@@ -7,10 +7,8 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import calculators.project.spring.form.BBSPostForm;
 import calculators.project.spring.model.BBSPost;
 import calculators.project.spring.model.Comment;
 import calculators.project.spring.model.LoginUserDetails;
@@ -32,11 +30,7 @@ public class BBSController {
 	}
 
 	@GetMapping("/bbs/newpost")
-	public String getNewPost(
-			Model model,
-			@AuthenticationPrincipal LoginUserDetails user
-	) {
-		model.addAttribute("categoryList", bbsFormulasService.getCategoryList("ja"));
+	public String getNewPost() {
 		return "bbs/newpost";
 	}
 
@@ -53,8 +47,6 @@ public class BBSController {
 
 	@GetMapping("/bbs/post/update")
 	public String getUpdatePost(
-		Model model,
-		@ModelAttribute BBSPostForm form,
 		@RequestParam(value="postId")Integer postId,
 		@AuthenticationPrincipal LoginUserDetails user
 	) {
@@ -62,11 +54,6 @@ public class BBSController {
 		if(postData == null || user.getLoginUser().getId() != postData.getCreatorId()) {
 			return "redirect:/bbs";
 		}
-		form.setPostId(postData.getId());
-		form.setTitle(postData.getTitle());
-		form.setCategory(postData.getCategoryId());
-		form.setComment(postData.getComment());
-		model.addAttribute("categoryList", bbsFormulasService.getCategoryList("ja"));
 		return "bbs/updatepost";
 	}
 }

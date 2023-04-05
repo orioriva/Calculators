@@ -75,6 +75,18 @@ public class RestBBSController {
 		return bbsFormulasService.getPostList(user.getLoginUser().getId());
 	}
 
+	/** 自分の投稿内容１件取得 */
+	@GetMapping("/rest/posts/mypost")
+	public BBSPost restGetMyPost(
+			@AuthenticationPrincipal LoginUserDetails user,
+			@RequestParam(value="postId")Integer postId) {
+		BBSPost post = bbsFormulasService.getPostOne(postId);
+		if(post.getCreatorId() != user.getLoginUser().getId()) {
+			return null;
+		}
+		return post;
+	}
+
 	/** 新規投稿 */
 	@PostMapping("/rest/posts")
 	public RestResult restNewPost(

@@ -1,35 +1,7 @@
 'use strict'
 
-const vmCategoryList = Vue.createApp({
-	data(){
-		return{
-			categories: [{
-				id: 100,
-				name: "bbb"
-			}]
-		}
-	},
-	methods:{
-		setCategories(array){
-			let categories = [];
-			array.forEach((element) => {
-				categories.push(element);
-			})
-			this.categories = categories;
-		}
-	},
-	errorCaptured(){
-		alert("error")
-	}
-})
-
-function setCategories(value){
-	vmCategoryList.categories.push(value);
-}
-
-ajaxGetCategoryList();
-
-//vmCategoryList.setCategories([{id:1, name:"その他"},{id:2, name:"aaa"}]);
+// カテゴリーリストが取得出来た時に呼び出す関数
+var addCategoryListFunc = null;
 
 /** バリデーション結果の反映 */
 function reflectValidResult(key, value){
@@ -59,13 +31,11 @@ function ajaxGetCategoryList(){
 			_csrf: $("*[name=_csrf]").val()  // CSRFトークンを送信
 		},
 		function(data){
-			/*$.each(data, function(index,value){
-				console.log(value);
-				setCategories(value);
-			});*/
-			//vmCategoryList.setCategories(data);
-			vmForm.test.push(data);
-			//vmCategoryList.categories.push(data);
+			if(!addCategoryListFunc){
+				alert("カテゴリーリストを取得する関数が用意されていません！");
+				return;
+			}
+			addCategoryListFunc(data);
 		}
 	);
 }
@@ -94,6 +64,25 @@ function ajaxGetMyPostList(){
 		},
 		function(data){
 			createDataTable(data);
+		}
+	);
+}
+
+/** 自身の投稿内容１件取得 */
+function ajaxGetMyPost(postId){
+	if(!postId){
+		return;
+	}
+
+	setAjax(
+		'GET',
+		'/rest/posts/mypost',
+		{
+			_csrf: $("*[name=_csrf]").val(),  // CSRFトークンを送信
+			postId: postId
+		},
+		function(data){
+			vmForm.init(data);
 		}
 	);
 }
