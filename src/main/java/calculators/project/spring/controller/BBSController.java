@@ -24,8 +24,7 @@ public class BBSController {
 	private CommentsService commentsService;
 
 	@GetMapping("/bbs")
-	public String getBBS(Model model) {
-		model.addAttribute("categoryList", bbsFormulasService.getCategoryList("ja"));
+	public String getBBS() {
 		return "bbs/bbs";
 	}
 

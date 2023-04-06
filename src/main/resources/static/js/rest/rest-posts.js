@@ -27,10 +27,9 @@ function ajaxGetCategoryList(){
 	setAjax(
 		'GET',
 		'/rest/category',
-		{
-			_csrf: $("*[name=_csrf]").val()  // CSRFトークンを送信
-		},
+		{},
 		function(data){
+			console.log(data);
 			if(!addCategoryListFunc){
 				alert("カテゴリーリストを取得する関数が用意されていません！");
 				return;

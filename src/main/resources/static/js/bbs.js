@@ -3,9 +3,27 @@
 /** DataTables初期設定 */
 setDataTablesStatus(4,3);
 
+/** 投稿用vueインスタンス */
+const vmSearchForm = Vue.createApp({
+	data(){
+		return{
+			options: []
+		}
+	},
+	methods: {
+		addOption(options) {
+			options.forEach(element => this.options.push(element))
+		}
+	},
+	mounted(){
+		addCategoryListFunc = this.addOption;
+	}
+}).mount('#search-form')
+
 /** ページの読み込みが終わったら */
 $(document).ready(function () {
 	ajaxGetPostList();
+	ajaxGetCategoryList();
 });
 
 /** 絞り込みボタンが押されたら */
@@ -42,7 +60,7 @@ function createDataTable(list){
 			{
 				data: 'creatorName'
 			},
-			//　タイトル
+			// タイトル
 			{
 				data: 'title'
 			},
@@ -53,7 +71,7 @@ function createDataTable(list){
 					return dateToTextDef(new Date(data));
 				}
 			},
-			//　操作
+			// 操作
 			{
 				data: 'id',
 				render: function(data,type,row){
