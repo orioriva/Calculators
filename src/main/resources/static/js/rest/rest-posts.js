@@ -29,7 +29,6 @@ function ajaxGetCategoryList(){
 		'/rest/category',
 		{},
 		function(data){
-			console.log(data);
 			if(!addCategoryListFunc){
 				alert("カテゴリーリストを取得する関数が用意されていません！");
 				return;

@@ -5,6 +5,14 @@
 <!-- Mapperとxmlのマッピング -->
 <mapper namespace="calculators.project.spring.mapper.UserMapper">
 
+<!-- ユーザー一覧取得 -->
+<select id="getUserList" resultType="LoginUser">
+	SELECT
+		*
+	FROM
+		`users`
+</select>
+
 <!-- ユーザーＩＤからユーザー情報１件取得 -->
 <select id="findUserOneUserId" resultType="LoginUser">
 	SELECT

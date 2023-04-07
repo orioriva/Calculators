@@ -39,7 +39,7 @@ public class SecurityConfig{
 			.mvcMatchers("/bbs/post").permitAll()
 			.mvcMatchers("/rest/category").permitAll()
 			.antMatchers("/h2-console/**").permitAll()
-			.mvcMatchers("/admin").hasRole("ADMIN")
+			.mvcMatchers("/admin/**").hasRole("ADMIN")
 			.anyRequest().authenticated()
 		).headers(header -> header
 			.frameOptions()

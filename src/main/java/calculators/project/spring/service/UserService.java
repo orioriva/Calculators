@@ -1,5 +1,7 @@
 package calculators.project.spring.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -15,6 +17,10 @@ public class UserService {
 	@Autowired
 	private PasswordEncoder encoder;
 
+	/** ユーザー情報一覧取得 */
+	public List<LoginUser> getUserList() {
+		return mapper.getUserList();
+	}
 	/** ユーザーIDからユーザー情報を１件取得 */
 	public LoginUser findUserOneUserId(String userId) {
 		return mapper.findUserOneUserId(userId);
