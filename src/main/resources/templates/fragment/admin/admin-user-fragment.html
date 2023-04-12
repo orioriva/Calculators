@@ -1,0 +1,84 @@
+<th:block xmlns:th="http://www.thymeleaf.org" th:fragment="admin-user-fragment">
+
+<script th:inline="javascript">
+  var currentUserId = /*[[${#authentication.principal.loginUser.id}]]*/ null;
+</script>
+
+<div class="mt-2 mb-4 border-bottom">
+	<h3>ユーザー管理</h3>
+</div>
+<!-- ユーザー一覧表示テーブル -->
+<div class="scroll-x pb-4 pr-3">
+	<table id="dataTable"
+		class="table table-bordered table-hover table-sm text-nowrap w-100">
+		<thead class="thead-light">
+			<tr>
+				<th scope="col">ID</th>
+				<th scope="col">ユーザー名</th>
+				<th scope="col">ログインID</th>
+				<th scope="col">権限</th>
+				<th scope="col" th:text="#{operation}"></th>
+			</tr>
+		</thead>
+		<tbody>
+		</tbody>
+	</table>
+</div>
+
+<!-- 情報編集ポップアップ -->
+<div class="popup-file">
+	<div class="content">
+		<form id="input-form">
+			<table class="table table-bordered table-hover">
+				<tr>
+					<th class="col-3">ID</th>
+					<td class="col">{{id}}</td>
+				</tr>
+				<tr>
+					<th>ユーザー名</th>
+					<td>
+						<input class="form-control" v-model="userName">
+					</td>
+				</tr>
+				<tr>
+					<th>ログインID</th>
+					<td>
+						<input class="form-control" v-model="userId">
+					</td>
+				</tr>
+				<tr>
+					<th>パスワード</th>
+					<td>
+						<!-- 計算表を変更するか？ -->
+						<div class="custom-control custom-switch">
+							<input type="checkbox" class="custom-control-input" name="isChange" id="isChange" v-model="isChange" @change="">
+							<label class="custom-control-label" for="isChange">変更する</label>
+						</div>
+						<div v-if="isChange">
+							<label class="mt-2" for="password1">新パスワード</label>
+							<input class="form-control" id="password1" type="password" v-model="password">
+							<label class="mt-2" for="password2">確認用</label>
+							<input class="form-control" id="password2" type="password" v-model="confirm">
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<th>権限</th>
+					<td>
+						<select class="form-control" v-model="role">
+							<option value="ROLE_ADMIN">管理者</option>
+							<option value="ROLE_GENERAL">一般ユーザー</option>
+						</select>
+					</td>
+				</tr>
+			</table>
+		</form>
+		<div class="mt-5 row">
+			<button id="close-file" class="col mr-5 btn btn-secondary"><i class="fas fa-window-close"></i>&ensp;[[#{close}]]</button>
+			<button class="col mr-5 btn btn-primary"><i class="fas fa-user-edit"></i>&ensp;ユーザー情報更新</button>
+			<button class="col btn btn-danger"><i class="fas fa-user-slash"></i>&ensp;ユーザー削除</button>
+		</div>
+	</div>
+</div>
+
+</th:block>
