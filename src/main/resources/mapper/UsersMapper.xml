@@ -16,11 +16,7 @@
 <!-- ユーザーＩＤからユーザー情報１件取得 -->
 <select id="findUserOneUserId" resultType="LoginUser">
 	SELECT
-		id,
-		userName,
-		userId,
-		password,
-		role
+		*
 	FROM
 		`users`
 	WHERE
@@ -51,7 +47,7 @@
 		id = #{id}
 </update>
 
-<!-- ユーザー情報更新 -->
+<!-- パスワードまたはログインID情報更新 -->
 <update id="updateUserIdPassword">
 	UPDATE
 		`users`
@@ -68,6 +64,21 @@
 	WHERE
 		id = #{id} AND
 		userId = #{nowUserId}
+</update>
+
+<!-- ユーザー情報更新 -->
+<update id="updateUserStatus">
+	UPDATE
+		`users`
+	SET
+		userName = #{userName},
+		userId = #{userId},
+		<if test="password != null">
+			password = #{password},
+		</if>
+		role = #{role}
+	WHERE
+		id = #{id}
 </update>
 
 <!-- ユーザー１件削除 -->

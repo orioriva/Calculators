@@ -28,22 +28,22 @@
 <!-- 情報編集ポップアップ -->
 <div class="popup-file">
 	<div class="content">
-		<form id="input-form">
+		<form th:action th;method="PUT" id="input-form">
 			<table class="table table-bordered table-hover">
 				<tr>
 					<th class="col-3">ID</th>
-					<td class="col">{{id}}</td>
+					<td class="col">{{id}}<input type="hidden" name="id" :value="id"></td>
 				</tr>
 				<tr>
 					<th>ユーザー名</th>
 					<td>
-						<input class="form-control" v-model="userName">
+						<input class="form-control" name="userName" v-model="userName">
 					</td>
 				</tr>
 				<tr>
-					<th>ログインID</th>
+					<th>ユーザーID</th>
 					<td>
-						<input class="form-control" v-model="userId">
+						<input class="form-control" name="userId" v-model="userId">
 					</td>
 				</tr>
 				<tr>
@@ -51,21 +51,25 @@
 					<td>
 						<!-- 計算表を変更するか？ -->
 						<div class="custom-control custom-switch">
-							<input type="checkbox" class="custom-control-input" name="isChange" id="isChange" v-model="isChange" @change="">
+							<input type="checkbox" class="custom-control-input" name="isChange" id="isChange" v-model="isChange">
 							<label class="custom-control-label" for="isChange">変更する</label>
 						</div>
 						<div v-if="isChange">
-							<label class="mt-2" for="password1">新パスワード</label>
-							<input class="form-control" id="password1" type="password" v-model="password">
-							<label class="mt-2" for="password2">確認用</label>
-							<input class="form-control" id="password2" type="password" v-model="confirm">
+							<div>
+								<label class="mt-2" for="password1">新パスワード</label>
+								<input class="form-control" id="password1" name="password" type="password" v-model="password">
+							</div>
+							<div>
+								<label class="mt-2" for="password2">確認用</label>
+								<input class="form-control" id="password2" name="confirm" type="password" v-model="confirm">
+							</div>
 						</div>
 					</td>
 				</tr>
 				<tr>
 					<th>権限</th>
 					<td>
-						<select class="form-control" v-model="role">
+						<select class="form-control" name="role" v-model="role">
 							<option value="ROLE_ADMIN">管理者</option>
 							<option value="ROLE_GENERAL">一般ユーザー</option>
 						</select>
@@ -75,8 +79,8 @@
 		</form>
 		<div class="mt-5 row">
 			<button id="close-file" class="col mr-5 btn btn-secondary"><i class="fas fa-window-close"></i>&ensp;[[#{close}]]</button>
-			<button class="col mr-5 btn btn-primary"><i class="fas fa-user-edit"></i>&ensp;ユーザー情報更新</button>
-			<button class="col btn btn-danger"><i class="fas fa-user-slash"></i>&ensp;ユーザー削除</button>
+			<button class="col mr-5 btn btn-primary" onclick="ajaxUpdateUser()"><i class="fas fa-user-edit"></i>&ensp;ユーザー情報更新</button>
+			<button class="col btn btn-danger" onclick="ajaxDeleteUser()"><i class="fas fa-user-slash"></i>&ensp;ユーザー削除</button>
 		</div>
 	</div>
 </div>

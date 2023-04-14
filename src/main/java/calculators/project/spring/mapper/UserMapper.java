@@ -13,5 +13,6 @@ public interface UserMapper {
 	public boolean addUserOne(LoginUser user);
 	public boolean updateUserName(int id,String userName);
 	public boolean updateUserIdPassword(int id, String nowUserId, String newUserId, String newPassword);
+	public boolean updateUserStatus(LoginUser user);
 	public boolean deleteUser(int id);
 }

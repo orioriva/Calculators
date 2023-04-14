@@ -62,6 +62,13 @@ public class UserService {
 		String encodePass = (newPassword == null) ? null : encoder.encode(newPassword);
 		return mapper.updateUserIdPassword(id, nowUserId, newUserId, encodePass);
 	}
+	/** ユーザー情報更新 */
+	public boolean updateUserStatus(LoginUser user) {
+		String rawPassword = user.getPassword();
+		if(rawPassword != null)
+			user.setPassword(encoder.encode(rawPassword));
+		return mapper.updateUserStatus(user);
+	}
 	/** ユーザー１件削除 */
 	public boolean deleteUser(int id) {
 		return mapper.deleteUser(id);
