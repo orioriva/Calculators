@@ -52,16 +52,16 @@ public class RestAdminController {
 	) {
 		Map<String, String> errors = new HashMap<>();
 		errorCheckService.setValidError(bindingResult, errors);
-		// パスワードを変更しないならパスワードのエラーは無視する
-		if(!form.getIsChange()) {
+		if(form.getIsChange()) {
+			errorCheckService.setNotMatchError(
+				form.getPassword(), form.getConfirm(),
+				new String[]{"password","confirm"},
+				errors,
+				"NotMatchNewPassword");
+		}else {
+			// パスワードを変更しないならパスワードのエラーは無視する
 			errors.remove("password");
 			errors.remove("confirm");
-		}else {
-			errorCheckService.setNotMatchError(
-					form.getPassword(), form.getConfirm(),
-					new String[]{"password","confirm"},
-					errors,
-					"NotMatchNewPassword");
 		}
 
 		// エラーが見つかった場合
@@ -70,18 +70,18 @@ public class RestAdminController {
 		}
 
 		try {
-			userService.updateUserStatus(form.toLoginUser());
-		} catch (Exception e) {
-			return new RestResult(500, null);
-		}
+			if(userService.updateUserStatus(form.toLoginUser())) {
+				return new RestResult(0, null);
+			}
+		} catch (Exception e) {}
 
-		return new RestResult(0, null);
+		return new RestResult(500, null);
 	}
 
 	@DeleteMapping("/admin/rest/user")
 	public RestResult restUpdateUser(
 			@AuthenticationPrincipal LoginUserDetails user,
-			@RequestParam(value="id")Integer id
+			@RequestParam Integer id
 	) {
 		if(user.getLoginUser().getId() == id) {
 			return new RestResult(500, null);

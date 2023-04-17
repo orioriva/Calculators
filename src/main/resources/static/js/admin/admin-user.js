@@ -92,14 +92,14 @@ function ajaxUpdateUser(){
 	);
 }
 
-/** ユーザー情報１件更新 */
+/** ユーザー情報１件削除 */
 function ajaxDeleteUser(){
 	if(!confirm("本当に削除してよろしいですか？\r\n※　関連する掲示板投稿は非表示、保存した計算表は削除されます")){
 		return;
 	}
 	setAjax(
 		'DELETE',
-		'/admin/rest/users',
+		'/admin/rest/user',
 		{
 			id: vmForm.id,
 			_csrf: $("*[name=_csrf]").val()
