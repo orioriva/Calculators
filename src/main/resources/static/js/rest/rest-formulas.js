@@ -36,6 +36,25 @@ function ajaxGetFormulaList(){
 }
 
 /** 該当計算表を読み込む */
+function ajaxGetFormula(formulaId){
+	if(!formulaId){
+		return;
+	}
+
+	setAjax(
+		'GET',
+		'/rest/formulas/selected',
+		{
+			formulaId: formulaId,
+			_csrf: $("*[name=_csrf]").val()  // CSRFトークンを送信
+		},
+		function(data){
+			setFormula(data.id, data.title);
+		}
+	);
+}
+
+/** 該当計算表を読み込む(json) */
 function ajaxLoadFormula(){
 	setAjax(
 		'GET',

@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import calculators.project.spring.form.BBSPostForm;
 import calculators.project.spring.model.BBSPost;
+import calculators.project.spring.model.Category;
 import calculators.project.spring.model.LoginUserDetails;
 import calculators.project.spring.model.RestResult;
 import calculators.project.spring.service.BBSFormulasService;
@@ -27,7 +28,7 @@ import calculators.project.spring.service.FormulasService;
 @RestController
 public class RestBBSController {
 	@Autowired
-	private BBSFormulasService bbsFormulaService;
+	private BBSFormulasService bbsFormulasService;
 
 	@Autowired
 	private FormulasService formulasService;
@@ -35,16 +36,55 @@ public class RestBBSController {
 	@Autowired
 	private ErrorCheckService errorCheck;
 
+	// 投稿フォームに入力された内容をデータベース登録用のクラスに変換
+	private BBSPost formToPost(BBSPostForm form, int userId) {
+		BBSPost post = new BBSPost();
+		post.setCategoryId(form.getCategory());
+		post.setCreatorId(userId);
+		post.setUpdateDate(new Date());
+		post.setTitle(form.getTitle());
+		post.setComment(form.getComment());
+		post.setJsonData(formulasService.getJsonOne(userId, form.getPostFormula()));
+		return post;
+	}
+	// 更新の場合
+	private BBSPost formToUpdatePost(BBSPostForm form, int userId) {
+		BBSPost post = formToPost(form, userId);
+		post.setId(form.getPostId());
+		if(form.getChangeFormula() == null) {
+			post.setJsonData(null);
+		}
+		return post;
+	}
+
+	/** カテゴリーリスト取得 */
+	@GetMapping("/rest/category")
+	public List<Category> restGetCategoryList(){
+		return bbsFormulasService.getCategoryList("ja");
+	}
+
 	/** 投稿一覧リスト取得 */
 	@GetMapping("/rest/posts")
 	public List<BBSPost> restGetPostList() {
-		return bbsFormulaService.getPostList();
+		return bbsFormulasService.getPostList();
 	}
 
 	/** 自分の投稿一覧リスト取得 */
 	@GetMapping("/rest/posts/myposts")
 	public List<BBSPost> restGetMyPostList(@AuthenticationPrincipal LoginUserDetails user) {
-		return bbsFormulaService.getPostList(user.getLoginUser().getId());
+		return bbsFormulasService.getPostList(user.getLoginUser().getId());
+	}
+
+	/** 自分の投稿内容１件取得 */
+	@GetMapping("/rest/posts/mypost")
+	public BBSPost restGetMyPost(
+			@AuthenticationPrincipal LoginUserDetails user,
+			@RequestParam(value="postId")Integer postId) {
+		BBSPost post = bbsFormulasService.getPostOne(postId);
+		if(post.getCreatorId() != user.getLoginUser().getId()) {
+			return null;
+		}
+		return post;
 	}
 
 	/** 新規投稿 */
@@ -62,16 +102,8 @@ public class RestBBSController {
 		}
 
 		// 投稿データ登録
-		BBSPost post = new BBSPost();
-		int userId = user.getLoginUser().getId();
-		int formulaId = form.getPostFormula();
-		post.setCategoryId(form.getCategory());
-		post.setCreatorId(userId);
-		post.setUpdateDate(new Date());
-		post.setTitle(form.getTitle());
-		post.setComment(form.getComment());
-		post.setJsonData(formulasService.getJsonOne(userId, formulaId));
-		if(!bbsFormulaService.newPostOne(post)) {
+		BBSPost post = formToPost(form, user.getLoginUser().getId());
+		if(!bbsFormulasService.newPostOne(post)) {
 			return new RestResult(500, null);
 		}
 
@@ -97,24 +129,8 @@ public class RestBBSController {
 		}
 
 		// 投稿データ登録
-		BBSPost post = new BBSPost();
-		int userId = user.getLoginUser().getId();
-		post.setId(form.getPostId());
-		post.setCreatorId(userId);
-		post.setCategoryId(form.getCategory());
-		post.setUpdateDate(new Date());
-		post.setTitle(form.getTitle());
-		post.setComment(form.getComment());
-
-		if(form.getChangeFormula() != null) {
-			System.out.println(form.getPostFormula());
-			int formulaId = form.getPostFormula();
-			post.setJsonData(formulasService.getJsonOne(userId, formulaId));
-		}else {
-			post.setJsonData(null);
-		}
-
-		if(!bbsFormulaService.updatePostOne(post)) {
+		BBSPost post = formToUpdatePost(form, user.getLoginUser().getId());
+		if(!bbsFormulasService.updatePostOne(post)) {
 			return new RestResult(500, null);
 		}
 
@@ -127,6 +143,6 @@ public class RestBBSController {
 		@AuthenticationPrincipal LoginUserDetails user,
 		@RequestParam int id
 	) {
-		return bbsFormulaService.hidePostOne(id, user.getLoginUser().getId());
+		return bbsFormulasService.hidePostOne(id, user.getLoginUser().getId());
 	}
 }

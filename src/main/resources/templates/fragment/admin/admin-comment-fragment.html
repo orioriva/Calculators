@@ -1,0 +1,23 @@
+<th:block xmlns:th="http://www.thymeleaf.org" th:fragment="admin-comment-fragment">
+
+<div class="mt-2 mb-4 border-bottom">
+	<h3>コメント管理</h3>
+</div>
+<!-- コメント一覧表示テーブル -->
+<div class="scroll-x pb-4 pr-3">
+	<table id="dataTable"
+		class="table table-bordered table-hover table-sm text-nowrap w-100">
+		<thead class="thead-light">
+			<tr>
+				<th scope="col">ID</th>
+				<th scope="col">コメント投稿者ID</th>
+				<th scope="col">表示状態</th>
+				<th scope="col" th:text="#{operation}"></th>
+			</tr>
+		</thead>
+		<tbody>
+		</tbody>
+	</table>
+</div>
+
+</th:block>

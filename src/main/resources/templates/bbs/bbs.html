@@ -38,8 +38,8 @@ title = #{bbs}, scripts = ~{::script}, links = ~{::link})">
 					<label class="input-group-text" for="category" th:text="#{category}"></label>
 				</div>
 				<select class="custom-select" id="category" onchange="filterColumn(0);">
-					<option value="" th:text="#{all}"></option>
-					<option th:each="category : ${categoryList}" th:value="${category.name}" th:text="${category.name}"></option>
+					<option value="" th:text="#{all}" selected></option>
+					<option v-for="option in options" :value="option.name">{{ option.name }}</option>
 				</select>
 			</div>
 			<!-- 作成者 -->

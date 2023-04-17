@@ -14,7 +14,12 @@ function setDataTablesStatus(operationCol, dateCol){
 			  "targets": operationCol,
 			  "orderable": false,
 			  "searchable": false
-		}],
-		"order": [ dateCol, "desc" ]
+		}]
 	});
+
+	if(dateCol !== undefined){
+		$.extend( $.fn.dataTable.defaults, {
+			"order": [ dateCol, "desc" ]
+		});
+	}
 }

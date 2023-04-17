@@ -16,7 +16,7 @@ title = #{newpost}, scripts = ~{::script}, links = ~{::link})">
 <header th:replace="fragment/header-fragment :: header-fragment"></header>
 
 <!-- 投稿情報入力 -->
-<form class="container w-75" id="input-form" th:action method="post" th:object="${BBSPostForm}" onsubmit="return ajaxAddPost();">
+<form class="container w-75" id="input-form" th:action method="post" onsubmit="return ajaxAddPost();">
 	<!-- 見出し -->
 	<div class="border-bottom mb-3">
 		<h3 th:text="#{newpost}"></h3>
@@ -26,70 +26,19 @@ title = #{newpost}, scripts = ~{::script}, links = ~{::link})">
 	</div>
 	<!-- 計算表選択 -->
 	<div class="z-0 input-group mb-3">
-		<div class="input-group-prepend">
-			<label class="input-group-text" for="myFormulas" th:text="#{postFormula}"></label>
-		</div>
-		<label class="form-control text-truncate" id="titleText" for="open-btn" th:text="${selectedName != ''} ? ${selectedName} : #{select.pls}"></label>
-		<div class="input-group-append">
-			<button class="btn btn-secondary z-0" id="open-btn" type="button" th:text="#{select}"></button>
-		</div>
+		<div th:replace="fragment/createpost-fragment :: selectFormula-fragment"></div>
 	</div>
-	<input type="hidden" th:field="*{postFormula}" value="">
+	<input type="hidden" name="postFormula" v-model="formulaId">
 
-	<div class="row">
-		<!-- タイトル -->
-		<div class="col-md-8">
-			<div class="input-group mr-2 mb-3">
-				<div class="input-group-prepend">
-					<label class="input-group-text" th:text="#{title}"></label>
-				</div>
-				<input type="text" class="form-control" th:field="*{title}">
-			</div>
-		</div>
-
-		<!-- カテゴリ -->
-		<div class="col-md-4">
-			<div class="input-group mb-3">
-				<div class="input-group-prepend">
-					<label class="input-group-text" for="category" th:text="#{category}"></label>
-				</div>
-				<select class="custom-select" th:field="*{category}">
-					<option value="" th:text="#{unselected}"></option>
-					<option th:each="category : ${categoryList}" th:value="${category.id}" th:text="${category.name}"></option>
-				</select>
-			</div>
-		</div>
-
-	</div>
-
-	<!-- コメント -->
-	<div class="form-group">
-		<label class="mt-2 mb-0 p-2 border-bottom-0 rounded" id="commentLavel" for="comment" th:text="#{comment.sup}"></label>
-		<textarea class="form-control" id="comment" rows="8" th:field="*{comment}"></textarea>
-	</div>
+	<!-- その他入力部分 -->
+	<div th:replace="fragment/createpost-fragment :: form-fragment"></div>
 
 	<!-- 投稿ボタン -->
 	<button class="mt-3 btn btn-primary w-100" type="submit" th:text="#{post}"></button>
 </form>
 
-<!-- ファイル読込 -->
-<div class="popup-file">
-	<div class="content">
-		<!-- 計算表一覧 -->
-		<table id="dataTable" class="table table-sm table-bordered text-nowrap w-100">
-			<thead class="thead-light">
-				<tr>
-					<th th:text="#{title}"></th>
-					<th th:text="#{updateDate}"></th>
-					<th th:text="#{operation}"></th>
-				</tr>
-			</thead>
-			<tbody>
-			</tbody>
-		</table>
-		<button id="close-file" class="btn btn-secondary"><i class="fas fa-window-close"></i>&ensp;[[#{close}]]</button>
-	</div>
-</div>
+<!-- ファイル読込ポップアップ -->
+<header th:replace="fragment/popup-formulaList-fragment :: popup-formulaList-fragment"></header>
 
 </body>
 </html>

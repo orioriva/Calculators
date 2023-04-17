@@ -3,6 +3,38 @@
 /** DataTables初期設定 */
 setDataTablesStatus(2,1);
 
+/** 投稿用vueインスタンス */
+const vmForm = Vue.createApp({
+	data(){
+		return{
+			formulaTitle: '-- 選択して下さい --',
+			formulaId: 0,
+			isChange: false,
+			title: '',
+			category: 0,
+			comment: '',
+			options: [],
+		}
+	},
+	methods: {
+		addOption(options) {
+			options.forEach(element => this.options.push(element))
+		},
+		init(data){
+			this.title = data.title;
+			this.category = data.categoryId;
+			this.comment = data.comment;
+		}
+	},
+	mounted(){
+		addCategoryListFunc = this.addOption;
+	}
+}).mount('#input-form')
+
+ajaxGetFormula(getParam("selectedId"));
+ajaxGetMyPost(getParam("postId"));
+ajaxGetCategoryList();
+
 /** ファイルを開くボタンが押された時 */
 $('#open-btn').click(function() {
     $('.popup-file').addClass('popup-show').fadeIn();
@@ -22,9 +54,9 @@ $('#close-file').click(function() {
 });
 
 /** 計算表をセットする */
-function setFormula(formulaId, title){
-	$('#titleText').text(title);
-	$('#postFormula').val(formulaId);
+function setFormula(formulaId, formulaTitle){
+	vmForm.formulaTitle = formulaTitle;
+	vmForm.formulaId = formulaId;
 	$('.popup-file').fadeOut();
 }
 

@@ -1,0 +1,18 @@
+<div xmlns:th="http://www.thymeleaf.org" th:fragment="popup-formulaList-fragment"
+ class="popup-file">
+	<div class="content">
+		<!-- 計算表一覧 -->
+		<table id="dataTable" class="table table-sm table-bordered text-nowrap w-100">
+			<thead class="thead-light">
+				<tr>
+					<th th:text="#{title}"></th>
+					<th th:text="#{updateDate}"></th>
+					<th th:text="#{operation}"></th>
+				</tr>
+			</thead>
+			<tbody>
+			</tbody>
+		</table>
+		<button id="close-file" class="btn btn-secondary"><i class="fas fa-window-close"></i>&ensp;[[#{close}]]</button>
+	</div>
+</div>
