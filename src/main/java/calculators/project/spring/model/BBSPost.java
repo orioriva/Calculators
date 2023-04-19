@@ -15,4 +15,5 @@ public class BBSPost {
 	private String comment;
 	private String jsonData;
 	private String creatorName;
+	private Boolean view;
 }

@@ -64,4 +64,18 @@ public class BBSFormulasService {
 		categoryList.remove(0);
 		return categoryList;
 	}
+
+	/** 投稿一覧取得(管理者) */
+	public List<BBSPost> adminGetPostList(){
+		return mapper.adminGetPostList();
+	}
+
+	/** 投稿の表示非表示切り替え */
+	public boolean changePostView(int postId, boolean view) {
+		return mapper.changePostView(postId, view);
+	}
+	/** 投稿１件削除（物理） */
+	public boolean deletePostOne(int postId) {
+		return mapper.deletePostOne(postId);
+	}
 }

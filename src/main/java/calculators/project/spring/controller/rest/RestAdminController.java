@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import calculators.project.spring.form.ChangeUserStatusForm;
+import calculators.project.spring.model.BBSPost;
 import calculators.project.spring.model.LoginUser;
 import calculators.project.spring.model.LoginUserDetails;
 import calculators.project.spring.model.RestResult;
@@ -89,6 +90,27 @@ public class RestAdminController {
 		formulasService.deleteFormulaAll(id);
 		bbsFormulasService.hidePostAll(id);
 		userService.deleteUser(id);
+		return new RestResult(0, null);
+	}
+
+	/** 投稿一覧取得 */
+	@GetMapping("/admin/rest/posts")
+	public List<BBSPost> restGetPostList(){
+		return bbsFormulasService.adminGetPostList();
+	}
+
+	@PutMapping("/admin/rest/posts/view")
+	public RestResult restChangePostView(Integer postId, Boolean view) {
+		if(!bbsFormulasService.changePostView(postId, view))
+			return new RestResult(500, null);
+		return new RestResult(0, null);
+	}
+
+	/** 投稿１件削除 */
+	@DeleteMapping("/admin/rest/posts")
+	public RestResult restDeletePostOne(Integer postId) {
+		if(!bbsFormulasService.deletePostOne(postId))
+			return new RestResult(500, null);
 		return new RestResult(0, null);
 	}
 }
