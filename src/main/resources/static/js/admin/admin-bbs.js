@@ -2,10 +2,58 @@
 
 setDataTablesStatus(6);
 
+var addCategoryListFunc = null;
+
+/** 検索用vueインスタンス */
+const vmSearchForm = Vue.createApp({
+	data(){
+		return{
+			options: []
+		}
+	},
+	methods: {
+		addOption(options) {
+			options.forEach(element => this.options.push(element))
+		}
+	},
+	mounted(){
+		addCategoryListFunc = this.addOption;
+	}
+}).mount('#search-form')
+
 /** ページの読み込みが終わったら */
 $(document).ready(function () {
 	ajaxGetPostList();
+	ajaxGetCategoryList();
 });
+
+/** 指定列を検索 */
+function filterColumn(col) {
+	let searchText = event.currentTarget.value;
+	$('#dataTable')
+		.DataTable()
+		.column(col)
+		.search(
+			searchText
+		)
+		.draw();
+}
+
+/** カテゴリーリスト取得 */
+function ajaxGetCategoryList(){
+	setAjax(
+		'GET',
+		'/rest/category',
+		{},
+		function(data){
+			if(!addCategoryListFunc){
+				alert("カテゴリーリストを取得する関数が用意されていません！");
+				return;
+			}
+			addCategoryListFunc(data);
+		}
+	);
+}
 
 /** 投稿一覧取得 */
 function ajaxGetPostList(){
@@ -72,6 +120,7 @@ function createDataTable(list){
 	}
 
 	dataTable = $('#dataTable').DataTable({
+		sDom: 'lrtip',	// 検索非表示
 		data: list,
 		columns: [
 			{ data: 'id' },

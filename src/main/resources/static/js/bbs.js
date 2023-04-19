@@ -3,7 +3,7 @@
 /** DataTables初期設定 */
 setDataTablesStatus(4,3);
 
-/** 投稿用vueインスタンス */
+/** 検索用vueインスタンス */
 const vmSearchForm = Vue.createApp({
 	data(){
 		return{

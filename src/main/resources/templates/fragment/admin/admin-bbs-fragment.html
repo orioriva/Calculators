@@ -3,6 +3,60 @@
 <div class="mt-2 mb-4 border-bottom">
 	<h3>掲示板管理</h3>
 </div>
+
+<!-- 検索フォーム -->
+<form class="form-inline p-2 mb-2 mt-2 border border-info rounded-lg" id="search-form">
+	<!-- ID -->
+	<div class="input-group mr-2 mb-2">
+		<div class="input-group-prepend">
+			<label class="input-group-text">ID</label>
+		</div>
+		<input type="text" class="form-control" oninput="filterColumn(0);">
+	</div>
+	<!-- カテゴリ -->
+	<div class="input-group mr-2 mb-2">
+		<div class="input-group-prepend">
+			<label class="input-group-text" for="category" th:text="#{category}"></label>
+		</div>
+		<select class="custom-select" id="category" onchange="filterColumn(1);">
+			<option value="" th:text="#{all}" selected></option>
+			<option v-for="option in options" :value="option.name">{{ option.name }}</option>
+		</select>
+	</div>
+	<!-- 投稿者 -->
+	<div class="input-group mr-2 mb-2">
+		<div class="input-group-prepend">
+			<label class="input-group-text" th:text="#{poster}"></label>
+		</div>
+		<input type="text" class="form-control" oninput="filterColumn(2);">
+	</div>
+	<!-- タイトル -->
+	<div class="input-group mr-2 mb-2">
+		<div class="input-group-prepend">
+			<label class="input-group-text" th:text="#{title}"></label>
+		</div>
+		<input type="text" class="form-control" oninput="filterColumn(3);">
+	</div>
+	<!-- 更新日 -->
+	<div class="input-group mr-2 mb-2">
+		<div class="input-group-prepend">
+			<label class="input-group-text" th:text="#{updateDate}"></label>
+		</div>
+		<input type="text" class="form-control" oninput="filterColumn(4);">
+	</div>
+	<!-- 表示状態 -->
+	<div class="input-group mr-2 mb-2">
+		<div class="input-group-prepend">
+			<label class="input-group-text">表示状態</label>
+		</div>
+		<select class="custom-select" onchange="filterColumn(5);">
+			<option value="" th:text="#{all}" selected></option>
+			<option>true</option>
+			<option>false</option>
+		</select>
+	</div>
+</form>
+
 <!-- 投稿一覧表示テーブル -->
 <div class="scroll-x pb-4 pr-3">
 	<table id="dataTable"
