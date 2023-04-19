@@ -15,6 +15,7 @@
  		<result column="comment" property="comment"/>
  		<result column="jsonData" property="jsonData"/>
  		<result column="userName" property="creatorName"/>
+ 		<result column="view" property="view"/>
  	</resultMap>
 
 <!-- カテゴリリスト取得 -->
@@ -58,6 +59,29 @@
 		<if test="creatorId != null">
 			AND bbsformulas.creatorId = #{creatorId}
 		</if>
+</select>
+
+<!-- 投稿リスト取得(管理者) -->
+<select id="adminGetPostList" resultMap="bbsPost">
+	SELECT
+		bbsformulas.id,
+		categories.ja AS category,
+		categories.id AS categoryId,
+		bbsformulas.updateDate,
+		bbsformulas.title,
+		bbsformulas.comment,
+		`users`.userName,
+		bbsformulas.view
+	FROM
+		bbsformulas
+		LEFT JOIN
+			`users`
+		ON
+			bbsformulas.creatorId = `users`.id
+		LEFT JOIN
+			categories
+		ON
+			bbsformulas.category = categories.id
 </select>
 
 <!-- 投稿１件取得 -->
@@ -135,7 +159,17 @@
 		view = true
 </update>
 
-<!-- 数式表１件削除(論理) -->
+<!-- 投稿１件表示非表示切り替え -->
+<update id="changePostView">
+	UPDATE
+		bbsformulas
+	SET
+		view = #{view}
+	WHERE
+		id = #{postId}
+</update>
+
+<!-- 自身の投稿１件削除(論理) -->
 <update id="hidePostOne">
 	UPDATE
 		bbsformulas
@@ -147,7 +181,7 @@
 		view = true
 </update>
 
-<!-- 数式表１件削除(論理) -->
+<!-- 自身の投稿全件削除(論理) -->
 <update id="hidePostAll">
 	UPDATE
 		bbsformulas
@@ -158,13 +192,12 @@
 		view = true
 </update>
 
-<!-- 数式表１件削除(物理) -->
+<!-- 投稿１件削除(物理) -->
 <delete id="deletePostOne">
 	DELETE FROM
 		bbsformulas
 	WHERE
-		id = #{id} AND
-		creatorId = #{creatorId}
+		id = #{postId}
 </delete>
 
 </mapper>
