@@ -1,5 +1,6 @@
 package calculators.project.spring.service;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,10 +71,12 @@ public class BBSFormulasService {
 		return mapper.adminGetPostList();
 	}
 
-	/** 投稿の表示非表示切り替え */
-	public boolean changePostView(int postId, boolean view) {
-		return mapper.changePostView(postId, view);
+	/** 投稿１件更新(管理者) */
+	public boolean adminUpdatePostOne(BBSPost post) {
+		post.setUpdateDate(new Date());
+		return mapper.adminUpdatePostOne(post);
 	}
+
 	/** 投稿１件削除（物理） */
 	public boolean deletePostOne(int postId) {
 		return mapper.deletePostOne(postId);

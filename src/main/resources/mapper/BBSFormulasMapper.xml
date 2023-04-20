@@ -159,14 +159,18 @@
 		view = true
 </update>
 
-<!-- 投稿１件表示非表示切り替え -->
-<update id="changePostView">
+<!-- 投稿１件更新(管理者) -->
+<update id="adminUpdatePostOne">
 	UPDATE
 		bbsformulas
 	SET
+		category = #{categoryId},
+		updateDate = #{updateDate},
+		title = #{title},
+		comment = #{comment},
 		view = #{view}
 	WHERE
-		id = #{postId}
+		id = #{id}
 </update>
 
 <!-- 自身の投稿１件削除(論理) -->

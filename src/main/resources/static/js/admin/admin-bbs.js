@@ -1,8 +1,20 @@
 'use strict'
 
-setDataTablesStatus(6);
+var postDataList;
+
+setDataTablesStatus(7);
 
 var addCategoryListFunc = null;
+
+/** ファイルを閉じる時 */
+$('.popup-file').click(function(e){
+    if(!$(e.target).closest('.content').length){
+		$('.popup-file').fadeOut();
+	}
+});
+$('#close-file').click(function() {
+    $('.popup-file').fadeOut();
+});
 
 /** 検索用vueインスタンス */
 const vmSearchForm = Vue.createApp({
@@ -20,6 +32,38 @@ const vmSearchForm = Vue.createApp({
 		addCategoryListFunc = this.addOption;
 	}
 }).mount('#search-form')
+
+/** 情報更新用vueインスタンス */
+const vmInputForm = Vue.createApp({
+	data(){
+		return{
+			id: 0,
+			category: 1,
+			poster: '',
+			title: '',
+			comment: '',
+			updateDate: '',
+			view: true,
+			options: vmSearchForm.options
+		}
+	},
+	methods: {
+		init(postId) {
+			let postData = postDataList.find((v) => v.id == postId);
+			this.id = postData.id;
+			this.category = postData.categoryId;
+			this.poster = postData.creatorName;
+			this.title = postData.title;
+			this.comment = postData.comment;
+			this.updateDate = dateToTextDef(new Date(postData.updateDate));
+			this.view = postData.view;
+		},
+		deletePost: function() {
+			ajaxDeletePost(this.id);
+		}
+	}
+}).mount('#input-form')
+
 
 /** ページの読み込みが終わったら */
 $(document).ready(function () {
@@ -69,22 +113,27 @@ function ajaxGetPostList(){
 	);
 }
 
-/** 投稿１件削除 */
-function ajaxDeletePost(postId){
-	if(!confirm("本当に削除してよろしいですか？\r\n削除ID：" + postId)){
-		return false;
+/** 投稿１件更新 */
+function ajaxUpdatePost(){
+	if(!confirm("この内容で更新してよろしいですか？")){
+		return;
 	}
 
 	setAjax(
-		'DELETE',
+		'PUT',
 		'/admin/rest/posts',
 		{
-			postId: postId,
+			id: vmInputForm.id,
+			categoryId: vmInputForm.category,
+			title: vmInputForm.title,
+			comment: vmInputForm.comment,
+			view: vmInputForm.view,
 			_csrf: $("*[name=_csrf]").val()  // CSRFトークンを送信
 		},
 		function(data){
 			if(data.result == 0){
-				alert("削除完了しました");
+				alert("更新完了しました");
+				$('.popup-file').fadeOut();
 				ajaxGetPostList();
 			}else{
 				errorCodeCheck(data.result);
@@ -93,24 +142,35 @@ function ajaxDeletePost(postId){
 	);
 }
 
-/** 投稿１件表示非表示切り替え */
-function ajaxChangePostView(postId,view){
+/** 投稿１件削除 */
+function ajaxDeletePost(){
+	if(!confirm("本当に削除してよろしいですか？")){
+		return false;
+	}
+
 	setAjax(
-		'PUT',
-		'/admin/rest/posts/view',
+		'DELETE',
+		'/admin/rest/posts',
 		{
-			postId: postId,
-			view: view,
+			postId: vmInputForm.id,
 			_csrf: $("*[name=_csrf]").val()  // CSRFトークンを送信
 		},
 		function(data){
 			if(data.result == 0){
+				alert("削除完了しました");
+				$('.popup-file').fadeOut();
 				ajaxGetPostList();
 			}else{
 				errorCodeCheck(data.result);
 			}
 		}
 	);
+}
+
+/** フォームの初期値をセット */
+function setUserDataFromId(postId){
+	vmInputForm.init(postId);
+	$('.popup-file').addClass('popup-show').fadeIn();
 }
 
 function createDataTable(list){
@@ -127,36 +187,27 @@ function createDataTable(list){
 			{ data: 'category' },
 			{ data: 'creatorName' },
 			{ data: 'title' },
+			{ data: 'comment' },
 			{
 				data: 'updateDate',
 				render: function(data){
 					return dateToTextDef(new Date(data));
 				}
 			},
-			{
-				data: 'view',
-				render: function(data,type,row){
-					let insert =
-						data +'<button class="ml-2 btn btn-sm btn-secondary" onclick="ajaxChangePostView(' + row.id + ',' + !data +')">'+
-							'<i class="fas fa-sync-alt"></i>&ensp;切り替え'+
-						'</button>';
-					return insert;
-				}
-			},
+			{ data: 'view' },
 			// 操作
 			{
 				data: 'id',
 				render: function(data,type,row){
 					let insert =
-						'<a href="/bbs/post?postId=' + data + '" class="btn btn-sm btn-info" role="button">' +
-							'<i class="fas fa-book-open"></i>&ensp;閲覧' +
-						'</a>'+
-						'<button class="ml-2 btn btn-sm btn-danger" onclick="ajaxDeletePost(' + data + ')">'+
-							'<i class="fas fa-trash-alt"></i>&ensp;完全削除'+
-						'</button>';
+						"<button class='btn btn-sm btn-primary' type='button' onclick='setUserDataFromId(" + data + ")'>" +
+							"<i class='fas fa-cog'></i>&ensp;情報変更" +
+						"</button>";
 					return insert;
 				}
 			}
 		]
 	});
+
+	postDataList = list;
 }

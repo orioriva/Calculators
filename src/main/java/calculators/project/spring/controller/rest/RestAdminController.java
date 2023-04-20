@@ -79,11 +79,13 @@ public class RestAdminController {
 		return new RestResult(500, null);
 	}
 
+	/** ユーザー１件削除 */
 	@DeleteMapping("/admin/rest/user")
 	public RestResult restUpdateUser(
 			@AuthenticationPrincipal LoginUserDetails user,
 			@RequestParam Integer id
 	) {
+		// ここからは自身は削除出来ない
 		if(user.getLoginUser().getId() == id) {
 			return new RestResult(500, null);
 		}
@@ -99,9 +101,10 @@ public class RestAdminController {
 		return bbsFormulasService.adminGetPostList();
 	}
 
-	@PutMapping("/admin/rest/posts/view")
-	public RestResult restChangePostView(Integer postId, Boolean view) {
-		if(!bbsFormulasService.changePostView(postId, view))
+	/** 投稿１件更新 */
+	@PutMapping("/admin/rest/posts")
+	public RestResult restUpdatePost(BBSPost post) {
+		if(!bbsFormulasService.adminUpdatePostOne(post))
 			return new RestResult(500, null);
 		return new RestResult(0, null);
 	}

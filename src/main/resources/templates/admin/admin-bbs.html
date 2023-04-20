@@ -4,7 +4,8 @@
 <head th:replace="fragment/head-fragment :: head-fragment(
 title = '掲示板管理', scripts = ~{::script}, links = ~{::link})">
 	<!-- 個別CSS、JSを引数に指定 -->
-	<link rel="stylesheet" type="text/css" th:href="@{/css/blank.css}">
+	<link rel="stylesheet" type="text/css" th:href="@{/css/popup.css}">
+	<link rel="stylesheet" type="text/css" th:href="@{/css/table-width-limit.css}">
 	<script type="text/javascript" th:src="@{/js/admin/admin-bbs.js}" defer></script>
 </head>
 <body>

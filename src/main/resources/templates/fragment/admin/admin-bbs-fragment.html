@@ -37,19 +37,26 @@
 		</div>
 		<input type="text" class="form-control" oninput="filterColumn(3);">
 	</div>
+	<!-- 投稿者コメント -->
+	<div class="input-group mr-2 mb-2">
+		<div class="input-group-prepend">
+			<label class="input-group-text">投稿者コメント</label>
+		</div>
+		<input type="text" class="form-control" oninput="filterColumn(4);">
+	</div>
 	<!-- 更新日 -->
 	<div class="input-group mr-2 mb-2">
 		<div class="input-group-prepend">
 			<label class="input-group-text" th:text="#{updateDate}"></label>
 		</div>
-		<input type="text" class="form-control" oninput="filterColumn(4);">
+		<input type="text" class="form-control" oninput="filterColumn(5);">
 	</div>
 	<!-- 表示状態 -->
 	<div class="input-group mr-2 mb-2">
 		<div class="input-group-prepend">
 			<label class="input-group-text">表示状態</label>
 		</div>
-		<select class="custom-select" onchange="filterColumn(5);">
+		<select class="custom-select" onchange="filterColumn(6);">
 			<option value="" th:text="#{all}" selected></option>
 			<option>true</option>
 			<option>false</option>
@@ -64,10 +71,11 @@
 		<thead class="thead-light">
 			<tr>
 				<th scope="col">ID</th>
-				<th scope="col">カテゴリ</th>
-				<th scope="col">投稿者</th>
-				<th scope="col">タイトル</th>
-				<th scope="col">更新日</th>
+				<th scope="col" th:text="#{category}"></th>
+				<th scope="col" th:text="#{poster}"></th>
+				<th scope="col" th:text="#{title}"></th>
+				<th scope="col">投稿者コメント</th>
+				<th scope="col" th:text="#{updateDate}"></th>
 				<th scope="col">表示状態</th>
 				<th scope="col" th:text="#{operation}"></th>
 			</tr>
@@ -75,6 +83,62 @@
 		<tbody>
 		</tbody>
 	</table>
+</div>
+
+<!-- 情報編集ポップアップ -->
+<div class="popup-file">
+	<div class="content">
+		<form th:action th;method="PUT" id="input-form">
+			<table class="table table-bordered table-hover">
+				<tr>
+					<th class="col-3">ID</th>
+					<td class="col">{{id}}</td>
+				</tr>
+				<tr>
+					<th>カテゴリ</th>
+					<td>
+						<select class="form-control" v-model="category">
+							<option v-for="option in options" :value="option.id">{{ option.name }}</option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<th>投稿者名</th>
+					<td>{{poster}}</td>
+				</tr>
+				<tr>
+					<th>タイトル</th>
+					<td>
+						<input class="form-control" v-model="title">
+					</td>
+				</tr>
+				<tr>
+					<th>投稿者コメント</th>
+					<td>
+						<textarea class="form-control" rows="8" v-model="comment"></textarea>
+					</td>
+				</tr>
+				<tr>
+					<th>更新日時</th>
+					<td>{{updateDate}}</td>
+				</tr>
+				<tr>
+					<th>表示状態</th>
+					<td>
+						<select class="form-control" v-model="view">
+							<option value="true">true（公開）</option>
+							<option value="false">false（非公開）</option>
+						</select>
+					</td>
+				</tr>
+			</table>
+		</form>
+		<div class="mt-5 row">
+			<button id="close-file" class="col mr-5 btn btn-secondary"><i class="fas fa-window-close"></i>&ensp;[[#{close}]]</button>
+			<button class="col mr-5 btn btn-primary" onclick="ajaxUpdatePost()"><i class="fas fa-edit"></i>&ensp;投稿内容更新</button>
+			<button class="col btn btn-danger" onclick="ajaxDeletePost()"><i class="fas fa-trash-alt"></i>&ensp;投稿完全削除</button>
+		</div>
+	</div>
 </div>
 
 </th:block>

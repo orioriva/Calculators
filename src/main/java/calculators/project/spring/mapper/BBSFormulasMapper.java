@@ -18,6 +18,6 @@ public interface BBSFormulasMapper {
 	public boolean hidePostOne(int id, int creatorId);
 	public boolean hidePostAll(int creatorId);
 	public List<BBSPost> adminGetPostList();
-	public boolean changePostView(int postId, boolean view);
+	public boolean adminUpdatePostOne(BBSPost post);
 	public boolean deletePostOne(int postId);
 }
