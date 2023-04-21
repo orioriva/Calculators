@@ -36,3 +36,4 @@ build/
 ### Project ###
 /src/main/resources/application.properties
 /bin/
+/README.md
