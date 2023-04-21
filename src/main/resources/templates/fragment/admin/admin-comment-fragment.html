@@ -3,16 +3,77 @@
 <div class="mt-2 mb-4 border-bottom">
 	<h3>コメント管理</h3>
 </div>
+
+<!-- 検索フォーム -->
+<form class="form-inline p-2 mb-2 mt-2 border border-info rounded-lg" id="search-form">
+	<!-- 投稿先ID -->
+	<div class="input-group mr-2 mb-2">
+		<div class="input-group-prepend">
+			<label class="input-group-text">投稿先ID</label>
+		</div>
+		<input type="text" class="form-control" oninput="filterColumn(0);">
+	</div>
+	<!-- No -->
+	<div class="input-group mr-2 mb-2">
+		<div class="input-group-prepend">
+			<label class="input-group-text">No</label>
+		</div>
+		<input type="text" class="form-control" oninput="filterColumn(1);">
+	</div>
+	<!-- 投稿者ID -->
+	<div class="input-group mr-2 mb-2">
+		<div class="input-group-prepend">
+			<label class="input-group-text">投稿者ID</label>
+		</div>
+		<input type="text" class="form-control" oninput="filterColumn(2);">
+	</div>
+	<!-- 投稿者名 -->
+	<div class="input-group mr-2 mb-2">
+		<div class="input-group-prepend">
+			<label class="input-group-text">投稿者名</label>
+		</div>
+		<input type="text" class="form-control" oninput="filterColumn(3);">
+	</div>
+	<!-- 投稿日時 -->
+	<div class="input-group mr-2 mb-2">
+		<div class="input-group-prepend">
+			<label class="input-group-text">投稿日時</label>
+		</div>
+		<input type="text" class="form-control" oninput="filterColumn(4);">
+	</div>
+	<!-- コメント -->
+	<div class="input-group mr-2 mb-2">
+		<div class="input-group-prepend">
+			<label class="input-group-text">コメント</label>
+		</div>
+		<input type="text" class="form-control" oninput="filterColumn(5);">
+	</div>
+	<!-- 表示状態 -->
+	<div class="input-group mr-2 mb-2">
+		<div class="input-group-prepend">
+			<label class="input-group-text">表示状態</label>
+		</div>
+		<select class="custom-select" onchange="filterColumn(6);">
+			<option value="" th:text="#{all}" selected></option>
+			<option>公開</option>
+			<option>隠す</option>
+		</select>
+	</div>
+</form>
+
 <!-- コメント一覧表示テーブル -->
 <div class="scroll-x pb-4 pr-3">
 	<table id="dataTable"
 		class="table table-bordered table-hover table-sm text-nowrap w-100">
 		<thead class="thead-light">
 			<tr>
-				<th scope="col">ID</th>
-				<th scope="col">コメント投稿者ID</th>
+				<th scope="col">投稿先ID</th>
+				<th scope="col">No</th>
+				<th scope="col">投稿者ID</th>
+				<th scope="col">投稿者名</th>
+				<th scope="col">投稿日時</th>
+				<th scope="col">コメント</th>
 				<th scope="col">表示状態</th>
-				<th scope="col" th:text="#{operation}"></th>
 			</tr>
 		</thead>
 		<tbody>

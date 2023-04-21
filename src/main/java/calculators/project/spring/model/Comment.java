@@ -12,4 +12,5 @@ public class Comment {
 	private String posterName;
 	private Date postDate;
 	private String comment;
+	private Boolean view;
 }

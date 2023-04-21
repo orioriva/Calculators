@@ -31,17 +31,6 @@ function toggleSearchForm(){
 	$('#search-form').animate({height:'toggle', opacity:'toggle'},'normal');
 }
 
-function filterColumn(col) {
-	let searchText = event.currentTarget.value;
-	$('#dataTable')
-		.DataTable()
-		.column(col)
-		.search(
-			searchText
-		)
-		.draw();
-}
-
 function createDataTable(list){
 	//既にdataTableが定義されていれば削除
 	if(dataTable !== null){

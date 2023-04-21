@@ -16,10 +16,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import calculators.project.spring.form.ChangeUserStatusForm;
 import calculators.project.spring.model.BBSPost;
+import calculators.project.spring.model.Comment;
 import calculators.project.spring.model.LoginUser;
 import calculators.project.spring.model.LoginUserDetails;
 import calculators.project.spring.model.RestResult;
 import calculators.project.spring.service.BBSFormulasService;
+import calculators.project.spring.service.CommentsService;
 import calculators.project.spring.service.ErrorCheckService;
 import calculators.project.spring.service.FormulasService;
 import calculators.project.spring.service.UserService;
@@ -37,6 +39,9 @@ public class RestAdminController {
 
 	@Autowired
 	private BBSFormulasService bbsFormulasService;
+
+	@Autowired
+	private CommentsService commentsService;
 
 	/** ユーザー一覧取得 */
 	@GetMapping("/admin/rest/users")
@@ -113,6 +118,20 @@ public class RestAdminController {
 	@DeleteMapping("/admin/rest/posts")
 	public RestResult restDeletePostOne(Integer postId) {
 		if(!bbsFormulasService.deletePostOne(postId))
+			return new RestResult(500, null);
+		commentsService.deleteComments(postId);
+		return new RestResult(0, null);
+	}
+
+	/** コメント一覧取得 */
+	@GetMapping("/admin/rest/comments")
+	public List<Comment> getCommentList(){
+		return commentsService.adminGetCommentList();
+	}
+
+	@PutMapping("/admin/rest/comments/view")
+	public RestResult changeCommentView(Integer postId, Integer no) {
+		if(!commentsService.changeCommentView(postId, no))
 			return new RestResult(500, null);
 		return new RestResult(0, null);
 	}

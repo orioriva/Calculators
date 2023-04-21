@@ -58,8 +58,8 @@
 		</div>
 		<select class="custom-select" onchange="filterColumn(6);">
 			<option value="" th:text="#{all}" selected></option>
-			<option>true</option>
-			<option>false</option>
+			<option>公開</option>
+			<option>隠す</option>
 		</select>
 	</div>
 </form>
@@ -126,8 +126,8 @@
 					<th>表示状態</th>
 					<td>
 						<select class="form-control" v-model="view">
-							<option value="true">true（公開）</option>
-							<option value="false">false（非公開）</option>
+							<option value="true">公開</option>
+							<option value="false">隠す</option>
 						</select>
 					</td>
 				</tr>

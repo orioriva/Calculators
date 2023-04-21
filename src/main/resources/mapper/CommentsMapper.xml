@@ -5,12 +5,30 @@
 <!-- Mapperとxmlのマッピング -->
 <mapper namespace="calculators.project.spring.mapper.CommentsMapper">
 
+<!-- コメント一覧取得（管理者） -->
+<select id="adminGetCommentList" resultType="Comment">
+	SELECT
+		postId,
+		no,
+		posterId,
+		`users`.userName AS posterName,
+		postDate,
+		comment,
+		view
+	FROM
+		comments
+		LEFT JOIN
+			`users`
+		ON
+			`users`.id = comments.posterId
+</select>
+
 <!-- 投稿のコメント一覧取得 -->
 <select id="getCommentList" resultType="Comment">
 	SELECT
 		no,
 		CASE users.userName
-			WHEN NULL THEN '退会済みユーザー'
+			WHEN IS NULL THEN '※　退会済みユーザー　※'
 			ELSE `users`.userName
 		END posterName,
 		postDate,
@@ -49,5 +67,24 @@
 			#{comment}
 		)
 </insert>
+
+<!-- コメントの表示/非表示切り替え -->
+<update id="changeCommentView">
+	UPDATE
+		comments
+	SET
+		view = NOT view
+	WHERE
+		postId = #{postId} AND
+		no = #{no}
+</update>
+
+<!-- 指定投稿内のコメント全件削除(物理) -->
+<delete id="deleteComments">
+	DELETE FROM
+		comments
+	WHERE
+		postId = #{postId}
+</delete>
 
 </mapper>

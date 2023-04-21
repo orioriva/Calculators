@@ -71,18 +71,6 @@ $(document).ready(function () {
 	ajaxGetCategoryList();
 });
 
-/** 指定列を検索 */
-function filterColumn(col) {
-	let searchText = event.currentTarget.value;
-	$('#dataTable')
-		.DataTable()
-		.column(col)
-		.search(
-			searchText
-		)
-		.draw();
-}
-
 /** カテゴリーリスト取得 */
 function ajaxGetCategoryList(){
 	setAjax(
@@ -194,7 +182,14 @@ function createDataTable(list){
 					return dateToTextDef(new Date(data));
 				}
 			},
-			{ data: 'view' },
+			{
+				data: 'view',
+				render: function(data){
+					const icon = (!data ? '-slash' : '');
+					const str = (data ? '公開' : '隠す');
+					return '<i class="fas fa-eye' + icon + '"></i>&ensp;' + str;
+				}
+			},
 			// 操作
 			{
 				data: 'id',

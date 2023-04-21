@@ -9,13 +9,18 @@ function setDataTablesStatus(operationCol, dateCol){
 	        url: "http://cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Japanese.json"
 	    },
 	    lengthMenu: [ 10, 20, 30, 40, 50 ],
-	    displayLength: 10,
-	    columnDefs: [{
-			  "targets": operationCol,
-			  "orderable": false,
-			  "searchable": false
-		}]
+	    displayLength: 10
 	});
+
+	if(operationCol !== undefined){
+		$.extend( $.fn.dataTable.defaults, {
+			columnDefs: [{
+				"targets": operationCol,
+				"orderable": false,
+				"searchable": false
+			}]
+		});
+	}
 
 	if(dateCol !== undefined){
 		$.extend( $.fn.dataTable.defaults, {
