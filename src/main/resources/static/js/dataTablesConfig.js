@@ -2,6 +2,7 @@
 
 var dataTable = null;
 
+/** 特定の列を検索 */
 function filterColumn(col){
 	let searchText = event.currentTarget.value;
 	$('#dataTable')
