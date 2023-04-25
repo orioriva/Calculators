@@ -41,6 +41,5 @@ CREATE TABLE IF NOT EXISTS `comments`(
 /* カテゴリーリストテーブル */
 CREATE TABLE IF NOT EXISTS `categories`(
 	id INT PRIMARY KEY AUTO_INCREMENT,
-	ja TINYTEXT,
-	en TINYTEXT
+	name TINYTEXT NOT NULL
 );

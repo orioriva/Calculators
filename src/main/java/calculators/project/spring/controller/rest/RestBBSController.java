@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import calculators.project.spring.form.BBSPostForm;
 import calculators.project.spring.model.BBSPost;
-import calculators.project.spring.model.Category;
 import calculators.project.spring.model.LoginUserDetails;
 import calculators.project.spring.model.RestResult;
 import calculators.project.spring.service.BBSFormulasService;
@@ -55,12 +54,6 @@ public class RestBBSController {
 			post.setJsonData(null);
 		}
 		return post;
-	}
-
-	/** カテゴリーリスト取得 */
-	@GetMapping("/rest/category")
-	public List<Category> restGetCategoryList(){
-		return bbsFormulasService.getCategoryList("ja");
 	}
 
 	/** 投稿一覧リスト取得 */

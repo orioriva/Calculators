@@ -18,27 +18,11 @@
  		<result column="view" property="view"/>
  	</resultMap>
 
-<!-- カテゴリリスト取得 -->
-<select id="getCategoryList" resultType="Category">
-	SELECT
-		id,
-		<choose>
-			<when test="locale == 'en'">
-				en AS name
-			</when>
-			<otherwise>
-				ja AS name
-			</otherwise>
-		</choose>
-	FROM
-		categories
-</select>
-
 <!-- 投稿リスト取得 -->
 <select id="getPostList" resultMap="bbsPost">
 	SELECT
 		bbsformulas.id,
-		categories.ja AS category,
+		categories.name AS category,
 		categories.id AS categoryId,
 		bbsformulas.updateDate,
 		bbsformulas.title,
@@ -65,7 +49,7 @@
 <select id="adminGetPostList" resultMap="bbsPost">
 	SELECT
 		bbsformulas.id,
-		categories.ja AS category,
+		categories.name AS category,
 		categories.id AS categoryId,
 		bbsformulas.updateDate,
 		bbsformulas.title,
@@ -88,7 +72,7 @@
 <select id="getPostOne" resultMap="bbsPost">
 	SELECT
 		bbsformulas.id,
-		categories.ja AS category,
+		categories.name AS category,
 		categories.id AS categoryId,
 		bbsformulas.creatorId,
 		bbsformulas.updateDate,
@@ -171,6 +155,16 @@
 		view = #{view}
 	WHERE
 		id = #{id}
+</update>
+
+<!-- 指定されたカテゴリの投稿を別のカテゴリへ変更 -->
+<update id="changeCategory">
+	UPDATE
+		bbsformulas
+	SET
+		category = #{afterId}
+	WHERE
+		category = #{beforeId}
 </update>
 
 <!-- 自身の投稿１件削除(論理) -->

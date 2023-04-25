@@ -10,17 +10,20 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import calculators.project.spring.form.ChangeUserStatusForm;
 import calculators.project.spring.model.BBSPost;
+import calculators.project.spring.model.Category;
 import calculators.project.spring.model.Comment;
 import calculators.project.spring.model.LoginUser;
 import calculators.project.spring.model.LoginUserDetails;
 import calculators.project.spring.model.RestResult;
 import calculators.project.spring.service.BBSFormulasService;
+import calculators.project.spring.service.CategoriesService;
 import calculators.project.spring.service.CommentsService;
 import calculators.project.spring.service.ErrorCheckService;
 import calculators.project.spring.service.FormulasService;
@@ -42,6 +45,9 @@ public class RestAdminController {
 
 	@Autowired
 	private CommentsService commentsService;
+
+	@Autowired
+	private CategoriesService categoriesService;
 
 	/** ユーザー一覧取得 */
 	@GetMapping("/admin/rest/users")
@@ -129,10 +135,51 @@ public class RestAdminController {
 		return commentsService.adminGetCommentList();
 	}
 
+	/** コメント１件表示非表示切り替え */
 	@PutMapping("/admin/rest/comments/view")
 	public RestResult changeCommentView(Integer postId, Integer no) {
 		if(!commentsService.changeCommentView(postId, no))
 			return new RestResult(500, null);
+		return new RestResult(0, null);
+	}
+
+	/** カテゴリーリスト取得 */
+	@GetMapping("/admin/rest/category")
+	public List<Category> restGetCategoryList(){
+		return categoriesService.getCategoryList(false);
+	}
+
+	/** カテゴリ追加 */
+	@PostMapping("/admin/rest/category")
+	public RestResult addCategory(String name) {
+		if(categoriesService.addCategoryOne(name)) {
+			return new RestResult(0, null);
+		}
+		return new RestResult(500, null);
+	}
+
+	/** カテゴリ名変更 */
+	@PutMapping("/admin/rest/category")
+	public RestResult updateCategoryName(Category category) {
+		if(category.getId() <= 1) {
+			return new RestResult(90, null);
+		}
+		if(categoriesService.updateCategoryOne(category)) {
+			return new RestResult(0, null);
+		}
+		return new RestResult(500, null);
+	}
+
+	/** カテゴリ統合 */
+	@DeleteMapping("/admin/rest/category")
+	public RestResult integrationCategory(Integer beforeId, Integer afterId) {
+		if(beforeId <= 1) {
+			return new RestResult(90, null);
+		}
+		bbsFormulasService.changeCategory(beforeId, afterId);
+		if(!categoriesService.deleteCategoryOne(beforeId)) {
+			return new RestResult(500, null);
+		}
 		return new RestResult(0, null);
 	}
 }
