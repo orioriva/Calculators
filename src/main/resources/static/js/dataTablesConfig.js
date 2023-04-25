@@ -2,6 +2,17 @@
 
 var dataTable = null;
 
+function filterColumn(col){
+	let searchText = event.currentTarget.value;
+	$('#dataTable')
+		.DataTable()
+		.column(col)
+		.search(
+			searchText
+		)
+		.draw();
+}
+
 /** DataTables初期設定 */
 function setDataTablesStatus(operationCol, dateCol){
 	$.extend( $.fn.dataTable.defaults, {
