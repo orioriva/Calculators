@@ -8,14 +8,14 @@ INSERT INTO `users`(
 	('てすと','test','$2a$10$lJMwQdThMO8kjXIQuFMEneTdWGE.bcLAFXkq8z9EUvzvxETaLdmY.','ROLE_GENERAL')
 ;
 
-INSERT INTO categories(ja,en)VALUES
-	('その他','others'),
-	('生活','life'),
-	('健康','health'),
-	('交通','traffic'),
-	('仕事','work'),
-	('勉強','study'),
-	('遊び','play')
+INSERT INTO categories(name)VALUES
+	('その他'),
+	('生活'),
+	('健康'),
+	('交通'),
+	('仕事'),
+	('勉強'),
+	('遊び')
 ;
 
 INSERT INTO formulas(

@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import calculators.project.spring.mapper.BBSFormulasMapper;
 import calculators.project.spring.model.BBSPost;
-import calculators.project.spring.model.Category;
 
 @Service
 public class BBSFormulasService {
@@ -53,19 +52,6 @@ public class BBSFormulasService {
 		return mapper.hidePostAll(creatorId);
 	}
 
-	/** カテゴリ選択肢のリストを取得 */
-	public List<Category> getCategoryList(String locale){
-		List<Category> categoryList = mapper.getCategoryList(locale);
-		if(categoryList.isEmpty()) {
-			categoryList.add(new Category(0,"データ取得失敗"));
-			return categoryList;
-		}
-		// その他が最後に来るよう並び替え
-		categoryList.add(categoryList.get(0));
-		categoryList.remove(0);
-		return categoryList;
-	}
-
 	/** 投稿一覧取得(管理者) */
 	public List<BBSPost> adminGetPostList(){
 		return mapper.adminGetPostList();
@@ -75,6 +61,11 @@ public class BBSFormulasService {
 	public boolean adminUpdatePostOne(BBSPost post) {
 		post.setUpdateDate(new Date());
 		return mapper.adminUpdatePostOne(post);
+	}
+
+	/** 指定されたカテゴリの投稿を別のカテゴリへ変更 */
+	public boolean changeCategory(int beforeId, int afterId) {
+		return mapper.changeCategory(beforeId, afterId);
 	}
 
 	/** 投稿１件削除（物理） */

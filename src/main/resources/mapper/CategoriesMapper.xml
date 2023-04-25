@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+ <!-- Mapperとxmlのマッピング -->
+<mapper namespace="calculators.project.spring.mapper.CategoriesMapper">
+
+<!-- カテゴリリスト取得 -->
+<select id="getCategoryList" resultType="Category">
+	SELECT
+		*
+	FROM
+		categories
+</select>
+
+<!-- カテゴリ追加 -->
+<insert id="addCategoryOne">
+	INSERT INTO
+		categories(
+			name
+		) VALUES(
+			#{name}
+		)
+</insert>
+
+<!-- カテゴリ名変更 -->
+<update id="updateCategoryOne">
+	UPDATE
+		categories
+	SET
+		name = #{name}
+	WHERE
+		id = #{id}
+</update>
+
+<!-- カテゴリ削除 -->
+<delete id="deleteCategoryOne">
+	DELETE FROM
+		categories
+	WHERE
+		id = #{id}
+</delete>
+
+</mapper>

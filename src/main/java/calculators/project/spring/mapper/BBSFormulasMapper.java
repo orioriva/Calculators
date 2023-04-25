@@ -5,11 +5,9 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import calculators.project.spring.model.BBSPost;
-import calculators.project.spring.model.Category;
 
 @Mapper
 public interface BBSFormulasMapper {
-	public List<Category> getCategoryList(String locale);
 	public boolean newPostOne(BBSPost post);
 	public boolean updatePostOne(BBSPost post);
 	public List<BBSPost> getPostList(Integer creatorId);
@@ -19,5 +17,6 @@ public interface BBSFormulasMapper {
 	public boolean hidePostAll(int creatorId);
 	public List<BBSPost> adminGetPostList();
 	public boolean adminUpdatePostOne(BBSPost post);
+	public boolean changeCategory(int beforeId, int afterId);
 	public boolean deletePostOne(int postId);
 }

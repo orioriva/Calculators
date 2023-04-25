@@ -21,4 +21,8 @@ public class AdminController {
 	public String getAdminComment() {
 		return "admin/admin-comment";
 	}
+	@GetMapping("/admin/category")
+	public String getAdminCategory() {
+		return "admin/admin-category";
+	}
 }

@@ -15,6 +15,9 @@
 				<a th:href="@{/admin/comment}" class="list-group-item list-group-item-action" th:classappend="${viewPage == 'comment'} ? 'active disabled'">
 					<i class="far fa-comment-dots"></i>&ensp;コメント管理
 				</a>
+				<a th:href="@{/admin/category}" class="list-group-item list-group-item-action" th:classappend="${viewPage == 'category'} ? 'active disabled'">
+					<i class="fas fa-icons"></i>&ensp;カテゴリ管理
+				</a>
 			</div>
 		</div>
 		<!-- 右側 -->
@@ -28,6 +31,9 @@
 				</th:block>
 				<th:block th:case="comment">
 					<th:block th:replace="fragment/admin/admin-comment-fragment :: admin-comment-fragment"></th:block>
+				</th:block>
+				<th:block th:case="category">
+					<th:block th:replace="fragment/admin/admin-category-fragment :: admin-category-fragment"></th:block>
 				</th:block>
 			</th:block>
 		</div>

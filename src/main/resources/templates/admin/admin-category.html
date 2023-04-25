@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<!-- 共通 <head> 読込 -->
+<head th:replace="fragment/head-fragment :: head-fragment(
+title = 'カテゴリ管理', scripts = ~{::script}, links = ~{::link})">
+	<!-- 個別CSS、JSを引数に指定 -->
+	<link rel="stylesheet" type="text/css" th:href="@{/css/popup.css}">
+	<script type="text/javascript" th:src="@{/js/admin/admin-category.js}" defer></script>
+</head>
+<body>
+
+<!-- 共通ヘッダー読込 -->
+<header th:replace="fragment/header-fragment :: header-fragment"></header>
+
+<th:block th:replace="fragment/admin/admin-body-fragment :: admin-body-fragment('category')"></th:block>
+
+</body>
+</html>
