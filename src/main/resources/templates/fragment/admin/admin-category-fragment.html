@@ -6,6 +6,8 @@
 
 <button class="mb-3 btn btn-success" onclick="ajaxAddCategory();"><i class="fas fa-plus-circle"></i>&ensp;カテゴリ新規追加</button>
 
+<div id="input-body">
+
 <!-- カテゴリ一覧表示テーブル -->
 <div class="scroll-x pb-4 pr-3">
 	<table id="dataTable"
@@ -18,20 +20,6 @@
 			</tr>
 		</thead>
 		<tbody>
-			<tr v-for="item in options" :key="item.id">
-				<td>{{item.id}}</td>
-				<td>{{item.name}}</td>
-				<td>
-					<div v-if="item.id != 1">
-						<button class='btn btn-sm btn-primary' type='button' @click='init(item.id)'>
-							<i class='fas fa-cog'></i>&ensp;情報変更
-						</button>
-					</div>
-					<div v-else>
-						※　固定の為変更不可　※
-					</div>
-				</td>
-			</tr>
 		</tbody>
 	</table>
 </div>
@@ -39,7 +27,7 @@
 <!-- 情報編集ポップアップ -->
 <div class="popup-file">
 	<div class="content">
-		<form th:action th;method="PUT" id="input-form">
+		<form th:action method="post" id="input-form">
 			<table class="table table-bordered table-hover">
 				<tr>
 					<th class="col-3">ID</th>
@@ -69,6 +57,8 @@
 
 		<button id="close-file" class="mt-5 btn btn-secondary"><i class="fas fa-window-close"></i>&ensp;[[#{close}]]</button>
 	</div>
+</div>
+
 </div>
 
 </th:block>

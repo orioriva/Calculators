@@ -38,6 +38,20 @@ function ajaxGetCategoryList(){
 	);
 }
 
+/** 投稿内容１件取得 */
+function ajaxGetPost(){
+	setAjax(
+		'GET',
+		'/rest/posts/' + getParam("postId"),
+		{},
+		function(data){
+			if(data.id != 0)
+				setPostData(data);
+			$('.hide').removeClass('hide');
+		}
+	);
+}
+
 /** 投稿一覧取得 */
 function ajaxGetPostList(){
 	setAjax(

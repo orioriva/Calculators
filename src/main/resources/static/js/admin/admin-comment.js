@@ -7,7 +7,7 @@ $(document).ready(function () {
 	ajaxGetCommentList();
 });
 
-/** 投稿一覧取得 */
+/** コメント一覧取得 */
 function ajaxGetCommentList(){
 	setAjax(
 		'GET',

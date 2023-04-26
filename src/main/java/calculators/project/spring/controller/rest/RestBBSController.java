@@ -11,6 +11,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -66,6 +67,18 @@ public class RestBBSController {
 	@GetMapping("/rest/posts/myposts")
 	public List<BBSPost> restGetMyPostList(@AuthenticationPrincipal LoginUserDetails user) {
 		return bbsFormulasService.getPostList(user.getLoginUser().getId());
+	}
+
+	/** 投稿内容１件取得 */
+	@GetMapping("/rest/posts/{postId}")
+	public BBSPost restGetPost(
+			@AuthenticationPrincipal LoginUserDetails user,
+			@PathVariable("postId") Integer postId
+	) {
+		BBSPost postData = bbsFormulasService.getPostOne(postId);
+		if(postData == null)
+			postData = new BBSPost();
+		return postData;
 	}
 
 	/** 自分の投稿内容１件取得 */

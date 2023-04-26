@@ -14,8 +14,14 @@ function setAjax(type, url, sendData, func){
 			return;
 		}
 		func(data);
-	}).fail(function(jqXHR, testStatus, errorThrown){
+	}).fail(function(jqXHR, textStatus, errorThrown){
+		// 通信失敗時の処理
 		alert('情報送信に失敗しました');
+        console.log("ajax通信に失敗しました");
+        console.log("jqXHR          : " + jqXHR.status); // HTTPステータスが取得
+        console.log("textStatus     : " + textStatus);    // タイムアウト、パースエラー
+        console.log("errorThrown    : " + errorThrown.message); // 例外情報
+        console.log("URL            : " + url);
 	});
 }
 

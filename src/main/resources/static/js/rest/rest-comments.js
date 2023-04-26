@@ -1,20 +1,34 @@
 'use strict'
 
+/** コメント一覧取得 */
+function ajaxGetCommentList(){
+	setAjax(
+		'GET',
+		'/rest/comments',
+		{
+			postId: getParam('postId')
+		},
+		function(data){
+			setCommentList(data);
+		}
+	);
+}
+
 /** コメント追加 */
-function ajaxAddComment(){
+function ajaxAddComment(postId, comment){
 	if(!confirm("この内容で投稿してよろしいですか？")){
 		return false;
 	}
 
 	// バリデーション結果をクリア
 	removeValidResult();
-	
+
 	setAjax(
 		'POST',
 		'/rest/comment',
 		{
-			postId: getParam('postId'),
-			comment: $('#comment-form textarea').val(),
+			postId: postId,
+			comment: comment,
 			_csrf: $("*[name=_csrf]").val()  // CSRFトークンを送信
 		},
 		function(data){
@@ -33,6 +47,6 @@ function ajaxAddComment(){
 			}
 		}
 	);
-	
+
 	return false;
 }
