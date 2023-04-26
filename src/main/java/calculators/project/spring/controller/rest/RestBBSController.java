@@ -76,8 +76,14 @@ public class RestBBSController {
 			@PathVariable("postId") Integer postId
 	) {
 		BBSPost postData = bbsFormulasService.getPostOne(postId);
-		if(postData == null)
+		if(postData == null) {
 			postData = new BBSPost();
+		}else {
+			postData.setMine(
+				user != null &&
+				user.getLoginUser().getId() == postData.getCreatorId()
+			);
+		}
 		return postData;
 	}
 
