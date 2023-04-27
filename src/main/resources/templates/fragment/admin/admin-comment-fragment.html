@@ -74,11 +74,39 @@
 				<th scope="col">投稿日時</th>
 				<th scope="col">コメント</th>
 				<th scope="col">表示状態</th>
+				<th scope="col">操作</th>
 			</tr>
 		</thead>
 		<tbody>
 		</tbody>
 	</table>
+</div>
+
+<!-- 情報編集ポップアップ -->
+<div class="popup-file">
+	<div class="content">
+		<div id="popup-body">
+			<h6 class="border-bottom">表題と説明コメント</h6>
+			<div v-if="postData != null" class="mb-4">
+				<div v-if="postData.id" class="border border-success rounded p-2">
+					<h5>[ {{postData.category}} ] {{postData.title}}</h5>
+					<small>投稿者 : {{postData.creatorName}}　更新日時：{{formatDate(postData.updateDate)}}</small>
+					<div class="border-bottom border-success"></div>
+					<p>{{postData.comment}}</p>
+				</div>
+				<div v-else>※　非公開の為取得出来ませんでした　※</div>
+			</div>
+			<h6 class="border-bottom">ついたコメント</h6>
+			<div v-if="comments.length">
+				<div v-for="comment in comments" class="border rounded p-2 mb-2" :class="[selectNo == comment.no ? 'border-danger' : 'border-secondary']">
+					<small>No：{{comment.no}}　投稿者：{{comment.posterName}}　投稿日時：{{formatDate(comment.postDate)}}</small>
+					<div class="border-bottom border-secondary"></div>
+					<p>{{comment.comment}}</p>
+				</div>
+			</div>
+		</div>
+		<button id="close-file" class="mt-3 btn btn-secondary"><i class="fas fa-window-close"></i>&ensp;[[#{close}]]</button>
+	</div>
 </div>
 
 </th:block>

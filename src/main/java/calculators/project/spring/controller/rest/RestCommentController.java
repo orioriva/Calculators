@@ -28,7 +28,7 @@ public class RestCommentController {
 	@Autowired
 	private ErrorCheckService errorCheck;
 
-	/** コメント一覧取得 */
+	/** 記事のコメント一覧取得 */
 	@GetMapping("/rest/comments")
 	public List<Comment> getComments(Integer postId){
 		return commentService.getCommentList(postId);

@@ -47,7 +47,10 @@ function createDataTable(list){
 			},
 			// 作成者
 			{
-				data: 'creatorName'
+				data: 'creatorName',
+				render: function(data){
+					return data != null ? data : '<div class="text-black-50">※ 退会済みユーザー ※</div>';
+				}
 			},
 			// タイトル
 			{

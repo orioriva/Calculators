@@ -104,7 +104,7 @@
 				</tr>
 				<tr>
 					<th>投稿者名</th>
-					<td>{{poster}}</td>
+					<td :class="[!poster ? 'text-black-50': '']">{{poster ? poster : '※ 退会済 ※'}}</td>
 				</tr>
 				<tr>
 					<th>タイトル</th>

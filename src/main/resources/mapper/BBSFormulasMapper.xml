@@ -78,7 +78,11 @@
 		bbsformulas.updateDate,
 		bbsformulas.title,
 		bbsformulas.comment,
-		`users`.userName
+		CASE `users`.userName
+			WHEN IS NULL
+			THEN '※　退会済みユーザー　※'
+			ELSE `users`.userName
+		END userName
 	FROM
 		bbsformulas
 		LEFT JOIN

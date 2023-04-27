@@ -173,7 +173,12 @@ function createDataTable(list){
 		columns: [
 			{ data: 'id' },
 			{ data: 'category' },
-			{ data: 'creatorName' },
+			{
+				data: 'creatorName',
+				render: function(data){
+					return data != null ? data : '<div class="text-black-50">※ 退会済 ※</div>';
+				}
+			},
 			{ data: 'title' },
 			{ data: 'comment' },
 			{

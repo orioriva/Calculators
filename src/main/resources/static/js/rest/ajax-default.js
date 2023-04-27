@@ -9,10 +9,6 @@ function setAjax(type, url, sendData, func){
 		data : sendData,
 		dataType : 'json'
 	}).done(function(data){
-		if(data == null){
-			alert('データを取得できませんでした');
-			return;
-		}
 		func(data);
 	}).fail(function(jqXHR, textStatus, errorThrown){
 		// 通信失敗時の処理

@@ -10,15 +10,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import calculators.project.spring.model.BBSPost;
 import calculators.project.spring.model.LoginUserDetails;
 import calculators.project.spring.service.BBSFormulasService;
-import calculators.project.spring.service.CommentsService;
 
 @Controller
 public class BBSController {
 	@Autowired
 	private BBSFormulasService bbsFormulasService;
-
-	@Autowired
-	private CommentsService commentsService;
 
 	@GetMapping("/bbs")
 	public String getBBS() {
