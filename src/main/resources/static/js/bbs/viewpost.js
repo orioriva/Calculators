@@ -19,6 +19,7 @@ const vmForm = Vue.createApp({
 	methods: {
 		setPostData(data){
 			this.postData = data;
+			document.title = data.title;
 		},
 		setComments(data) {
 			this.comments = [];
