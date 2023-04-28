@@ -151,6 +151,11 @@ public class RestUserController {
 			BindingResult bindingResult,
 			@AuthenticationPrincipal LoginUserDetails user
 	) {
+		// 管理者は削除出来ない
+		if(user.getLoginUser().getRole().equals("ROLE_ADMIN")) {
+			return new RestResult(403,null);
+		}
+
 		Map<String, String> errors = new HashMap<>();
 		int myId = user.getLoginUser().getId();
 		errorCheck.setValidError(bindingResult, errors);

@@ -86,7 +86,8 @@
 	DELETE FROM
 		`users`
 	WHERE
-		id = #{id}
+		id = #{id} AND
+		role != 'ROLE_ADMIN'
 </delete>
 
 </mapper>

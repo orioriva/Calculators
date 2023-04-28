@@ -166,6 +166,8 @@ function ajaxDeleteUser(){
 				$.each(data.errors, function(key, value){
 					reflectValidResult(key, value)
 				});
+			}else if(data.result == 403){
+				alert("管理者は削除出来ません！\r\n他の管理者に権限の変更及び削除を依頼して下さい。");
 			}else if(data.result == 0){
 				alert("登録情報を削除いたしました。");
 				$('#logoutForm').submit();
