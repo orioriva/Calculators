@@ -5,6 +5,8 @@ const ctx = canvas.getContext("2d");
 
 var objects = new Array();
 var selectedObj = null;
+var onGradient = false;
+var defaultResultTag = true;
 
 /** 全オブジェクト削除 */
 function allDelete(){

@@ -20,6 +20,24 @@ function changeCanvasSize(value){
 	}
 }
 
+/** 計算の流れ表示が変更されたら */
+$('#calcStream').change(function(){
+	if($(this).val() == "1"){
+		onGradient = true;
+	}else{
+		onGradient = false;
+	}
+});
+
+/** 計算結果の表示が変更されたら */
+$('#resultTag').change(function(){
+	if($(this).val() == "1"){
+		defaultResultTag = true;
+	}else{
+		defaultResultTag = false;
+	}
+});
+
 /** スマホ用入力ボタン表示/非表示 */
 $('#calc-keys-show').click(function(){
 	$('#calc-keys').animate({height: 'show', opacity:'show'},'slow');
