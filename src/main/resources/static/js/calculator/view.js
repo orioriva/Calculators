@@ -8,10 +8,23 @@ window.onbeforeunload = function(event){
     event.returnValue = 'ページを離れますか？\r\n保存していない内容は破棄されます！';
 };
 
-/** キャンバスサイズが変更されたら */
-$('#selectCanvasSize').change(function(){
-	changeCanvasSize($(this).val());
-});
+/** 設定用vueインスタンス */
+var vmConfig = Vue.createApp({
+	data(){
+		return{
+			canvasSize: '1',
+			strokeAnim: 'off',
+			resultTag: 'default',
+			resultTagName: 'RESULT'
+		}
+	},
+	methods: {
+		changeCanvasSize(){
+			changeCanvasSize(this.canvasSize)
+		}
+	}
+}).mount('#control-bar')
+
 function changeCanvasSize(value){
 	if(value == "1"){
 		$('#canvas-wrapper').css({'width': '100%', 'height': '100vh'});
@@ -19,24 +32,6 @@ function changeCanvasSize(value){
 		$('#canvas-wrapper').css({'width': '1280px', 'height': '720px'});
 	}
 }
-
-/** 計算の流れ表示が変更されたら */
-$('#calcStream').change(function(){
-	if($(this).val() == "1"){
-		onGradient = true;
-	}else{
-		onGradient = false;
-	}
-});
-
-/** 計算結果の表示が変更されたら */
-$('#resultTag').change(function(){
-	if($(this).val() == "1"){
-		defaultResultTag = true;
-	}else{
-		defaultResultTag = false;
-	}
-});
 
 /** スマホ用入力ボタン表示/非表示 */
 $('#calc-keys-show').click(function(){

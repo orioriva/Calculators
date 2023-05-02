@@ -183,7 +183,7 @@ class SignClass extends ObjectClass{
 
 		let dir = getDirection(this.prevObj[0],this);
 		let path = getStrokePath(dir, this.prevObj[0], this, 0);
-		ctx.strokeStyle = onGradient ? getGradient(path, this.fillColor) : this.fillColor;
+		ctx.strokeStyle = vmConfig.strokeAnim == "on" ? getGradient(path, this.fillColor) : this.fillColor;
 		ctx.moveTo( path.toX, path.toY);
 		ctx.lineTo( path.baseX, path.baseY);
 		ctx.lineWidth = 3;
@@ -200,7 +200,7 @@ class SignClass extends ObjectClass{
 		// 計算先へ矢印を引く
 		let dir = getDirection(this,lineToObj);
 		let path = getStrokePath(dir, this, lineToObj, 0);
-		ctx.strokeStyle = onGradient ? getGradient(path, this.fillColor) : this.fillColor;
+		ctx.strokeStyle = vmConfig.strokeAnim == "on" ? getGradient(path, this.fillColor) : this.fillColor;
 		aline(path.baseX, path.baseY, path.toX, path.toY, 30, 10);
 	}
 
@@ -224,7 +224,7 @@ class SignClass extends ObjectClass{
 			getStrokePath(dir, this.nextObj[0], this.resultObj, space)
 		];
 		paths.forEach((value)=>{
-			ctx.strokeStyle = onGradient ? getGradient(value, this.fillColor) : this.fillColor;
+			ctx.strokeStyle = vmConfig.strokeAnim == "on" ? getGradient(value, this.fillColor) : this.fillColor;
 			ctx.moveTo( value.toX, value.toY);
 			ctx.lineTo( value.baseX, value.baseY);
 		});
@@ -256,7 +256,7 @@ class SignClass extends ObjectClass{
 			this.resultObj = new NumberClass(
 				0,
 				this.nextObj[0].y,
-				defaultResultTag ? this.prevObj[0].text + " " + this.text + " " + this.nextObj[0].text : "RESULT",
+				vmConfig.resultTag == "default" ? this.prevObj[0].text + " " + this.text + " " + this.nextObj[0].text : vmConfig.resultTagName,
 				this.calculate(),
 				this
 			);

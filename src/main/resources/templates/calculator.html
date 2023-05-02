@@ -33,51 +33,52 @@ title = #{createFormula}, scripts = ~{::script}, links = ~{::link})">
 <header th:replace="fragment/header-fragment :: header-fragment"></header>
 
 <!-- ナビゲーションバー -->
-<nav class="container-fluid navbar mb-2">
+<nav class="container-fluid navbar mb-2" id="control-bar">
     <div class="navbar-nav d-flex flex-row flex-wrap align-items-center">
 		<!-- 操作ガイド -->
 		<button class="nav-item mr-3 mb-2 btn btn-sm btn-secondary" id="guide-btn"><i class="fas fa-question-circle"></i>&ensp;操作ガイド</button>
-		<!-- Canvasサイズ変更 -->
-		<div class="nav-item mr-3 mb-2">
-			<div class="input-group input-group-sm">
-				<div class="input-group-prepend">
-					<label class="input-group-text" for="selectCanvasSize" th:text="#{canvasSize}"></label>
-				</div>
-				<select class="custom-select" id="selectCanvasSize">
-					<option value="1" th:text="#{windowSize}"></option>
-					<option value="2" th:text="#{innerSize}"></option>
-				</select>
-			</div>
-		</div>
-		<!-- 計算の流れ表示切り替え -->
-		<div class="nav-item mr-3 mb-2">
-			<div class="input-group input-group-sm">
-				<div class="input-group-prepend">
-					<label class="input-group-text" for="calcStream">計算の流れ</label>
-				</div>
-				<select class="custom-select" id="calcStream">
-					<option value="1">表示</option>
-					<option value="2" selected>非表示</option>
-				</select>
-			</div>
-		</div>
-		<!-- 計算結果の初期タグ名 -->
-		<div class="nav-item mr-3 mb-2">
-			<div class="input-group input-group-sm">
-				<div class="input-group-prepend">
-					<label class="input-group-text" for="resultTag">計算結果の初期タグ名</label>
-				</div>
-				<select class="custom-select" id="resultTag">
-					<option value="1" selected>(値1タグ名)(符号)(値2タグ名)</option>
-					<option value="2">RESULT</option>
-				</select>
-			</div>
-		</div>
 		<!-- 全消去 -->
 		<button class="nav-item mr-3 mb-2 btn btn-sm btn-danger" id="delete-btn"><i class="fas fa-trash-alt"></i>&ensp;全消去</button>
 		<!-- 開く -->
 		<button sec:authorize="${authenticated}" class="nav-item btn btn-sm btn-success mr-3 mb-2" id="open-btn"><i class="fas fa-folder-open"></i>&ensp;開く</button>
 		<small sec:authorize="${!authenticated}" class="nav-item mr-3 mb-2">※ ログインすると保存出来るようになります</small>
+	</div>
+	<!-- 各種設定 -->
+	<div class="rounded p-2" id="config-area">
+		<div class="mb-2">
+			<small class="mr-3">キャンバスサイズ</small>
+			<div class="btn-group btn-group-toggle" data-toggle="buttons">
+				<label class="btn btn-sm btn-light">
+					<input type="radio" autocomplete="off" value="1" v-model="canvasSize" @change="changeCanvasSize">画面サイズ
+				</label>
+				<label class="btn btn-sm btn-light">
+					<input type="radio" autocomplete="off" value="2" v-model="canvasSize" @change="changeCanvasSize">内部サイズ
+				</label>
+			</div>
+		</div>
+		<div class="mb-2">
+			<small class="mr-3">線のアニメーション</small>
+			<div class="btn-group btn-group-toggle" data-toggle="buttons">
+				<label class="btn btn-sm btn-light">
+					<input type="radio" autocomplete="off" value="on" v-model="strokeAnim">ON
+				</label>
+				<label class="btn btn-sm btn-light">
+					<input type="radio" autocomplete="off" value="off" v-model="strokeAnim">OFF
+				</label>
+			</div>
+		</div>
+		<div class="mb-2">
+			<small class="mr-3">計算結果の初期タグ名</small>
+			<div class="btn-group btn-group-toggle" data-toggle="buttons">
+				<label class="btn btn-sm btn-light">
+					<input type="radio" autocomplete="off" value="default" v-model="resultTag">(タグ1) (符号) (タグ2)
+				</label>
+				<label class="btn btn-sm btn-light">
+					<input type="radio" autocomplete="off" value="custom" v-model="resultTag">固定
+				</label>
+				<input type="text" v-model="resultTagName" :disabled="resultTag != 'custom'">
+			</div>
+		</div>
 	</div>
 </nav>
 
