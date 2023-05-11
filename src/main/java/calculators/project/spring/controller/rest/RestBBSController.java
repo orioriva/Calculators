@@ -87,6 +87,14 @@ public class RestBBSController {
 		return postData;
 	}
 
+	/** jsonデータ１件取得 */
+	@GetMapping("/rest/posts/json")
+	public String restGetJson(
+			@RequestParam Integer postId
+	) {
+		return bbsFormulasService.getJsonOne(postId);
+	}
+
 	/** 自分の投稿内容１件取得 */
 	@GetMapping("/rest/posts/mypost")
 	public BBSPost restGetMyPost(

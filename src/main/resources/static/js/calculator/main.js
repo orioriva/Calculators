@@ -12,8 +12,7 @@ window.addEventListener("load", init() );
 /** 起動時処理 */
 function init() {
 	setInterval(update, 60);
-
-	loadObjects();
+	ajaxInitJsonData();
 }
 
 function addNumber(x,y,text,number){
@@ -26,28 +25,56 @@ function update(){
 	drawObj();
 }
 
+/** 指定されていれば初期jsonデータの読込 */
+function ajaxInitJsonData(){
+	let id = null;
+	const func = function(data){
+		allDelete();
+		loadObjects(data);
+	}
+
+	// 掲示板の計算表を開く場合
+	if(id = getParam("openBBS")){
+		setAjax(
+			'GET',
+			'/rest/posts/json',
+			{
+				postId: id,
+				_csrf: $("*[name=_csrf]").val()  // CSRFトークンを送信
+			},
+			func
+		);
+	}
+	// 自分の保存した計算表を開く場合
+	else if(id = getParam("openMine")){
+		setAjax(
+			'GET',
+			'/rest/formulas/json',
+			{
+				formulaId: id,
+				_csrf: $("*[name=_csrf]").val()  // CSRFトークンを送信
+			},
+			func
+		);
+	}
+}
+
 /** オブジェクトの読込 */
-function loadObjects(){
+function loadObjects(jsonData){
 	loading.isLoading = true;
 
-	const jsonData = $('#jsonData').val();
-
-	if(jsonData == undefined || jsonData == null || jsonData == ''){
+	if(!jsonData){
 		return;
 	}
 
-	// JavaScriptオブジェクトへ変換
-	let objData;
-	objData = JSON.parse(jsonData);
-
-	for(let value of objData){
+	for(let value of jsonData){
 		let targetObj = null;
 
 		if(value.type == "number"){
 			if(value.calcSource != null){
 				// 計算元があれば計算結果を生成させる
 				let signObj = objects[value.calcSource];
-				let signObjData = objData[value.calcSource];
+				let signObjData = jsonData[value.calcSource];
 				signObj.setNextObj(objects[signObjData.nextObj[0]]);
 
 				// 計算結果オブジェクトに値を反映

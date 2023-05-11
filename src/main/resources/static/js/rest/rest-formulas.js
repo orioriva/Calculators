@@ -65,8 +65,7 @@ function ajaxLoadFormula(){
 		},
 		function(data){
 			allDelete();
-			$('#jsonData').val(JSON.stringify(data));
-			loadObjects();
+			loadObjects(data);
 			$('.popup-file').fadeOut();
 			alert('データを読み込みました');
 		}
