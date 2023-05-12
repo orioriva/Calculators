@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+</head>
+<body>
+<div layout:fragment="mypage-menu(viewPage)" class="col-md-2">
+	<h5 class="text-center pt-2">My Page Menu</h5>
+	<div class="list-group list-group-flush">
+		<a th:href="@{/mypage/top}" class="list-group-item list-group-item-action" th:classappend="${viewPage == 'top'} ? 'active disabled'">
+			[[#{myPageTop}]]
+		</a>
+		<a th:href="@{/mypage/formulas}" class="list-group-item list-group-item-action" th:classappend="${viewPage == 'formulas'} ? 'active disabled'">
+			<i class="fas fa-calculator"></i>&ensp;[[#{myFormulaList}]]
+		</a>
+		<a th:href="@{/mypage/posts}" class="list-group-item list-group-item-action" th:classappend="${viewPage == 'posts'} ? 'active disabled'">
+			<i class="fas fa-edit"></i>&ensp;[[#{myPostList}]]
+		</a>
+		<a th:href="@{/mypage/userSettings}" class="list-group-item list-group-item-action" th:classappend="${viewPage == 'settings'} ? 'active disabled'">
+			<i class="fas fa-cog"></i>&ensp;[[#{userSettings}]]
+		</a>
+		<form name="logout" th:action="@{/logout}" method="post">
+		</form>
+		<a href="#" class="list-group-item list-group-item-action" onclick="document.logout.submit();">[[#{logout}]]<i class="ml-2 fas fa-sign-out-alt"></i></a>
+	</div>
+</div>
+</body>
+</html>

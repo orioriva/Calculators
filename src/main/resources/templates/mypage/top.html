@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+ layout:decorate="~{layout/mypage}">
+<head>
+	<title>[[#{myPageTop}]]</title>
+</head>
+<body>
+<div layout:fragment="mypage-content" class="row">
+	<!-- 左側 -->
+	<div layout:replace="layout/mypage-menu :: mypage-menu('top')"></div>
+	<!-- 右側 -->
+	<div class="container">
+		<div class="mt-2 border-bottom">
+			<h3 th:text="#{myPageTop}"></h3>
+		</div>
+		<div class="container mt-2">
+			<div class="row">
+				<!-- 保存した計算表一覧 -->
+				<div class="col-md-6 p-1">
+					<div class="card border-info">
+						<div class="bg-info text-center text-white p-3">
+							<h5><i class="fas fa-calculator fa-lg"></i>&ensp;[[#{myFormulaList}]]</h5>
+						</div>
+						<div class="card-body">
+							<!--div class="scroll-y" style="height: 150px"-->
+							<p class="card-text">自身が計算表作成ページから保存した計算表データ一覧が見れます。</p>
+							<div class="border border-info rounded-lg p-1">
+								<small>
+									その他可能な操作：<br>
+									・各計算表の保存名変更<br>
+									・各計算表の掲示板への投稿<br>
+									・各計算表の保存内容の読込<br>
+									・各計算表の削除<br>
+								</small>
+							</div>
+							<!--/div-->
+							<a th:href="@{/mypage/formulas}" class="w-100 mt-3 btn btn-info">[[#{move}]]&ensp;<i class="fas fa-angle-right"></i></a>
+						</div>
+					</div>
+				</div>
+				<!-- 自分の投稿一覧 -->
+				<div class="col-md-6 p-1">
+					<div class="card border-success">
+						<div class="bg-success text-center text-white p-3">
+							<h5><i class="fas fa-edit fa-lg"></i>&ensp;[[#{myPostList}]]</h5>
+						</div>
+						<div class="card-body">
+							<p>自身が掲示板へ投稿した投稿の一覧が見れます。</p>
+							<div class="border border-success rounded-lg p-1">
+								<small>
+									その他可能な操作：<br>
+									・各投稿の投稿内容ページへの移動<br>
+									・各投稿の投稿内容の編集<br>
+									・各投稿の削除<br>
+								</small>
+							</div>
+							<a th:href="@{/mypage/posts}" class="w-100 mt-3 btn btn-success">[[#{move}]]&ensp;<i class="fas fa-angle-right"></i></a>
+						</div>
+					</div>
+				</div>
+				<!-- ユーザー情報変更 -->
+				<div class="col-md-6 p-1">
+					<div class="card border-secondary">
+						<div class="bg-secondary text-center text-white p-3">
+							<h5><i class="fas fa-cog fa-lg"></i>&ensp;[[#{userSettings}]]</h5>
+						</div>
+						<div class="card-body">
+							<p>各種ユーザー設定の変更が出来ます。</p>
+							<div class="border border-secondary rounded-lg p-1">
+								<small>
+									・ユーザー名の変更<br>
+									・ログインユーザーIDの変更<br>
+									・ログインパスワードの変更<br>
+									・ユーザー登録解除<br>
+								</small>
+							</div>
+							<a th:href="@{/mypage/userSettings}" class="w-100 mt-3 btn btn-secondary">[[#{move}]]&ensp;<i class="fas fa-angle-right"></i></a>
+						</div>
+					</div>
+				</div>
+				<!-- ログアウト -->
+				<div class="col-md-6 p-1">
+					<div class="card border-dark">
+						<div class="bg-dark text-center text-white p-3">
+							<h5>[[#{logout}]]&ensp;<i class="ml-2 fas fa-sign-out-alt fa-lg"></i></h5>
+						</div>
+						<div class="card-body">
+							<p>ログアウトしてログイン画面へ戻ります。</p>
+							<div class="border border-dark rounded-lg p-1">
+								<small>
+									※ ログアウト後も計算表作成や掲示板の閲覧は出来ますが、以下の事が出来なくなります。<br>
+									・計算表作成ページでの作成した計算表の保存<br>
+									・掲示板への新規投稿<br>
+									・掲示板の自身の投稿の編集<br>
+								</small>
+							</div>
+							<a href="#" class="w-100 mt-3 btn btn-dark" onclick="document.logout.submit();">[[#{logout}]]&ensp;<i class="ml-2 fas fa-sign-out-alt"></i></a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</body>
+</html>

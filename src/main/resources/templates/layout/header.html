@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+ xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+ layout:decorate="~{layout/layout}">
+<head>
+</head>
+<body>
+<!-- 共通ヘッダー -->
+<header layout:fragment="header" class="mb-4">
+<nav class="navbar navbar-expand-sm navbar-light rounded-lg m-1" style="background-color: #ffff77;">
+	<!--
+	<a class="navbar-brand" th:href="@{/}">自由計算(仮)</a>
+	 -->
+	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false">
+		<span class="navbar-toggler-icon"></span>
+	</button>
+	<!-- 画面が小さい時折りたたむ -->
+	<div class="collapse navbar-collapse" id="navbarNav">
+		<ul class="navbar-nav">
+			<li class="nav-item mr-3">
+				<a class="nav-link h5 pb-0" th:href="@{/}">TOP</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" th:href="@{/calculator}"><i class="fas fa-calculator"></i>&ensp;[[#{createFormula}]]</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" th:href="@{/bbs}"><i class="fas fa-chalkboard"></i>&ensp;[[#{bbs}]]</a>
+			</li>
+			<li class="nav-item" sec:authorize="hasRole('ADMIN')">
+				<a class="nav-link" th:href="@{/admin}"><i class="fas fa-wrench"></i>&ensp;管理者専用</a>
+			</li>
+		</ul>
+	</div>
+	<!-- 右側 -->
+	<ul class="navbar-nav">
+		<!-- 認証前なら表示 -->
+		<li sec:authorize="${!authenticated}" class="nav-item">
+			<a class="btn btn-sm btn-info" th:href="@{/login}" role="button">
+				[[#{login}]]<i class="ml-1 fas fa-sign-in-alt"></i>
+			</a>
+		</li>
+		<!-- ユーザー操作ドロップダウンリスト -->
+		<li sec:authorize="${authenticated}" class="dropdown">
+			<button class="btn btn-outline-secondary dropdown-toggle" type="button" id="dropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				<i class="fas fa-user-circle fa-lg mr-2"></i>
+				<span th:text="#{welcomeUser(${#authentication.principal.loginUser.userName})}"></span>
+			</button>
+			<div class="dropdown-menu" aria-labelledby="dropdownMenu">
+				<a th:href="@{/mypage/top}" class="dropdown-item">[[#{myPageTop}]]</a>
+				<a th:href="@{/mypage/formulas}" class="dropdown-item"><i class="fas fa-calculator"></i>&ensp;[[#{myFormulaList}]]</a>
+				<a th:href="@{/mypage/posts}" class="dropdown-item"><i class="fas fa-edit"></i>&ensp;[[#{myPostList}]]</a>
+				<a th:href="@{/mypage/userSettings}" class="dropdown-item"><i class="fas fa-cog"></i>&ensp;[[#{userSettings}]]</a>
+				<!-- ログアウト -->
+				<div class="dropdown-divider"></div>
+				<form th:action="@{/logout}" method="post">
+					<button class="dropdown-item" type="submit">
+						[[#{logout}]]<i class="ml-2 fas fa-sign-out-alt"></i>
+					</button>
+				</form>
+			</div>
+		</li>
+	</ul>
+</nav>
+</header>
+</body>
+</html>

@@ -1,19 +1,14 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<!-- 共通 <head> 読込 -->
-<head th:replace="fragment/head-fragment :: head-fragment(
-title = #{signup}, scripts = ~{::script}, links = ~{::link})">
-	<!-- 個別CSS、JSを引数に指定 -->
-	<link rel="stylesheet" type="text/css" th:href="@{/css/blank.css}"/>
+<html xmlns:th="http://www.thymeleaf.org"
+ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+ layout:decorate="~{layout/layout}">
+<head>
+	<title>[[#{signup}]]</title>
 	<script type="text/javascript" th:src="@{/js/rest/rest-users.js}" defer></script>
 </head>
 <body>
-
-<!-- 共通ヘッダー読込 -->
-<header th:replace="fragment/header-fragment :: header-fragment"></header>
-
 <!-- 入力フォーム -->
-<div class="container w-50 mt-3">
+<div layout:fragment="content" class="container w-50 mt-3">
 	<h3 class="text-center" th:text="#{signup}"></h3>
 	<form class="form-input" id="input-form" th:action method="post" th:object="${registerForm}" onsubmit="return ajaxAddUser();">
 		<!-- ユーザー名 -->

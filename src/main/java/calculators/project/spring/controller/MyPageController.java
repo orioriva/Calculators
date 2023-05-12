@@ -20,19 +20,19 @@ public class MyPageController {
 	@GetMapping("/mypage/top")
 	public String getMyPageTop(Model model) {
 		model.addAttribute("viewPage","top");
-		return "mypage";
+		return "mypage/top";
 	}
 
 	@GetMapping("/mypage/formulas")
 	public String getMyPageFormulas(Model model) {
 		model.addAttribute("viewPage","formulas");
-		return "mypage";
+		return "mypage/formulas";
 	}
 
 	@GetMapping("/mypage/posts")
 	public String getMyPagePosts(Model model) {
 		model.addAttribute("viewPage","posts");
-		return "mypage";
+		return "mypage/posts";
 	}
 
 	@GetMapping("/mypage/userSettings")
@@ -43,6 +43,6 @@ public class MyPageController {
 	) {
 		userNameForm.setUserName(user.getUserViewName());
 		model.addAttribute("viewPage","userSettings");
-		return "mypage";
+		return "mypage/settings";
 	}
 }

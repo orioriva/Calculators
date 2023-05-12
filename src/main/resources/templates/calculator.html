@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+ layout:decorate="~{layout/layout}">
 <!-- 共通 <head> 読込 -->
-<head th:replace="fragment/head-fragment :: head-fragment(
-title = #{createFormula}, scripts = ~{::script}, links = ~{::link})">
+<head>
+<title>[[#{createFormula}]]</title>
 
 <!-- CSS -->
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css">
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.13.1/datatables.min.css"/>
 <link rel="stylesheet" type="text/css" th:href="@{/css/calculator.css}">
 <link rel="stylesheet" type="text/css" th:href="@{/css/popup.css}">
 
@@ -28,10 +28,7 @@ title = #{createFormula}, scripts = ~{::script}, links = ~{::link})">
 
 </head>
 <body>
-
-<!-- 共通ヘッダー読込 -->
-<header th:replace="fragment/header-fragment :: header-fragment"></header>
-
+<div layout:fragment="content">
 <!-- ナビゲーションバー -->
 <nav class="container-fluid navbar mb-2" id="control-bar">
     <div class="navbar-nav d-flex flex-row flex-wrap align-items-center">
@@ -147,6 +144,6 @@ title = #{createFormula}, scripts = ~{::script}, links = ~{::link})">
 
 <!-- 操作ガイド（ポップアップ表示） -->
 <div th:replace="fragment/calculator-guide-fragment :: calculator-guide-fragment"></div>
-
+</div>
 </body>
 </html>
