@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+<title></title>
+</head>
+<body>
+<div layout:fragment="admin-menu(viewPage)" class="col-md-2">
+	<h5 class="text-center pt-2">Admin Menu</h5>
+	<div class="list-group list-group-flush">
+		<a th:href="@{/admin/user}" class="list-group-item list-group-item-action" th:classappend="${viewPage == 'user'} ? 'active disabled'">
+			<i class="fas fa-user-cog"></i>&ensp;ユーザー管理
+		</a>
+		<a th:href="@{/admin/bbs}" class="list-group-item list-group-item-action" th:classappend="${viewPage == 'bbs'} ? 'active disabled'">
+			<i class="fas fa-chalkboard"></i>&ensp;掲示板管理
+		</a>
+		<a th:href="@{/admin/comment}" class="list-group-item list-group-item-action" th:classappend="${viewPage == 'comment'} ? 'active disabled'">
+			<i class="far fa-comment-dots"></i>&ensp;コメント管理
+		</a>
+		<a th:href="@{/admin/category}" class="list-group-item list-group-item-action" th:classappend="${viewPage == 'category'} ? 'active disabled'">
+			<i class="fas fa-icons"></i>&ensp;カテゴリ管理
+		</a>
+	</div>
+</div>
+</body>
+</html>

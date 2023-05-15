@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<!-- 共通 <head> 読込 -->
-<head th:replace="fragment/head-fragment :: head-fragment(
-title = #{postNone}, scripts = ~{::script}, links = ~{::link})">
-	<!-- 個別CSS、JSを引数に指定 -->
+<html xmlns:th="http://www.thymeleaf.org"
+ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+ layout:decorate="~{layout/layout}">
+<head>
+	<title>[[#{postNone}]]</title>
+	<!-- 個別CSS、JSを読込 -->
 	<link rel="stylesheet" type="text/css" th:href="@{/css/post.css}">
 	<script type="text/javascript" th:src="@{/js/rest/rest-posts.js}" defer></script>
 	<script type="text/javascript" th:src="@{/js/rest/rest-comments.js}" defer></script>
@@ -11,10 +12,7 @@ title = #{postNone}, scripts = ~{::script}, links = ~{::link})">
 </head>
 <body>
 
-<!-- 共通ヘッダー読込 -->
-<header th:replace="fragment/header-fragment :: header-fragment"></header>
-
-<div id="post-body" class="hide container mt-3">
+<div layout:fragment="content" id="post-body" class="hide container mt-3">
 	<div v-if="postData != null">
 		<div class="w-100 border border-info rounded p-2">
 			<!-- 投稿タイトル部分 -->

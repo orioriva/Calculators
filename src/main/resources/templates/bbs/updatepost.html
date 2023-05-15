@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<!-- 共通 <head> 読込 -->
-<head th:replace="fragment/head-fragment :: head-fragment(
-title = #{postEditing}, scripts = ~{::script}, links = ~{::link})">
+<html xmlns:th="http://www.thymeleaf.org"
+ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+ layout:decorate="~{layout/layout}">
+<head>
+	<title>[[#{postEditing}]]</title>
 	<!-- 個別CSS、JSを引数に指定 -->
 	<link rel="stylesheet" type="text/css" th:href="@{/css/popup.css}">
 	<link rel="stylesheet" type="text/css" th:href="@{/css/bbspost.css}">
@@ -13,42 +14,40 @@ title = #{postEditing}, scripts = ~{::script}, links = ~{::link})">
 </head>
 <body>
 
-<!-- 共通ヘッダー読込 -->
-<header th:replace="fragment/header-fragment :: header-fragment"></header>
-
-<!-- 投稿情報入力 -->
-<form class="container w-75" id="input-form" th:action th:method="put" th:object="${BBSPostForm}" onsubmit="return ajaxUpdatePost();">
-	<!-- 見出し -->
-	<div class="border-bottom mb-3">
-		<h3 th:text="#{postEditing}"></h3>
-	</div>
-	<!-- エラーメッセージ -->
-	<div class="mb-3 text-center" id="errorMsg">
-	</div>
-
-	<div class="border rounded p-2 mb-3">
-		<!-- 計算表を変更するか？ -->
-		<div class="custom-control custom-switch z-0">
-			<input type="checkbox" class="custom-control-input" name="changeFormula" id="changeFormula" v-model="isChange">
-			<label class="custom-control-label" for="changeFormula" th:text="#{formulaChange}"></label>
+<div layout:fragment="content">
+	<!-- 投稿情報入力 -->
+	<form class="container w-75" id="input-form" th:action th:method="put" th:object="${BBSPostForm}" onsubmit="return ajaxUpdatePost();">
+		<!-- 見出し -->
+		<div class="border-bottom mb-3">
+			<h3 th:text="#{postEditing}"></h3>
+		</div>
+		<!-- エラーメッセージ -->
+		<div class="mb-3 text-center" id="errorMsg">
 		</div>
 
-		<!-- 計算表選択 -->
-		<div class="input-group mt-1 z-0" id="selectFormula" style="display:none">
-			<div th:replace="fragment/createpost-fragment :: selectFormula-fragment"></div>
+		<div class="border rounded p-2 mb-3">
+			<!-- 計算表を変更するか？ -->
+			<div class="custom-control custom-switch z-0">
+				<input type="checkbox" class="custom-control-input" name="changeFormula" id="changeFormula" v-model="isChange">
+				<label class="custom-control-label" for="changeFormula" th:text="#{formulaChange}"></label>
+			</div>
+
+			<!-- 計算表選択 -->
+			<div class="input-group mt-1 z-0" id="selectFormula" style="display:none">
+				<div th:replace="fragment/createpost-fragment :: selectFormula-fragment"></div>
+			</div>
+			<input type="hidden" name="postFormula" v-model="formulaId">
 		</div>
-		<input type="hidden" name="postFormula" v-model="formulaId">
-	</div>
 
-	<!-- その他入力部分 -->
-	<div th:replace="fragment/createpost-fragment :: form-fragment"></div>
+		<!-- その他入力部分 -->
+		<div th:replace="fragment/createpost-fragment :: form-fragment"></div>
 
-	<!-- 変更確定ボタン -->
-	<button class="mt-3 btn btn-primary w-100" type="submit" th:text="#{register}"></button>
-</form>
+		<!-- 変更確定ボタン -->
+		<button class="mt-3 btn btn-primary w-100" type="submit" th:text="#{register}"></button>
+	</form>
 
-<!-- ファイル読込ポップアップ -->
-<header th:replace="fragment/popup-formulaList-fragment :: popup-formulaList-fragment"></header>
-
+	<!-- ファイル読込ポップアップ -->
+	<header th:replace="fragment/popup-formulaList-fragment :: popup-formulaList-fragment"></header>
+</div>
 </body>
 </html>

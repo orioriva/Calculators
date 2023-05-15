@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
- layout:decorate="~{layout/mypage}">
+ layout:decorate="~{layout/layout}">
 <head>
 	<title>[[#{myFormulaList}]]</title>
 	<!-- 個別JS読込 -->
@@ -9,29 +9,31 @@
 	<script type="text/javascript" th:src="@{/js/mypage/myFormulas.js}" defer></script>
 </head>
 <body>
-<div layout:fragment="mypage-content" class="row">
-	<!-- 左側 -->
-	<div layout:replace="layout/mypage-menu :: mypage-menu('formulas')"></div>
-	<!-- 右側 -->
-	<div class="container">
-		<div class="mt-2 mb-2 border-bottom">
-			<h3 th:text="#{myFormulaList}"></h3>
-		</div>
-		<div>
-			<a th:href="@{/calculator}" class="btn btn-primary mt-2 mb-4" role="button"><i class="fas fa-folder-plus"></i>&ensp;[[#{newCreate}]]</a>
-		</div>
-		<div class="scroll-x pb-4 pr-3">
-			<table id="dataTable" class="table table-bordered table-hover table-sm text-nowrap w-100">
-				<thead class="thead-light">
-					<tr>
-						<th scope="col" th:text="#{title}"></th>
-						<th scope="col" th:text="#{updateDate}"></th>
-						<th scope="col" th:text="#{operation}"></th>
-					</tr>
-				</thead>
-				<tbody>
-				</tbody>
-			</table>
+<div layout:fragment="content" class="container-fluid">
+	<div class="row">
+		<!-- 左側 -->
+		<div layout:replace="layout/mypage-menu :: mypage-menu('formulas')"></div>
+		<!-- 右側 -->
+		<div class="container">
+			<div class="mt-2 mb-2 border-bottom">
+				<h3 th:text="#{myFormulaList}"></h3>
+			</div>
+			<div>
+				<a th:href="@{/calculator}" class="btn btn-primary mt-2 mb-4" role="button"><i class="fas fa-folder-plus"></i>&ensp;[[#{newCreate}]]</a>
+			</div>
+			<div class="scroll-x pb-4 pr-3">
+				<table id="dataTable" class="table table-bordered table-hover table-sm text-nowrap w-100">
+					<thead class="thead-light">
+						<tr>
+							<th scope="col" th:text="#{title}"></th>
+							<th scope="col" th:text="#{updateDate}"></th>
+							<th scope="col" th:text="#{operation}"></th>
+						</tr>
+					</thead>
+					<tbody>
+					</tbody>
+				</table>
+			</div>
 		</div>
 	</div>
 </div>

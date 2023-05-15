@@ -1,19 +1,17 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<!-- 共通 <head> 読込 -->
-<head th:replace="fragment/head-fragment :: head-fragment(
-title = #{bbs}, scripts = ~{::script}, links = ~{::link})">
-	<!-- 個別CSS、JSを引数に指定 -->
+<html xmlns:th="http://www.thymeleaf.org"
+ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+ layout:decorate="~{layout/layout}">
+<head>
+	<title>[[#{bbs}]]</title>
+	<!-- 個別CSS、JS読込 -->
 	<link rel="stylesheet" type="text/css" th:href="@{/css/bbs.css}">
 	<script type="text/javascript" th:src="@{/js/rest/rest-posts.js}" defer></script>
 	<script type="text/javascript" th:src="@{/js/bbs.js}" defer></script>
 </head>
 <body>
 
-<!-- 共通ヘッダー読込 -->
-<header th:replace="fragment/header-fragment :: header-fragment"></header>
-
-<div class="container">
+<div layout:fragment="content" class="container">
 
 	<div class="mb-4">
 		<div class="mt-2">
@@ -80,9 +78,9 @@ title = #{bbs}, scripts = ~{::script}, links = ~{::link})">
 		<tbody>
 		</tbody>
 	</table>
-</div>
 
-<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+	<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+</div>
 
 </body>
 </html>
