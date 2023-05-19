@@ -1,6 +1,7 @@
 # 計算表作成サイト
 電卓でちょっとした計算をしている時、さっき使った数値をまた使いたくなった事がありませんか？<br>
-でもExcelとか使うほどじゃ…って事がしばしばあったので、こういうのがあったらいいなと思い制作してみました！
+でもExcelとか使うほどじゃ…って事がしばしばあったので、こういうのがあったらいいなと思い制作してみました！<br>
+計算を図式化して後から値を変更出来、作成した計算表をデータベースに保存して他人と共有出来るWebアプリケーションです。
 <img src="/../../../../orioriva/orioriva.github.io/blob/main/img/calculatorpage.png">|<img src="/../../../../orioriva/orioriva.github.io/blob/main/img/calculatorpage-phone.png">
 ---|---
 <sub>PC表示</sub>|<sub>スマホ表示</sub>
